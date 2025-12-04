@@ -1,7 +1,8 @@
-"""Bluesky video downloader API (Vercel Functions-compatible)."""
+"""Bluesky video downloader API."""
 from __future__ import annotations
 
 import logging
+import os
 import re
 from dataclasses import asdict, dataclass
 from typing import Any, Dict, Optional
@@ -10,7 +11,9 @@ from flask import Flask, jsonify, render_template, request
 from yt_dlp import YoutubeDL
 
 
-# --- Logging -------------------------------------------------------------
+# --------------------------------------------------------------------
+# Logging
+# --------------------------------------------------------------------
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
@@ -18,13 +21,19 @@ logging.basicConfig(
 logger = logging.getLogger("bluesky-downloader")
 
 
-# --- Flask app -----------------------------------------------------------
-# templates/ is inside api/, so we use template_folder="templates"
-app = Flask(__name__, template_folder="templates")
+# --------------------------------------------------------------------
+# Flask app (templates inside api/templates)
+# --------------------------------------------------------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+
+app = Flask(__name__, template_folder=TEMPLATES_DIR)
 app.config["JSON_SORT_KEYS"] = False
 
 
-# --- Domain model --------------------------------------------------------
+# --------------------------------------------------------------------
+# Domain model
+# --------------------------------------------------------------------
 @dataclass
 class ExtractionResult:
     video_url: str
@@ -72,7 +81,6 @@ class BlueskyDownloader:
         return ExtractionResult(video_url=video_url, thumbnail_url=thumbnail_url)
 
 
-# Precompiled Bluesky URL validator
 BLSKY_URL_RE = re.compile(
     r"https?://(www\.)?(bsky\.app|staging\.bsky\.app)/profile/.+",
     re.IGNORECASE,
@@ -86,7 +94,9 @@ def validate_url(url: str) -> bool:
 downloader = BlueskyDownloader()
 
 
-# --- Routes --------------------------------------------------------------
+# --------------------------------------------------------------------
+# Routes
+# --------------------------------------------------------------------
 @app.route("/", methods=["GET"])
 def home() -> str:
     return render_template("index.html")
@@ -106,12 +116,11 @@ def extract() -> Any:
     try:
         result = downloader.extract(url)
     except Exception as exc:  # noqa: BLE001
-        logger.exception("Failed to extract media from URL: %s", url)
+        logger.exception("Failed to extract media")
         message = str(exc) or "Unable to process this URL right now."
         return jsonify({"error": message}), 500
 
     return jsonify(result.to_response())
 
 
-# Vercel Functions runtime will use the module-level `app` as the WSGI handler.
-# No custom `handler` alias, no extra indirection needed.
+# Vercel's Python runtime will pick up `app` automatically as a WSGI app.
