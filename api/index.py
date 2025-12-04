@@ -109,5 +109,8 @@ def register_routes(flask_app: Flask) -> None:
 
 
 # Vercel's Python runtime auto-detects a module-level WSGI callable named "app".
+#
+# Avoid setting __all__ so the runtime can introspect safely without assuming
+# attributes are classes (which caused issubclass TypeError in the platform
+# wrapper when __all__ was set to ["app"]).
 app = create_app()
-__all__ = ["app"]
