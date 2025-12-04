@@ -1,33 +1,17 @@
-"""Bluesky video downloader API."""
-from __future__ import annotations
-
-import logging
-import os
-import re
-from dataclasses import asdict, dataclass
-from typing import Any, Dict, Optional
-
 from flask import Flask, jsonify, render_template, request
 from yt_dlp import YoutubeDL
+import logging
+import re
+from dataclasses import dataclass, asdict
+from typing import Any, Dict, Optional
 
-
-# --------------------------------------------------------------------
-# Logging
-# --------------------------------------------------------------------
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
 )
 logger = logging.getLogger("bluesky-downloader")
 
-
-# --------------------------------------------------------------------
-# Flask app (templates inside api/templates)
-# --------------------------------------------------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
-
-app = Flask(__name__, template_folder=TEMPLATES_DIR)
+app = Flask(__name__, template_folder="templates")
 app.config["JSON_SORT_KEYS"] = False
 
 
