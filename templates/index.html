@@ -54,7 +54,7 @@
                 <div id="alert" class="hidden rounded-xl border p-4 text-sm font-semibold"></div>
 
                 <div id="results" class="hidden grid md:grid-cols-2 gap-4">
-                    <a id="videoBtn" href="#" download target="_blank" rel="noopener"
+                    <a id="videoBtn" href="#" download
                         class="group flex items-center justify-between rounded-xl border border-blue-100 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-4 shadow-lg shadow-blue-200 hover:shadow-blue-300">
                         <div>
                             <p class="text-sm opacity-90">Primary link</p>
@@ -62,7 +62,7 @@
                         </div>
                         <span class="group-hover:translate-x-1 transition-transform">⬇️</span>
                     </a>
-                    <a id="thumbBtn" href="#" download target="_blank" rel="noopener"
+                    <a id="thumbBtn" href="#" download
                         class="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-sm hover:shadow-md">
                         <div>
                             <p class="text-sm text-slate-500">Optional</p>
@@ -128,15 +128,12 @@
                 }
 
                 videoBtn.href = data.video_url;
-                videoBtn.download = 'bluesky-video.mp4';
-
                 thumbBtn.href = data.thumbnail_url || '#';
-                thumbBtn.download = data.thumbnail_url ? 'bluesky-thumbnail.jpg' : '';
                 thumbBtn.classList.toggle('pointer-events-none', !data.thumbnail_url);
                 thumbBtn.classList.toggle('opacity-60', !data.thumbnail_url);
 
                 resultsPanel.classList.remove('hidden');
-                setAlert('Links ready. Tap to download or open in a new tab.', false);
+                setAlert('Links ready. Tap to download.', false);
             } catch (err) {
                 setAlert(err.message || 'Something went wrong. Try again in a moment.', true);
             } finally {
