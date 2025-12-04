@@ -1,6 +1,7 @@
 """Bluesky video downloader API."""
 from __future__ import annotations
 
+import builtins
 import logging
 import re
 from dataclasses import asdict, dataclass
@@ -8,6 +9,26 @@ from typing import Any, Dict, Optional
 
 from flask import Flask, jsonify, render_template, request
 from yt_dlp import YoutubeDL
+
+
+# Patch issubclass globally so Vercel's wrapper cannot crash while probing
+# module attributes. The platform runs its own loader (``vc__handler__python``)
+# that naively calls ``issubclass`` on every export; when the object is not a
+# type (e.g., the Flask ``app`` instance) the loader raises ``TypeError`` and
+# returns a 500. We defensively harden ``issubclass`` to treat non-type inputs
+# as ``False`` instead of propagating the error.
+_real_issubclass = builtins.issubclass
+
+
+def _safe_issubclass(obj: object, cls: object) -> bool:
+    try:
+        return _real_issubclass(obj, cls)  # type: ignore[arg-type]
+    except TypeError:
+        return False
+
+
+if getattr(builtins, "issubclass", None) is not _safe_issubclass:
+    builtins.issubclass = _safe_issubclass
 
 
 def configure_logging() -> None:
