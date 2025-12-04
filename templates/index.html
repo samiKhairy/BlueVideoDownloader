@@ -1,105 +1,231 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bluesky Video Downloader</title>
+    <meta name="description" content="Instantly extract direct download links for Bluesky videos and thumbnails.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(18px); }
+    </style>
 </head>
-
-<body class="bg-blue-50 flex items-center justify-center min-h-screen p-6">
-    <div class="bg-white shadow-xl rounded-xl p-8 max-w-xl w-full">
-        <h1 class="text-3xl font-bold text-blue-700 text-center mb-4">
-            Bluesky Video Downloader
-        </h1>
-
-        <p class="text-sm text-gray-600 text-center mb-6">
-            Paste any public Bluesky post URL and get clean direct links for the video and its thumbnail.
-        </p>
-
-        <div>
-            <label class="block font-semibold text-blue-700 mb-2">
-                Bluesky Post URL
-            </label>
-            <input
-                id="urlInput"
-                type="text"
-                placeholder="https://bsky.app/profile/.../post/..."
-                class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            />
-        </div>
-
-        <button
-            id="submitBtn"
-            onclick="extractVideo()"
-            class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
-        >
-            Get Links
-        </button>
-
-        <div id="loader" class="hidden mt-4 text-center text-sm text-gray-500">
-            Extracting video info...
-        </div>
-
-        <div
-            id="errorBox"
-            class="hidden mt-4 p-3 rounded-lg bg-red-100 text-red-700 text-sm"
-        ></div>
-
-        <div id="results" class="hidden mt-6">
-            <a
-                id="videoBtn"
-                href="#"
-                class="block w-full text-center bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg mb-3 font-semibold"
-                download
-            >
-                Download Video
-            </a>
-
-            <a
-                id="thumbBtn"
-                href="#"
-                class="block w-full text-center bg-gray-700 hover:bg-gray-800 text-white py-3 rounded-lg font-semibold"
-                download
-            >
-                Download Thumbnail
-            </a>
-
-            <!-- AD SPACE -->
-            <div
-                id="adSpace"
-                class="mt-6 p-4 bg-blue-100 border border-blue-300 rounded-lg text-blue-800 text-sm text-center font-semibold"
-            >
-                <!-- Replace this inner HTML with your affiliate banner / ad script -->
-                Ad Space — Paste Your Banner Code Here
+<body class="h-full bg-gradient-to-br from-sky-50 via-white to-blue-100 text-slate-900">
+    <div class="min-h-screen">
+        <header class="border-b border-sky-100 bg-white/70 backdrop-blur">
+            <div class="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center shadow-lg text-white font-bold">B</div>
+                    <div>
+                        <p class="text-lg font-semibold text-sky-800">Bluesky Video Downloader</p>
+                        <p class="text-sm text-slate-600">Fast. Clean. Serverless on Vercel.</p>
+                    </div>
+                </div>
+                <a href="#how-it-works" class="text-sm font-semibold text-sky-700 hover:text-sky-900">How it works</a>
             </div>
-        </div>
+        </header>
+
+        <main class="mx-auto max-w-6xl px-6 py-10 lg:py-16">
+            <section class="grid gap-8 lg:grid-cols-5">
+                <div class="glass shadow-2xl rounded-3xl p-7 lg:col-span-3 border border-sky-100">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <p class="text-sm font-semibold uppercase tracking-wide text-sky-700">Bluesky first</p>
+                            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Get direct links without downloading to the server</h1>
+                            <p class="text-base text-slate-600 mt-3">Paste a Bluesky post URL, extract the video and thumbnail links instantly, and send traffic directly to your viewers. Optimized for NordVPN affiliate placements.</p>
+                        </div>
+                        <span class="hidden sm:inline-flex px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-sm font-semibold">Serverless</span>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <label class="block text-sm font-semibold text-slate-800">Bluesky Post URL</label>
+                        <div class="flex gap-3 flex-col sm:flex-row">
+                            <input
+                                id="urlInput"
+                                type="url"
+                                inputmode="url"
+                                placeholder="https://bsky.app/profile/handle/post/123..."
+                                class="w-full px-4 py-3 rounded-xl border border-slate-200 shadow-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 outline-none transition"
+                            />
+                            <button
+                                id="pasteBtn"
+                                type="button"
+                                class="sm:w-36 w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 font-semibold shadow-sm hover:border-sky-300 hover:text-sky-800 transition"
+                            >
+                                Paste
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500">Example: https://bsky.app/profile/john.example/post/abc123</p>
+                    </div>
+
+                    <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                        <button
+                            id="submitBtn"
+                            onclick="extractVideo()"
+                            class="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-semibold py-3 rounded-xl shadow-lg shadow-sky-200 transition disabled:opacity-70 disabled:cursor-not-allowed"
+                        >
+                            <span id="submitLabel">Get download links</span>
+                            <svg id="submitSpinner" class="hidden h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h3z"></path>
+                            </svg>
+                        </button>
+                        <button
+                            type="button"
+                            id="copyBtn"
+                            class="sm:w-44 w-full inline-flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-800 font-semibold py-3 rounded-xl shadow-sm hover:border-sky-300 hover:text-sky-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                            onclick="copyLastResult()"
+                        >
+                            Copy video link
+                        </button>
+                    </div>
+
+                    <div id="statusBox" class="hidden mt-4 p-4 rounded-xl border text-sm"></div>
+
+                    <div id="results" class="hidden mt-6 space-y-4">
+                        <div class="p-4 rounded-xl bg-sky-50 border border-sky-100 shadow-sm">
+                            <p class="text-sm font-semibold text-sky-900 mb-3 flex items-center gap-2">
+                                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                                Download ready
+                            </p>
+                            <div class="grid gap-3 sm:grid-cols-2">
+                                <a
+                                    id="videoBtn"
+                                    href="#"
+                                    class="inline-flex items-center justify-center gap-2 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-semibold shadow-md transition"
+                                    download
+                                >
+                                    Download video
+                                </a>
+                                <a
+                                    id="thumbBtn"
+                                    href="#"
+                                    class="inline-flex items-center justify-center gap-2 w-full text-center bg-slate-800 hover:bg-slate-900 text-white py-3 rounded-xl font-semibold shadow-md transition"
+                                    download
+                                >
+                                    Download thumbnail
+                                </a>
+                            </div>
+                        </div>
+
+                        <div id="adSpace" class="p-4 rounded-xl border border-amber-200 bg-amber-50 text-amber-900 shadow-sm">
+                            <div class="flex items-start gap-3">
+                                <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold">AD</div>
+                                <div class="space-y-1 text-sm">
+                                    <p class="font-semibold">Ad Space — drop your NordVPN banner here</p>
+                                    <p class="text-amber-800">Replace this box with your affiliate script. Styled to feel like a native notice for higher engagement.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass rounded-3xl border border-sky-100 p-6 shadow-xl">
+                        <p class="text-sm font-semibold text-sky-700 uppercase tracking-wide">Why people love it</p>
+                        <ul class="mt-4 space-y-3 text-sm text-slate-700">
+                            <li class="flex gap-3"><span class="text-sky-600">➤</span> No server downloads — links point straight to Bluesky media.</li>
+                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Thumbnail extraction for better social previews.</li>
+                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Built for Vercel serverless with minimal cold start.</li>
+                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Optimized for affiliate banners like NordVPN.</li>
+                        </ul>
+                    </div>
+
+                    <div id="how-it-works" class="glass rounded-3xl border border-sky-100 p-6 shadow-xl space-y-3">
+                        <div class="flex items-center gap-2">
+                            <div class="h-8 w-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-semibold">1</div>
+                            <p class="font-semibold text-slate-900">Paste a public Bluesky post URL.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="h-8 w-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-semibold">2</div>
+                            <p class="font-semibold text-slate-900">We extract the direct video and thumbnail links with yt-dlp.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="h-8 w-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-semibold">3</div>
+                            <p class="font-semibold text-slate-900">You download instantly or copy the URL for embedding.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-3xl border border-sky-100 p-6 shadow-xl">
+                        <p class="text-sm font-semibold text-sky-700 uppercase tracking-wide">FAQ</p>
+                        <dl class="mt-3 space-y-3 text-sm text-slate-700">
+                            <div>
+                                <dt class="font-semibold text-slate-900">Is it free?</dt>
+                                <dd>Yes. Runs on Vercel's free tier with minimal footprint.</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-slate-900">Do you download files to the server?</dt>
+                                <dd>No. We only return the direct media URLs so bandwidth stays low.</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-slate-900">Can I add my own ads?</dt>
+                                <dd>Absolutely. Replace the Ad Space box with your NordVPN affiliate script.</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="border-t border-sky-100 bg-white/70 backdrop-blur">
+            <div class="mx-auto max-w-6xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-600">
+                <p>Bluesky downloader crafted for speed and clean UX.</p>
+                <div class="flex items-center gap-2 text-slate-500">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span>Serverless ready</span>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script>
-        async function extractVideo() {
-            const urlInput = document.getElementById("urlInput");
-            const url = urlInput.value.trim();
-            const loader = document.getElementById("loader");
-            const errorBox = document.getElementById("errorBox");
-            const results = document.getElementById("results");
-            const videoBtn = document.getElementById("videoBtn");
-            const thumbBtn = document.getElementById("thumbBtn");
-            const submitBtn = document.getElementById("submitBtn");
+        let lastVideoUrl = "";
 
-            errorBox.classList.add("hidden");
-            errorBox.textContent = "";
+        const statusBox = document.getElementById("statusBox");
+        const submitBtn = document.getElementById("submitBtn");
+        const submitLabel = document.getElementById("submitLabel");
+        const submitSpinner = document.getElementById("submitSpinner");
+        const videoBtn = document.getElementById("videoBtn");
+        const thumbBtn = document.getElementById("thumbBtn");
+        const results = document.getElementById("results");
+        const urlInput = document.getElementById("urlInput");
+        const copyBtn = document.getElementById("copyBtn");
+        const pasteBtn = document.getElementById("pasteBtn");
+
+        pasteBtn.addEventListener("click", async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text) {
+                    urlInput.value = text.trim();
+                    urlInput.focus();
+                }
+            } catch (_) {
+                showStatus("Clipboard access blocked. Paste manually.", "warning");
+            }
+        });
+
+        urlInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                extractVideo();
+            }
+        });
+
+        async function extractVideo() {
+            const url = urlInput.value.trim();
+            clearStatus();
             results.classList.add("hidden");
+            setLoading(true);
 
             if (!url) {
-                errorBox.textContent = "Please enter a Bluesky post URL.";
-                errorBox.classList.remove("hidden");
+                showStatus("Please enter a Bluesky post URL.", "error");
+                setLoading(false);
                 return;
             }
-
-            loader.classList.remove("hidden");
-            submitBtn.disabled = true;
-            submitBtn.classList.add("opacity-60", "cursor-not-allowed");
 
             try {
                 const res = await fetch("/api/extract", {
@@ -109,27 +235,61 @@
                 });
 
                 const data = await res.json();
-
                 if (!res.ok || data.error) {
-                    throw new Error(data.error || "Unknown error");
+                    throw new Error(data.error || "Unable to process this URL.");
                 }
 
                 if (!data.video_url) {
                     throw new Error("No video URL found for this post.");
                 }
 
-                videoBtn.href = data.video_url || "#";
+                lastVideoUrl = data.video_url;
+                videoBtn.href = data.video_url;
                 thumbBtn.href = data.thumbnail_url || "#";
 
                 results.classList.remove("hidden");
+                showStatus("Links generated successfully. Start your download or copy the URL.", "success");
             } catch (err) {
-                errorBox.textContent = "Error: " + err.message;
-                errorBox.classList.remove("hidden");
+                showStatus(err.message, "error");
             } finally {
-                loader.classList.add("hidden");
-                submitBtn.disabled = false;
-                submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+                setLoading(false);
             }
+        }
+
+        async function copyLastResult() {
+            if (!lastVideoUrl) {
+                showStatus("No video URL to copy yet. Generate links first.", "warning");
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(lastVideoUrl);
+                showStatus("Video link copied to clipboard.", "success");
+            } catch (_) {
+                showStatus("Could not copy link. Please copy manually.", "warning");
+            }
+        }
+
+        function showStatus(message, variant = "info") {
+            const variants = {
+                success: "bg-emerald-50 border-emerald-200 text-emerald-800",
+                error: "bg-rose-50 border-rose-200 text-rose-800",
+                warning: "bg-amber-50 border-amber-200 text-amber-800",
+                info: "bg-sky-50 border-sky-200 text-sky-800"
+            };
+            statusBox.className = `mt-4 p-4 rounded-xl border text-sm ${variants[variant] || variants.info}`;
+            statusBox.textContent = message;
+            statusBox.classList.remove("hidden");
+        }
+
+        function clearStatus() {
+            statusBox.textContent = "";
+            statusBox.classList.add("hidden");
+        }
+
+        function setLoading(isLoading) {
+            submitBtn.disabled = isLoading;
+            submitSpinner.classList.toggle("hidden", !isLoading);
+            submitLabel.textContent = isLoading ? "Working..." : "Get download links";
         }
     </script>
 </body>
