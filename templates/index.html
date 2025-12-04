@@ -8,68 +8,141 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-blue-50 flex items-center justify-center min-h-screen p-6">
-    <div class="bg-white shadow-xl rounded-xl p-8 max-w-lg w-full">
-        <h1 class="text-3xl font-bold text-blue-700 text-center mb-6">
-            Bluesky Video Downloader
-        </h1>
-
-        <div>
-            <label class="block font-semibold text-blue-700 mb-2">Paste Bluesky Post URL</label>
-            <input id="urlInput" type="text" placeholder="https://bsky.app/profile/.../post/..."
-                class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400" />
-        </div>
-
-        <button onclick="extractVideo()"
-            class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg">
-            Get Download Links
-        </button>
-
-        <div id="results" class="hidden mt-6">
-            <a id="videoBtn" href="#"
-                class="block w-full text-center bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg mb-3"
-                download>
-                Download Video
-            </a>
-
-            <a id="thumbBtn" href="#"
-                class="block w-full text-center bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-lg" download>
-                Download Thumbnail
-            </a>
-
-            <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-center">
-                <p class="text-sm text-gray-700 font-medium">
-                    ⚡ Download slow? Your ISP might be throttling social media.
+<body class="bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen text-slate-800">
+    <header class="max-w-4xl mx-auto px-6 pt-12">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm uppercase tracking-[0.25em] text-blue-500 font-semibold">BlueSky</p>
+                <h1 class="text-4xl md:text-5xl font-black text-slate-900 mt-2">Video Downloader</h1>
+                <p class="text-base md:text-lg text-slate-600 mt-3 max-w-2xl">
+                    Drop in any public Bluesky post link and grab a clean download for the video and its thumbnail. We
+                    keep it simple, fast, and private.
                 </p>
-                <a href="YOUR_AFFILIATE_LINK_HERE" target="_blank"
-                    class="mt-2 inline-block text-blue-600 font-bold hover:underline">
-                    Boost Speed with NordVPN &rarr;
-                </a>
+            </div>
+            <div class="hidden md:block text-right">
+                <p class="text-xs font-semibold text-slate-500">Free • No signup</p>
+                <p class="text-sm text-slate-500">Optimized for mobile sharing</p>
             </div>
         </div>
-    </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 pb-12 mt-10">
+        <section class="bg-white/80 backdrop-blur shadow-2xl rounded-2xl border border-blue-100/80 overflow-hidden">
+            <div class="p-6 md:p-10 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-4 md:space-y-0">
+                    <div class="flex-1">
+                        <label for="urlInput" class="block text-sm font-semibold text-slate-700 mb-2">Paste a Bluesky
+                            post URL</label>
+                        <div class="flex gap-3">
+                            <input id="urlInput" type="url" autocomplete="off"
+                                placeholder="https://bsky.app/profile/handle/post/123..."
+                                class="flex-1 px-4 py-3 border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white" />
+                            <button id="extractBtn" onclick="extractVideo()"
+                                class="px-5 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-200 hover:shadow-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-60 disabled:cursor-not-allowed">
+                                Get Links
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2">Example: https://bsky.app/profile/example.bsky.social/post/xyz</p>
+                    </div>
+                    <div class="bg-blue-50 text-blue-800 border border-blue-100 rounded-xl p-4 flex items-start gap-3">
+                        <div class="text-2xl">💡</div>
+                        <p class="text-sm leading-relaxed">We only support public posts. If a link fails, make sure the
+                            post is visible without logging in.</p>
+                    </div>
+                </div>
+
+                <div id="alert" class="hidden rounded-xl border p-4 text-sm font-semibold"></div>
+
+                <div id="results" class="hidden grid md:grid-cols-2 gap-4">
+                    <a id="videoBtn" href="#" download target="_blank" rel="noopener"
+                        class="group flex items-center justify-between rounded-xl border border-blue-100 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-4 shadow-lg shadow-blue-200 hover:shadow-blue-300">
+                        <div>
+                            <p class="text-sm opacity-90">Primary link</p>
+                            <p class="text-lg font-bold">Download video</p>
+                        </div>
+                        <span class="group-hover:translate-x-1 transition-transform">⬇️</span>
+                    </a>
+                    <a id="thumbBtn" href="#" download target="_blank" rel="noopener"
+                        class="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-sm hover:shadow-md">
+                        <div>
+                            <p class="text-sm text-slate-500">Optional</p>
+                            <p class="text-lg font-bold text-slate-800">Download thumbnail</p>
+                        </div>
+                        <span class="group-hover:translate-x-1 transition-transform">🖼️</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 border-t border-slate-200 px-6 md:px-10 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div>
+                    <p class="text-sm font-semibold text-slate-700">Pro tip: avoid throttling</p>
+                    <p class="text-xs text-slate-500">Use a reliable VPN if downloads seem slow during peak hours.</p>
+                </div>
+                <a href="https://nordvpn.com/" target="_blank"
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 text-blue-700 bg-white hover:bg-blue-50 text-sm font-semibold">
+                    Stay fast with NordVPN →
+                </a>
+            </div>
+        </section>
+    </main>
 
     <script>
+        const alertBox = document.getElementById('alert');
+        const resultsPanel = document.getElementById('results');
+        const videoBtn = document.getElementById('videoBtn');
+        const thumbBtn = document.getElementById('thumbBtn');
+        const extractBtn = document.getElementById('extractBtn');
+
+        function setAlert(message, isError = false) {
+            alertBox.textContent = message;
+            alertBox.className = `rounded-xl border p-4 text-sm font-semibold ${isError ? 'bg-red-50 text-red-700 border-red-200' : 'bg-green-50 text-green-700 border-green-200'}`;
+            alertBox.classList.remove('hidden');
+        }
+
+        function clearAlert() {
+            alertBox.classList.add('hidden');
+        }
+
         async function extractVideo() {
-            const url = document.getElementById("urlInput").value.trim();
-            if (!url) return alert("Please enter a URL.");
-
-            const res = await fetch("/api/extract", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url })
-            });
-
-            const data = await res.json();
-            if (data.error) {
-                alert("Error: " + data.error);
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                setAlert('Please paste a Bluesky post URL first.', true);
                 return;
             }
 
-            document.getElementById("videoBtn").href = data.video;
-            document.getElementById("thumbBtn").href = data.thumbnail;
+            clearAlert();
+            resultsPanel.classList.add('hidden');
+            extractBtn.disabled = true;
+            extractBtn.textContent = 'Working...';
 
-            document.getElementById("results").classList.remove("hidden");
+            try {
+                const res = await fetch('/api/extract', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+
+                const data = await res.json();
+                if (!res.ok || data.error) {
+                    throw new Error(data.error || 'Unable to fetch links.');
+                }
+
+                videoBtn.href = data.video_url;
+                videoBtn.download = 'bluesky-video.mp4';
+
+                thumbBtn.href = data.thumbnail_url || '#';
+                thumbBtn.download = data.thumbnail_url ? 'bluesky-thumbnail.jpg' : '';
+                thumbBtn.classList.toggle('pointer-events-none', !data.thumbnail_url);
+                thumbBtn.classList.toggle('opacity-60', !data.thumbnail_url);
+
+                resultsPanel.classList.remove('hidden');
+                setAlert('Links ready. Tap to download or open in a new tab.', false);
+            } catch (err) {
+                setAlert(err.message || 'Something went wrong. Try again in a moment.', true);
+            } finally {
+                extractBtn.disabled = false;
+                extractBtn.textContent = 'Get Links';
+            }
         }
     </script>
 </body>
