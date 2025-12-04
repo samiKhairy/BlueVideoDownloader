@@ -1,9 +1,11 @@
-from flask import Flask, jsonify, render_template, request
-from yt_dlp import YoutubeDL
+from pathlib import Path
 import logging
 import re
 from dataclasses import dataclass, asdict
 from typing import Any, Dict, Optional
+
+from flask import Flask, jsonify, render_template, request
+from yt_dlp import YoutubeDL
 
 logging.basicConfig(
     level=logging.INFO,
@@ -11,7 +13,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger("bluesky-downloader")
 
-app = Flask(__name__, template_folder="templates")
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = BASE_DIR / "templates"
+app = Flask(__name__, template_folder=str(TEMPLATES_DIR))
 app.config["JSON_SORT_KEYS"] = False
 
 
