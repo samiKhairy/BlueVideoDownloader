@@ -1,4 +1,4 @@
-"""Bluesky video downloader API."""
+"""Bluesky video downloader API (Vercel Functions-compatible)."""
 from __future__ import annotations
 
 import logging
@@ -10,22 +10,21 @@ from flask import Flask, jsonify, render_template, request
 from yt_dlp import YoutubeDL
 
 
-def configure_logging() -> None:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
-    )
+# --- Logging -------------------------------------------------------------
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+)
+logger = logging.getLogger("bluesky-downloader")
 
 
-def create_app() -> Flask:
-    configure_logging()
-    app = Flask(__name__, template_folder="../templates")
-    app.config["JSON_SORT_KEYS"] = False
-
-    register_routes(app)
-    return app
+# --- Flask app -----------------------------------------------------------
+# templates/ is inside api/, so we use template_folder="templates"
+app = Flask(__name__, template_folder="templates")
+app.config["JSON_SORT_KEYS"] = False
 
 
+# --- Domain model --------------------------------------------------------
 @dataclass
 class ExtractionResult:
     video_url: str
@@ -38,7 +37,6 @@ class ExtractionResult:
 class BlueskyDownloader:
     """Wrapper around yt_dlp with Bluesky-friendly defaults."""
 
-    # Bluesky endpoints can be strict; set a modern user agent.
     DEFAULT_HEADERS = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -74,40 +72,46 @@ class BlueskyDownloader:
         return ExtractionResult(video_url=video_url, thumbnail_url=thumbnail_url)
 
 
-BLSKY_URL_RE = re.compile(r"https?://(www\.)?(bsky\.app|staging\.bsky\.app)/profile/.+", re.IGNORECASE)
+# Precompiled Bluesky URL validator
+BLSKY_URL_RE = re.compile(
+    r"https?://(www\.)?(bsky\.app|staging\.bsky\.app)/profile/.+",
+    re.IGNORECASE,
+)
 
 
 def validate_url(url: str) -> bool:
     return bool(BLSKY_URL_RE.match(url))
 
-def register_routes(flask_app: Flask) -> None:
-    downloader = BlueskyDownloader()
 
-    @flask_app.route("/", methods=["GET"])
-    def home() -> str:
-        return render_template("index.html")
-
-    @flask_app.route("/api/extract", methods=["POST"])
-    def extract() -> Any:
-        payload = request.get_json(silent=True) or {}
-        url = (payload.get("url") or "").strip()
-
-        if not url:
-            return jsonify({"error": "Please provide a Bluesky post URL."}), 400
-
-        if not validate_url(url):
-            return jsonify({"error": "Only Bluesky post URLs are supported."}), 400
-
-        try:
-            result = downloader.extract(url)
-        except Exception as exc:  # noqa: BLE001
-            logging.exception("Failed to extract media")
-            message = str(exc) or "Unable to process this URL right now."
-            return jsonify({"error": message}), 500
-
-        return jsonify(result.to_response())
+downloader = BlueskyDownloader()
 
 
-# Vercel expects a module-level WSGI callable named `app`.
-app = create_app()
-handler = app
+# --- Routes --------------------------------------------------------------
+@app.route("/", methods=["GET"])
+def home() -> str:
+    return render_template("index.html")
+
+
+@app.route("/api/extract", methods=["POST"])
+def extract() -> Any:
+    payload = request.get_json(silent=True) or {}
+    url = (payload.get("url") or "").strip()
+
+    if not url:
+        return jsonify({"error": "Please provide a Bluesky post URL."}), 400
+
+    if not validate_url(url):
+        return jsonify({"error": "Only Bluesky post URLs are supported."}), 400
+
+    try:
+        result = downloader.extract(url)
+    except Exception as exc:  # noqa: BLE001
+        logger.exception("Failed to extract media from URL: %s", url)
+        message = str(exc) or "Unable to process this URL right now."
+        return jsonify({"error": message}), 500
+
+    return jsonify(result.to_response())
+
+
+# Vercel Functions runtime will use the module-level `app` as the WSGI handler.
+# No custom `handler` alias, no extra indirection needed.
