@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bluesky Video Downloader</title>
-    <meta name="description" content="Paste a Bluesky link, grab the video and thumbnail instantly.">
+    <meta name="description" content="Instantly extract direct download links for Bluesky videos and thumbnails.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
                     <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center shadow-lg text-white font-bold">B</div>
                     <div>
                         <p class="text-lg font-semibold text-sky-800">Bluesky Video Downloader</p>
-                        <p class="text-sm text-slate-600">Fast, simple, and ready for sharing.</p>
+                        <p class="text-sm text-slate-600">Fast. Clean. Serverless on Vercel.</p>
                     </div>
                 </div>
                 <a href="#how-it-works" class="text-sm font-semibold text-sky-700 hover:text-sky-900">How it works</a>
@@ -35,10 +35,10 @@
                     <div class="flex items-start justify-between gap-4">
                         <div>
                             <p class="text-sm font-semibold uppercase tracking-wide text-sky-700">Bluesky first</p>
-                            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Grab the video and thumbnail in seconds</h1>
-                            <p class="text-base text-slate-600 mt-3">Drop a Bluesky link, get clean download buttons, and keep viewers moving. The built-in ad spot sits right under the action for your NordVPN banner.</p>
+                            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Get direct links without downloading to the server</h1>
+                            <p class="text-base text-slate-600 mt-3">Paste a Bluesky post URL, extract the video and thumbnail links instantly, and send traffic directly to your viewers. Optimized for NordVPN affiliate placements.</p>
                         </div>
-                        <span class="hidden sm:inline-flex px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-sm font-semibold">Instant</span>
+                        <span class="hidden sm:inline-flex px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-sm font-semibold">Serverless</span>
                     </div>
 
                     <div class="mt-6 space-y-3">
@@ -117,7 +117,7 @@
                                 <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold">AD</div>
                                 <div class="space-y-1 text-sm">
                                     <p class="font-semibold">Ad Space — drop your NordVPN banner here</p>
-                                    <p class="text-amber-800">Swap this placeholder with your affiliate embed. The styling already feels like a native notice.</p>
+                                    <p class="text-amber-800">Replace this box with your affiliate script. Styled to feel like a native notice for higher engagement.</p>
                                 </div>
                             </div>
                         </div>
@@ -128,10 +128,10 @@
                     <div class="glass rounded-3xl border border-sky-100 p-6 shadow-xl">
                         <p class="text-sm font-semibold text-sky-700 uppercase tracking-wide">Why people love it</p>
                         <ul class="mt-4 space-y-3 text-sm text-slate-700">
-                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Direct video link ready to download.</li>
-                            <li class="flex gap-3"><span class="text-sky-600">➤</span> High-quality thumbnail for previews or embeds.</li>
-                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Smooth, single-page flow that works on mobile.</li>
-                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Built-in ad slot right below the call-to-action.</li>
+                            <li class="flex gap-3"><span class="text-sky-600">➤</span> No server downloads — links point straight to Bluesky media.</li>
+                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Thumbnail extraction for better social previews.</li>
+                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Built for Vercel serverless with minimal cold start.</li>
+                            <li class="flex gap-3"><span class="text-sky-600">➤</span> Optimized for affiliate banners like NordVPN.</li>
                         </ul>
                     </div>
 
@@ -142,7 +142,7 @@
                         </div>
                         <div class="flex items-center gap-2">
                             <div class="h-8 w-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-semibold">2</div>
-                            <p class="font-semibold text-slate-900">We fetch the video and thumbnail links for you.</p>
+                            <p class="font-semibold text-slate-900">We extract the direct video and thumbnail links with yt-dlp.</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <div class="h-8 w-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-semibold">3</div>
@@ -155,15 +155,15 @@
                         <dl class="mt-3 space-y-3 text-sm text-slate-700">
                             <div>
                                 <dt class="font-semibold text-slate-900">Is it free?</dt>
-                                <dd>Yes. Use it as much as you like.</dd>
+                                <dd>Yes. Runs on Vercel's free tier with minimal footprint.</dd>
                             </div>
                             <div>
-                                <dt class="font-semibold text-slate-900">What if the link fails?</dt>
-                                <dd>Make sure the post is public and the URL is complete.</dd>
+                                <dt class="font-semibold text-slate-900">Do you download files to the server?</dt>
+                                <dd>No. We only return the direct media URLs so bandwidth stays low.</dd>
                             </div>
                             <div>
                                 <dt class="font-semibold text-slate-900">Can I add my own ads?</dt>
-                                <dd>Yes. Replace the Ad Space box with your NordVPN affiliate script.</dd>
+                                <dd>Absolutely. Replace the Ad Space box with your NordVPN affiliate script.</dd>
                             </div>
                         </dl>
                     </div>
@@ -176,7 +176,7 @@
                 <p>Bluesky downloader crafted for speed and clean UX.</p>
                 <div class="flex items-center gap-2 text-slate-500">
                     <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                    <span>Always ready</span>
+                    <span>Serverless ready</span>
                 </div>
             </div>
         </footer>
