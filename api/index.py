@@ -1,46 +1,137 @@
-import os
-from flask import Flask, request, jsonify, render_template
+"""Bluesky video downloader API."""
+from __future__ import annotations
+
+import builtins
+import logging
+import re
+from dataclasses import asdict, dataclass
+from typing import Any, Dict, Optional
+
+from flask import Flask, jsonify, render_template, request
 from yt_dlp import YoutubeDL
 
-app = Flask(__name__, template_folder="../templates")
 
-YDL_OPTS = {
-    "quiet": True,
-    "no_warnings": True,
-    "skip_download": True,
-    "forcejson": True
-}
-
-
-@app.route("/", methods=["GET"])
-def home():
-    return render_template("index.html")
+# Patch issubclass globally so Vercel's wrapper cannot crash while probing
+# module attributes. The platform runs its own loader (``vc__handler__python``)
+# that naively calls ``issubclass`` on every export; when the object is not a
+# type (e.g., the Flask ``app`` instance) the loader raises ``TypeError`` and
+# returns a 500. We defensively harden ``issubclass`` to treat non-type inputs
+# as ``False`` instead of propagating the error.
+_real_issubclass = builtins.issubclass
 
 
-@app.route("/api/extract", methods=["POST"])
-def extract():
-    data = request.get_json()
-    url = data.get("url")
-
-    if not url:
-        return jsonify({"error": "No URL provided"}), 400
-
+def _safe_issubclass(obj: object, cls: object) -> bool:
     try:
-        with YoutubeDL(YDL_OPTS) as ydl:
+        return _real_issubclass(obj, cls)  # type: ignore[arg-type]
+    except TypeError:
+        return False
+
+
+if getattr(builtins, "issubclass", None) is not _safe_issubclass:
+    builtins.issubclass = _safe_issubclass
+
+
+def configure_logging() -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+    )
+
+
+def create_app() -> Flask:
+    configure_logging()
+    app = Flask(__name__, template_folder="../templates")
+    app.config["JSON_SORT_KEYS"] = False
+
+    register_routes(app)
+    return app
+
+
+@dataclass
+class ExtractionResult:
+    video_url: str
+    thumbnail_url: Optional[str] = None
+
+    def to_response(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+class BlueskyDownloader:
+    """Wrapper around yt_dlp with Bluesky-friendly defaults."""
+
+    # Bluesky endpoints can be strict; set a modern user agent.
+    DEFAULT_HEADERS = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/129.0.0.0 Safari/537.36"
+        )
+    }
+
+    def __init__(self, session_headers: Optional[Dict[str, str]] = None) -> None:
+        headers = {**self.DEFAULT_HEADERS, **(session_headers or {})}
+        self.ydl_opts: Dict[str, Any] = {
+            "quiet": True,
+            "no_warnings": True,
+            "skip_download": True,
+            "forcejson": True,
+            "noplaylist": True,
+            "format": "bv*+ba/bestvideo+bestaudio/best",
+            "http_headers": headers,
+        }
+        self.logger = logging.getLogger(self.__class__.__name__)
+
+    def extract(self, url: str) -> ExtractionResult:
+        self.logger.info("Extracting Bluesky URL", extra={"url": url})
+
+        with YoutubeDL(self.ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
 
         video_url = info.get("url")
-        thumbnail = info.get("thumbnail")
+        if not video_url:
+            raise ValueError("No downloadable video stream found.")
 
-        return jsonify({
-            "video": video_url,
-            "thumbnail": thumbnail
-        })
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        thumbnail_url: Optional[str] = info.get("thumbnail")
+        return ExtractionResult(video_url=video_url, thumbnail_url=thumbnail_url)
 
 
-# Vercel entry point
-def handler(event, context):
-    return app(event, context)
+BLSKY_URL_RE = re.compile(r"https?://(www\.)?(bsky\.app|staging\.bsky\.app)/profile/.+", re.IGNORECASE)
+
+
+def validate_url(url: str) -> bool:
+    return bool(BLSKY_URL_RE.match(url))
+
+def register_routes(flask_app: Flask) -> None:
+    downloader = BlueskyDownloader()
+
+    @flask_app.route("/", methods=["GET"])
+    def home() -> str:
+        return render_template("index.html")
+
+    @flask_app.route("/api/extract", methods=["POST"])
+    def extract() -> Any:
+        payload = request.get_json(silent=True) or {}
+        url = (payload.get("url") or "").strip()
+
+        if not url:
+            return jsonify({"error": "Please provide a Bluesky post URL."}), 400
+
+        if not validate_url(url):
+            return jsonify({"error": "Only Bluesky post URLs are supported."}), 400
+
+        try:
+            result = downloader.extract(url)
+        except Exception as exc:  # noqa: BLE001
+            logging.exception("Failed to extract media")
+            message = str(exc) or "Unable to process this URL right now."
+            return jsonify({"error": message}), 500
+
+        return jsonify(result.to_response())
+
+
+# Vercel's Python runtime auto-detects a module-level WSGI callable named "app".
+#
+# Avoid setting __all__ so the runtime can introspect safely without assuming
+# attributes are classes (which caused issubclass TypeError in the platform
+# wrapper when __all__ was set to ["app"]).
+app = create_app()
