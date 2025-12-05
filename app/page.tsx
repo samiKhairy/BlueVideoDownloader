@@ -263,7 +263,9 @@ export default function HomePage(): React.ReactElement {
                         Download
                       </button>
                     </div>
-                    <code className="text-xs break-all bg-slate-100 px-2 py-1 rounded">{videoUrl}</code>
+                    <code className="block w-full text-left text-xs break-all font-mono bg-slate-100 px-3 py-2 rounded">
+                      {videoUrl}
+                    </code>
                   </div>
 
                   {thumbnailUrl && (
@@ -278,7 +280,9 @@ export default function HomePage(): React.ReactElement {
                           Download
                         </button>
                       </div>
-                      <code className="text-xs break-all bg-slate-100 px-2 py-1 rounded">{thumbnailUrl}</code>
+                      <code className="block w-full text-left text-xs break-all font-mono bg-slate-100 px-3 py-2 rounded">
+                        {thumbnailUrl}
+                      </code>
                     </div>
                   )}
                 </div>

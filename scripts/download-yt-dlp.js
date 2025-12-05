@@ -39,7 +39,7 @@ async function main() {
   }
 
   console.log(`Downloading yt-dlp binary to ${binaryPath}...`);
-  await YTDlpWrap.downloadFromGithub(binaryPath, undefined, selectGithubAsset());
+  await YTDlpWrap.downloadFromGithub(binaryPath, undefined, undefined, selectGithubAsset());
   console.log('yt-dlp ready.');
 }
 
