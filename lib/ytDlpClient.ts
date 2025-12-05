@@ -40,10 +40,29 @@ async function ensureBinaryAvailable(): Promise<void> {
         return;
       }
       await mkdir(path.dirname(binaryPath), { recursive: true });
-      await YTDlpWrap.downloadFromGithub(binaryPath);
+      await YTDlpWrap.downloadFromGithub(binaryPath, undefined, selectGithubAsset());
     })();
   }
   return ensurePromise;
+}
+
+type PlatformKey = 'linux' | 'darwin' | 'win32';
+type ArchKey = 'x64' | 'arm64';
+
+function selectGithubAsset(): string | undefined {
+  const platform = process.platform as PlatformKey;
+  const arch = process.arch as ArchKey;
+
+  const linuxAsset = arch === 'arm64' ? 'yt-dlp_linux_aarch64' : 'yt-dlp_linux';
+  const darwinAsset = arch === 'arm64' ? 'yt-dlp_macos_aarch64' : 'yt-dlp_macos';
+
+  const explicitAsset: Partial<Record<PlatformKey, string>> = {
+    linux: linuxAsset,
+    darwin: darwinAsset,
+    win32: 'yt-dlp.exe',
+  };
+
+  return explicitAsset[platform];
 }
 
 export async function getYtDlp(): Promise<YTDlpWrap> {

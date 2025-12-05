@@ -39,7 +39,7 @@ async function main() {
   }
 
   console.log(`Downloading yt-dlp binary to ${binaryPath}...`);
-  await YTDlpWrap.downloadFromGithub(binaryPath);
+  await YTDlpWrap.downloadFromGithub(binaryPath, undefined, selectGithubAsset());
   console.log('yt-dlp ready.');
 }
 
@@ -47,3 +47,19 @@ main().catch((error) => {
   console.error('Failed to download yt-dlp binary', error);
   process.exitCode = 1;
 });
+
+function selectGithubAsset() {
+  const platform = process.platform;
+  const arch = process.arch;
+
+  const linuxAsset = arch === 'arm64' ? 'yt-dlp_linux_aarch64' : 'yt-dlp_linux';
+  const darwinAsset = arch === 'arm64' ? 'yt-dlp_macos_aarch64' : 'yt-dlp_macos';
+
+  const explicitAsset = {
+    linux: linuxAsset,
+    darwin: darwinAsset,
+    win32: 'yt-dlp.exe',
+  };
+
+  return explicitAsset[platform];
+}
