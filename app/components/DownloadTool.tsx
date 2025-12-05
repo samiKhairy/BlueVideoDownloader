@@ -162,7 +162,7 @@ export function DownloadTool(): React.ReactElement {
               type="url"
               inputMode="url"
               placeholder="Paste Bluesky post URL here"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 shadow-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 outline-none transition"
+              className="w-full px-4 py-3 min-h-[52px] rounded-xl border border-slate-200 shadow-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 outline-none transition"
               value={url}
               onChange={(event) => setUrl(event.target.value)}
               onKeyDown={(event) => {
@@ -175,7 +175,7 @@ export function DownloadTool(): React.ReactElement {
             <button
               type="button"
               onClick={() => void pasteFromClipboard()}
-              className="sm:w-36 w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 font-semibold shadow-sm hover:border-sky-300 hover:text-sky-800 transition"
+              className="sm:w-36 w-full px-4 py-3 min-h-[52px] rounded-xl bg-white border border-slate-200 text-slate-800 font-semibold shadow-sm hover:border-sky-300 hover:text-sky-800 transition"
             >
               Paste
             </button>
@@ -185,7 +185,7 @@ export function DownloadTool(): React.ReactElement {
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
             <button
               type="submit"
-              className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-semibold py-3 rounded-xl shadow-lg"
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-semibold py-3 min-h-[52px] rounded-xl shadow-lg"
               disabled={loading}
             >
               <span>{loading ? 'Working...' : 'Download'}</span>
@@ -202,7 +202,7 @@ export function DownloadTool(): React.ReactElement {
             </button>
             <button
               type="button"
-              className="sm:w-44 w-full inline-flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-800 font-semibold py-3 rounded-xl shadow-sm hover:border-sky-300"
+              className="sm:w-44 w-full inline-flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-800 font-semibold py-3 min-h-[52px] rounded-xl shadow-sm hover:border-sky-300"
               onClick={handleCopy}
             >
               Copy video link
