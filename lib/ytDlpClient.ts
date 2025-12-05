@@ -1,6 +1,6 @@
 import { access, mkdir, chmod } from 'node:fs/promises';
 import path from 'node:path';
-import YTDlpWrap from 'yt-dlp-wrap';
+import YTDlpWrap from 'yt-dlp-wrap'; // Retain for download only
 
 function withWindowsExtension(targetPath: string): string {
   if (process.platform !== 'win32') {
@@ -20,8 +20,7 @@ function resolveBinaryPath(): string {
   return path.join(process.cwd(), 'bin', defaultName);
 }
 
-const binaryPath = resolveBinaryPath();
-let client: YTDlpWrap | null = null;
+export const binaryPath = resolveBinaryPath();
 let ensurePromise: Promise<void> | null = null;
 
 async function binaryExists(): Promise<boolean> {
@@ -37,11 +36,19 @@ async function ensureBinaryAvailable(): Promise<void> {
   if (!ensurePromise) {
     ensurePromise = (async () => {
       if (await binaryExists()) {
+        // Ensure permissions are set on Vercel deployment, even if already downloaded
+        try {
+          await chmod(binaryPath, 0o755);
+        } catch { }
         return;
       }
       await mkdir(path.dirname(binaryPath), { recursive: true });
-      await YTDlpWrap.downloadFromGithub(binaryPath, selectGithubAsset());
-      await chmod(binaryPath, 0o755); // Ensure executable permissions
+
+      const asset = selectGithubAsset();
+      // Revert download arguments to 3 (which compiled) and ensure permissions.
+      // Corrected argument mismatch by placing the asset string in the second (version) slot.
+      await YTDlpWrap.downloadFromGithub(binaryPath, asset);
+      await chmod(binaryPath, 0o755);
     })();
   }
   return ensurePromise;
@@ -66,10 +73,6 @@ function selectGithubAsset(): string | undefined {
   return explicitAsset[platform];
 }
 
-export async function getYtDlp(): Promise<YTDlpWrap> {
+export async function ensureBinaryReady(): Promise<void> {
   await ensureBinaryAvailable();
-  if (!client) {
-    client = new YTDlpWrap(binaryPath);
-  }
-  return client;
 }

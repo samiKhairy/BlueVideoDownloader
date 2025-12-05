@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ClientError, ExtractionError } from './errors';
-import { getYtDlp } from './ytDlpClient';
+import { ensureBinaryReady, binaryPath } from './ytDlpClient';
+import { execFile } from 'node:child_process';
 
 const BLSKY_URL_RE = /https?:\/\/(?:www\.)?(?:bsky\.app|staging\.bsky\.app)\/profile\/.+/i;
 
@@ -50,7 +51,7 @@ export async function extractBluesky(url: string): Promise<ExtractionResult> {
     throw new ClientError('Only Bluesky post URLs are supported.');
   }
 
-  const ytdlp = await getYtDlp();
+  await ensureBinaryReady(); // Wait for binary to be ready
   const args = [
     '--no-warnings',
     '--quiet',
@@ -63,9 +64,14 @@ export async function extractBluesky(url: string): Promise<ExtractionResult> {
     normalized
   ];
 
-  const rawOutput = await ytdlp.execPromise(args, {
-    // Attempt to disable Python detection in yt-dlp-wrap
-    env: { ...process.env, YTDLP_NO_PYTHON: '1' },
+  const rawOutput = await new Promise<string>((resolve, reject) => {
+    execFile(binaryPath, args, { maxBuffer: 1024 * 1024 * 10, encoding: 'utf8' }, (error, stdout) => {
+      if (error) {
+        reject(new ExtractionError(`Command failed: ${error.message}`));
+        return;
+      }
+      resolve(stdout);
+    });
   });
   const parsed = extractionSchema.safeParse(JSON.parse(rawOutput));
   if (!parsed.success) {
