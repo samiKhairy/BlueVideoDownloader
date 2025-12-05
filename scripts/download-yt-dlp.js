@@ -4,7 +4,24 @@ const { promises: fs } = require('fs');
 const path = require('path');
 const YTDlpWrap = require('yt-dlp-wrap').default;
 
-const binaryPath = process.env.YTDLP_BINARY_PATH || path.join(process.cwd(), 'bin', 'yt-dlp');
+const binaryPath = (() => {
+  const envPath = process.env.YTDLP_BINARY_PATH;
+  if (envPath && envPath.trim().length > 0) {
+    return normalizeForPlatform(envPath);
+  }
+
+  const defaultName = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
+  return path.join(process.cwd(), 'bin', defaultName);
+})();
+
+function normalizeForPlatform(targetPath) {
+  const normalized = path.normalize(targetPath);
+  if (process.platform !== 'win32') {
+    return normalized;
+  }
+
+  return normalized.toLowerCase().endsWith('.exe') ? normalized : `${normalized}.exe`;
+}
 
 async function fileExists(targetPath) {
   try {
