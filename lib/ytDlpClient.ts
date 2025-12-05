@@ -1,12 +1,11 @@
-import { access, mkdir, chmod, readFile } from 'node:fs/promises';
+import { access, mkdir, chmod } from 'node:fs/promises';
 import path from 'node:path';
-import YTDlpWrap from 'yt-dlp-wrap'; // Retain for download only
+import YTDlpWrap from 'yt-dlp-wrap';
 
 function withWindowsExtension(targetPath: string): string {
   if (process.platform !== 'win32') {
     return targetPath;
   }
-
   return targetPath.toLowerCase().endsWith('.exe') ? targetPath : `${targetPath}.exe`;
 }
 
@@ -16,7 +15,14 @@ function resolveBinaryPath(): string {
     return withWindowsExtension(path.normalize(envPath));
   }
 
-  const defaultName = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
+  // 🔥 Key change: on serverless Linux (Vercel) use /tmp
+  if (process.platform !== 'win32') {
+    const tmpDir = process.env.TMPDIR || '/tmp';
+    return path.join(tmpDir, 'yt-dlp'); // no .exe
+  }
+
+  // Local dev on Windows: keep old behavior
+  const defaultName = 'yt-dlp.exe';
   return path.join(process.cwd(), 'bin', defaultName);
 }
 
@@ -32,43 +38,6 @@ async function binaryExists(): Promise<boolean> {
   }
 }
 
-async function isPythonScript(filePath: string): Promise<boolean> {
-  try {
-    const buf = await readFile(filePath, { encoding: 'utf8' });
-    const firstLine = buf.split('\n')[0] ?? '';
-    return firstLine.includes('python');
-  } catch {
-    return false;
-  }
-}
-
-async function ensureBinaryAvailable(): Promise<void> {
-  if (!ensurePromise) {
-    ensurePromise = (async () => {
-      const exists = await binaryExists();
-      const pythonScript = exists && await isPythonScript(binaryPath);
-
-      if (exists && !pythonScript) {
-        try {
-          await chmod(binaryPath, 0o755);
-        } catch { }
-        return;
-      }
-
-      // If it's missing OR it's a python script, download the correct binary
-      await mkdir(path.dirname(binaryPath), { recursive: true });
-
-      const asset = selectGithubAsset();
-      if (!asset) {
-        throw new Error(`Unsupported platform/arch for yt-dlp: ${process.platform}/${process.arch}`);
-      }
-
-      await YTDlpWrap.downloadFromGithub(binaryPath, asset /* , optional version */);
-      await chmod(binaryPath, 0o755);
-    })();
-  }
-  return ensurePromise;
-}
 type PlatformKey = 'linux' | 'darwin' | 'win32';
 type ArchKey = 'x64' | 'arm64';
 
@@ -86,6 +55,33 @@ function selectGithubAsset(): string | undefined {
   };
 
   return explicitAsset[platform];
+}
+
+async function ensureBinaryAvailable(): Promise<void> {
+  if (!ensurePromise) {
+    ensurePromise = (async () => {
+      if (await binaryExists()) {
+        try {
+          await chmod(binaryPath, 0o755);
+        } catch {
+          // on some platforms we don't care if chmod fails
+        }
+        return;
+      }
+
+      await mkdir(path.dirname(binaryPath), { recursive: true });
+
+      const asset = selectGithubAsset();
+      if (!asset) {
+        throw new Error(`Unsupported platform/arch for yt-dlp: ${process.platform}/${process.arch}`);
+      }
+
+      // This writes into /tmp on Vercel, which IS writable
+      await YTDlpWrap.downloadFromGithub(binaryPath, asset);
+      await chmod(binaryPath, 0o755);
+    })();
+  }
+  return ensurePromise;
 }
 
 export async function ensureBinaryReady(): Promise<void> {
