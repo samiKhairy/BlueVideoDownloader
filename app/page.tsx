@@ -247,43 +247,27 @@ export default function HomePage(): React.ReactElement {
             </form>
 
             {hasResults && (
-              <div className="mt-8 border border-slate-100 rounded-2xl p-5 bg-white/80 shadow-sm">
-                <p className="text-lg font-semibold text-slate-900">Download links</p>
-                <p className="text-sm text-slate-600 mt-1">Video and thumbnail URLs that stay stable.</p>
-
-                <div className="mt-4 space-y-3">
-                  <div className="p-4 border border-slate-200 rounded-xl bg-white flex flex-col gap-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="font-semibold text-slate-800">Video</p>
-                      <button
-                        type="button"
-                        className="text-sm font-semibold text-blue-700 hover:underline"
-                        onClick={() => startDownload('video')}
-                      >
-                        Download
-                      </button>
-                    </div>
-                    <code className="block w-full text-left text-xs break-all font-mono bg-slate-100 px-3 py-2 rounded">
-                      {videoUrl}
-                    </code>
-                  </div>
-
+              <div className="mt-6 p-5 bg-white/90 border border-emerald-200 rounded-2xl shadow-md space-y-3">
+                <div className="flex items-center justify-start gap-2">
+                  <span className="h-3 w-3 block rounded-full bg-emerald-500" aria-hidden />
+                  <p className="text-sm text-gray-800 font-semibold">Download ready</p>
+                </div>
+                <div className="flex gap-3 flex-col sm:flex-row">
+                  <button
+                    type="button"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl shadow-lg transition"
+                    onClick={() => startDownload('video')}
+                  >
+                    Download video
+                  </button>
                   {thumbnailUrl && (
-                    <div className="p-4 border border-slate-200 rounded-xl bg-white flex flex-col gap-2">
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="font-semibold text-slate-800">Thumbnail</p>
-                        <button
-                          type="button"
-                          className="text-sm font-semibold text-blue-700 hover:underline"
-                          onClick={() => startDownload('thumbnail')}
-                        >
-                          Download
-                        </button>
-                      </div>
-                      <code className="block w-full text-left text-xs break-all font-mono bg-slate-100 px-3 py-2 rounded">
-                        {thumbnailUrl}
-                      </code>
-                    </div>
+                    <button
+                      type="button"
+                      className="flex-1 inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 rounded-xl shadow-lg transition"
+                      onClick={() => startDownload('thumbnail')}
+                    >
+                      Download thumbnail
+                    </button>
                   )}
                 </div>
               </div>
