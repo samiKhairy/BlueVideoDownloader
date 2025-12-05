@@ -53,16 +53,25 @@ function selectGithubAsset(): string | undefined {
   const platform = process.platform as PlatformKey;
   const arch = process.arch as ArchKey;
 
-  const linuxAsset = arch === 'arm64' ? 'yt-dlp_linux_aarch64' : 'yt-dlp_linux';
-  const darwinAsset = arch === 'arm64' ? 'yt-dlp_macos_aarch64' : 'yt-dlp_macos';
-
-  const explicitAsset: Partial<Record<PlatformKey, string>> = {
-    linux: linuxAsset,
-    darwin: darwinAsset,
+  // The official "yt-dlp" release artifacts for Linux and macOS are
+  // PyInstaller-packed binaries that do not require a system python3.
+  // Selecting those avoids the "env: 'python3': No such file" failures
+  // seen in serverless runtimes that lack a Python runtime entirely.
+  const portableBinary: Partial<Record<PlatformKey, string>> = {
+    linux: 'yt-dlp',
+    darwin: 'yt-dlp_macos',
     win32: 'yt-dlp.exe',
   };
 
-  return explicitAsset[platform];
+  // Prefer the platform-specific portable build; fall back to the legacy
+  // architecture-specific assets if the current OS requires them.
+  if (platform === 'linux') {
+    return portableBinary.linux ?? (arch === 'arm64' ? 'yt-dlp_linux_aarch64' : 'yt-dlp_linux');
+  }
+  if (platform === 'darwin') {
+    return portableBinary.darwin ?? (arch === 'arm64' ? 'yt-dlp_macos_aarch64' : 'yt-dlp_macos');
+  }
+  return portableBinary[platform];
 }
 
 export async function getYtDlp(): Promise<YTDlpWrap> {

@@ -52,14 +52,17 @@ function selectGithubAsset() {
   const platform = process.platform;
   const arch = process.arch;
 
-  const linuxAsset = arch === 'arm64' ? 'yt-dlp_linux_aarch64' : 'yt-dlp_linux';
-  const darwinAsset = arch === 'arm64' ? 'yt-dlp_macos_aarch64' : 'yt-dlp_macos';
-
-  const explicitAsset = {
-    linux: linuxAsset,
-    darwin: darwinAsset,
-    win32: 'yt-dlp.exe',
+  const portableBinary = {
+    linux: 'yt-dlp',
+    darwin: 'yt-dlp_macos',
+    win32: 'yt-dlp.exe'
   };
 
-  return explicitAsset[platform];
+  if (platform === 'linux') {
+    return portableBinary.linux ?? (arch === 'arm64' ? 'yt-dlp_linux_aarch64' : 'yt-dlp_linux');
+  }
+  if (platform === 'darwin') {
+    return portableBinary.darwin ?? (arch === 'arm64' ? 'yt-dlp_macos_aarch64' : 'yt-dlp_macos');
+  }
+  return portableBinary[platform];
 }
