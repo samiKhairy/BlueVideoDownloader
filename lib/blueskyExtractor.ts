@@ -63,7 +63,11 @@ export async function extractBluesky(url: string): Promise<ExtractionResult> {
     normalized
   ];
 
-  const rawOutput = await ytdlp.execPromise(args);
+  const rawOutput = await ytdlp.execPromise(args, {
+    // Explicitly set PATH to a known safe minimal path to prevent Vercel's shell
+    // from finding `python3` when the yt-dlp shebang is executed.
+    env: { ...process.env, PATH: '/usr/local/bin:/usr/bin:/bin' },
+  });
   const parsed = extractionSchema.safeParse(JSON.parse(rawOutput));
   if (!parsed.success) {
     throw new ExtractionError('Failed to parse response from yt-dlp.');
