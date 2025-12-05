@@ -1,6 +1,8 @@
-import { access, mkdir, chmod } from 'node:fs/promises';
+import { access, mkdir, chmod, stat } from 'node:fs/promises';
+import { createWriteStream } from 'node:fs';
 import path from 'node:path';
-import YTDlpWrap from 'yt-dlp-wrap';
+import { pipeline } from 'node:stream/promises';
+import { Readable } from 'node:stream';
 
 function withWindowsExtension(targetPath: string): string {
   if (process.platform !== 'win32') {
@@ -32,7 +34,8 @@ let ensurePromise: Promise<void> | null = null;
 async function binaryExists(): Promise<boolean> {
   try {
     await access(binaryPath);
-    return true;
+    const metadata = await stat(binaryPath);
+    return metadata.isFile() && metadata.size > 0;
   } catch {
     return false;
   }
@@ -57,6 +60,32 @@ function selectGithubAsset(): string | undefined {
   return explicitAsset[platform];
 }
 
+async function downloadBinary(asset: string, targetPath: string): Promise<void> {
+  const downloadUrl = `https://github.com/yt-dlp/yt-dlp/releases/latest/download/${asset}`;
+
+  const response = await fetch(downloadUrl, {
+    headers: {
+      'User-Agent': 'BlueVideoDownloader/1.0 (+https://bluevideosaver.com)'
+    }
+  });
+
+  if (!response.ok || !response.body) {
+    throw new Error(`Failed to download yt-dlp (${response.status} ${response.statusText})`);
+  }
+
+  const nodeStream = Readable.fromWeb(response.body as unknown as ReadableStream);
+  const fileStream = createWriteStream(targetPath, { mode: 0o755 });
+
+  try {
+    await pipeline(nodeStream, fileStream);
+  } catch (error) {
+    fileStream.destroy();
+    throw new Error(
+      `Failed to save yt-dlp binary: ${error instanceof Error ? error.message : String(error)}`
+    );
+  }
+}
+
 async function ensureBinaryAvailable(): Promise<void> {
   if (!ensurePromise) {
     ensurePromise = (async () => {
@@ -77,7 +106,7 @@ async function ensureBinaryAvailable(): Promise<void> {
       }
 
       // This writes into /tmp on Vercel, which IS writable
-      await YTDlpWrap.downloadFromGithub(binaryPath, asset);
+      await downloadBinary(asset, binaryPath);
       await chmod(binaryPath, 0o755);
     })();
   }
