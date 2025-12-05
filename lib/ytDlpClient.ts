@@ -3,6 +3,7 @@ import { createWriteStream } from 'node:fs';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { Readable } from 'node:stream';
+import { ReadableStream as NodeReadableStream } from 'node:stream/web';
 
 function withWindowsExtension(targetPath: string): string {
   if (process.platform !== 'win32') {
@@ -73,7 +74,8 @@ async function downloadBinary(asset: string, targetPath: string): Promise<void> 
     throw new Error(`Failed to download yt-dlp (${response.status} ${response.statusText})`);
   }
 
-  const nodeStream = Readable.fromWeb(response.body as unknown as ReadableStream);
+  const webStream = response.body as unknown as NodeReadableStream;
+  const nodeStream = Readable.fromWeb(webStream);
   const fileStream = createWriteStream(targetPath, { mode: 0o755 });
 
   try {
