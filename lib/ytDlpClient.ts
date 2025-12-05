@@ -1,4 +1,4 @@
-import { access, mkdir } from 'node:fs/promises';
+import { access, mkdir, chmod } from 'node:fs/promises';
 import path from 'node:path';
 import YTDlpWrap from 'yt-dlp-wrap';
 
@@ -41,6 +41,7 @@ async function ensureBinaryAvailable(): Promise<void> {
       }
       await mkdir(path.dirname(binaryPath), { recursive: true });
       await YTDlpWrap.downloadFromGithub(binaryPath, selectGithubAsset());
+      await chmod(binaryPath, 0o755); // Ensure executable permissions
     })();
   }
   return ensurePromise;

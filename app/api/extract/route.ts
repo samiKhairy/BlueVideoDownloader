@@ -30,6 +30,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     console.error('Unhandled extraction error', error);
-    return NextResponse.json({ error: 'Unable to process this URL right now.' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ error: `Internal Error: ${errorMessage}` }, { status: 500 });
   }
 }
