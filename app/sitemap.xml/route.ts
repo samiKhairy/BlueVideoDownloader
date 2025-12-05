@@ -1,14 +1,18 @@
 import { NextResponse } from 'next/server';
 
+import { BLOG_POSTS } from '../blog/posts';
+
 export const dynamic = 'force-dynamic';
 
-const INDEXABLE_PATHS = ['/', '/about'];
+const STATIC_PATHS = ['/', '/about', '/blog'];
+
+const BLOG_PATHS = BLOG_POSTS.map((post) => `/blog/${post.slug}`);
 
 export async function GET(request: Request): Promise<NextResponse> {
   const today = new Date().toISOString().split('T')[0];
   const baseUrl = process.env.SITE_URL || new URL(request.url).origin;
 
-  const urlEntries = INDEXABLE_PATHS.map((path) => {
+  const urlEntries = [...STATIC_PATHS, ...BLOG_PATHS].map((path) => {
     const loc = `${baseUrl}${path}`;
     return [
       '  <url>',
