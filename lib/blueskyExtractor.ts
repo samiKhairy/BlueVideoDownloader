@@ -63,7 +63,10 @@ export async function extractBluesky(url: string): Promise<ExtractionResult> {
     normalized
   ];
 
-  const rawOutput = await ytdlp.execPromise(args, { shell: true });
+  const rawOutput = await ytdlp.execPromise(args, {
+    // Attempt to disable Python detection in yt-dlp-wrap
+    env: { ...process.env, YTDLP_NO_PYTHON: '1' },
+  });
   const parsed = extractionSchema.safeParse(JSON.parse(rawOutput));
   if (!parsed.success) {
     throw new ExtractionError('Failed to parse response from yt-dlp.');
