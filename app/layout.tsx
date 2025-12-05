@@ -5,15 +5,52 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
+const softwareJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'BlueVideoSaver',
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Web, iOS, Android, Windows, macOS',
+  description:
+    'Bluesky video downloader to save Bluesky videos and GIFs as MP4, no watermark.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD'
+  }
+};
+
 export const metadata: Metadata = {
-  title: 'Bluesky Video Downloader',
-  description: 'Paste a Bluesky link, grab the video and thumbnail instantly.',
+  title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+  description:
+    'BlueVideoSaver lets you download Bluesky videos and GIFs as MP4, no watermark. Works on iPhone, Android, and desktop – free and fast.',
+  metadataBase: new URL('https://bluevideosaver.com'),
+  alternates: {
+    canonical: '/'
+  },
+  openGraph: {
+    title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+    description: 'Paste any Bluesky post URL and save the video or GIF as MP4. Works on iOS, Android, and desktop.',
+    url: 'https://bluevideosaver.com/',
+    siteName: 'BlueVideoSaver'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+    description: 'Web-based Bluesky video downloader. Paste link, download MP4, no watermark.'
+  },
   icons: [{ rel: 'icon', url: '/favicon.ico' }]
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
     <html lang="en" className="h-full">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
+        />
+      </head>
       <body className={`${inter.className} h-full text-slate-900`}>
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3VRYPMT8S3" />
         <Script id="ga4-init" strategy="afterInteractive">
