@@ -89,7 +89,10 @@ export const metadata: Metadata = {
     title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
     description: 'Web-based Bluesky video downloader. Paste link, download MP4, no watermark.'
   },
-  icons: [{ rel: 'icon', url: '/favicon.ico' }]
+  icons: [
+    { rel: 'icon', url: '/icon.svg', type: 'image/svg+xml' },
+    { rel: 'shortcut icon', url: '/icon.svg', type: 'image/svg+xml' }
+  ]
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }): React.ReactElement {
