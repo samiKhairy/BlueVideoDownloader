@@ -1,4 +1,4 @@
-import { access, mkdir, chmod } from 'node:fs/promises';
+import { access, mkdir, chmod, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import YTDlpWrap from 'yt-dlp-wrap'; // Retain for download only
 
@@ -32,28 +32,43 @@ async function binaryExists(): Promise<boolean> {
   }
 }
 
+async function isPythonScript(filePath: string): Promise<boolean> {
+  try {
+    const buf = await readFile(filePath, { encoding: 'utf8' });
+    const firstLine = buf.split('\n')[0] ?? '';
+    return firstLine.includes('python');
+  } catch {
+    return false;
+  }
+}
+
 async function ensureBinaryAvailable(): Promise<void> {
   if (!ensurePromise) {
     ensurePromise = (async () => {
-      if (await binaryExists()) {
-        // Ensure permissions are set on Vercel deployment, even if already downloaded
+      const exists = await binaryExists();
+      const pythonScript = exists && await isPythonScript(binaryPath);
+
+      if (exists && !pythonScript) {
         try {
           await chmod(binaryPath, 0o755);
         } catch { }
         return;
       }
+
+      // If it's missing OR it's a python script, download the correct binary
       await mkdir(path.dirname(binaryPath), { recursive: true });
 
       const asset = selectGithubAsset();
-      // Revert download arguments to 3 (which compiled) and ensure permissions.
-      // Corrected argument mismatch by placing the asset string in the second (version) slot.
-      await YTDlpWrap.downloadFromGithub(binaryPath, asset);
+      if (!asset) {
+        throw new Error(`Unsupported platform/arch for yt-dlp: ${process.platform}/${process.arch}`);
+      }
+
+      await YTDlpWrap.downloadFromGithub(binaryPath, asset /* , optional version */);
       await chmod(binaryPath, 0o755);
     })();
   }
   return ensurePromise;
 }
-
 type PlatformKey = 'linux' | 'darwin' | 'win32';
 type ArchKey = 'x64' | 'arm64';
 
