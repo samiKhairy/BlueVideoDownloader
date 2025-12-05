@@ -6,7 +6,8 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from flask import Flask, jsonify, render_template, request
+import requests
+from flask import Flask, jsonify, render_template, request, Response, stream_with_context
 from yt_dlp import YoutubeDL
 
 logging.basicConfig(
@@ -77,7 +78,8 @@ class BlueskyDownloader:
         if not self.is_valid_url(normalized_url):
             raise ValueError("Only Bluesky post URLs are supported.")
 
-        self.logger.info("Extracting Bluesky URL", extra={"url": normalized_url})
+        self.logger.info("Extracting Bluesky URL",
+                         extra={"url": normalized_url})
 
         with YoutubeDL(self.ydl_opts) as ydl:
             info = ydl.extract_info(normalized_url, download=False)
@@ -145,6 +147,52 @@ def extract() -> Any:
 @app.route("/api/health", methods=["GET"])
 def health() -> Any:
     return jsonify({"status": "ok"})
+
+
+@app.route("/api/download", methods=["GET"])
+def download_proxy() -> Response | tuple[Any, int]:
+    media_url = request.args.get("url")
+    filename = request.args.get("filename")
+
+    if not media_url:
+        return jsonify({"error": "Missing media URL parameter."}), 400
+
+    try:
+        req = requests.get(media_url, stream=True,
+                           headers=downloader.DEFAULT_HEADERS)
+        req.raise_for_status()
+
+        # --- Filename logic ---
+        if not filename:
+            # Fallback based on content type header
+            content_type = req.headers.get("Content-Type", "")
+            if "image" in content_type:
+                filename = "bluesky-thumbnail.jpg"
+            elif "video" in content_type:
+                filename = "bluesky-video.mp4"
+            else:
+                filename = "download.dat"  # Generic fallback
+
+        # Try to extract filename from Content-Disposition if present
+        content_disposition = req.headers.get("Content-Disposition")
+        if content_disposition:
+            match = re.search(
+                r'filename=["\']?(.+?)["\']?$', content_disposition)
+            if match:
+                filename = match.group(1)
+        # --- End Filename logic ---
+
+        headers = {
+            "Content-Type": req.headers.get("Content-Type", "application/octet-stream"),
+            "Content-Length": req.headers.get("Content-Length"),
+            "Content-Disposition": f"attachment; filename={filename}",
+        }
+
+        return Response(stream_with_context(req.iter_content(chunk_size=1024)), headers=headers)
+
+    except requests.exceptions.RequestException as exc:
+        logger.error("Error during proxy download: %s", exc)
+        return jsonify({"error": "Failed to fetch media file."}), 502
 
 
 # Vercel's Python runtime will pick up `app` automatically as a WSGI app.

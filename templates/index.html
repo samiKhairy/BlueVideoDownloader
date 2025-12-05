@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,16 +11,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(18px); }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(18px);
+        }
     </style>
 </head>
+
 <body class="h-full bg-gradient-to-br from-sky-50 via-white to-blue-100 text-slate-900">
     <div class="min-h-screen">
         <header class="border-b border-sky-100 bg-white/70 backdrop-blur">
             <div class="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center shadow-lg text-white font-bold">B</div>
+                    <div
+                        class="h-11 w-11 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center shadow-lg text-white font-bold">
+                        B</div>
                     <div>
                         <p class="text-lg font-semibold text-sky-800">Bluesky Video Downloader</p>
                         <p class="text-sm text-slate-600">Paste a link, grab the video.</p>
@@ -34,27 +44,23 @@
                     <div class="flex items-start justify-between gap-4">
                         <div>
                             <p class="text-sm font-semibold uppercase tracking-wide text-sky-700">Fast</p>
-                            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Download Bluesky video in seconds</h1>
-                            <p class="text-base text-slate-600 mt-3">Drop the post URL and get direct buttons for the video and thumbnail.</p>
+                            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Download Bluesky video in
+                                seconds</h1>
+                            <p class="text-base text-slate-600 mt-3">Drop the post URL and get direct buttons for the
+                                video and thumbnail.</p>
                         </div>
-                        <span class="hidden sm:inline-flex px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-sm font-semibold">Instant</span>
+                        <span
+                            class="hidden sm:inline-flex px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-sm font-semibold">Instant</span>
                     </div>
 
                     <div class="mt-6 space-y-3">
                         <label class="block text-sm font-semibold text-slate-800">Bluesky Post URL</label>
                         <div class="flex gap-3 flex-col sm:flex-row">
-                            <input
-                                id="urlInput"
-                                type="url"
-                                inputmode="url"
+                            <input id="urlInput" type="url" inputmode="url"
                                 placeholder="https://bsky.app/profile/handle/post/123..."
-                                class="w-full px-4 py-3 rounded-xl border border-slate-200 shadow-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 outline-none transition"
-                            />
-                            <button
-                                id="pasteBtn"
-                                type="button"
-                                class="sm:w-36 w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 font-semibold shadow-sm hover:border-sky-300 hover:text-sky-800 transition"
-                            >
+                                class="w-full px-4 py-3 rounded-xl border border-slate-200 shadow-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 outline-none transition" />
+                            <button id="pasteBtn" type="button"
+                                class="sm:w-36 w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 font-semibold shadow-sm hover:border-sky-300 hover:text-sky-800 transition">
                                 Paste
                             </button>
                         </div>
@@ -62,37 +68,30 @@
                     </div>
 
                     <div class="mt-6 flex flex-col sm:flex-row gap-3">
-                        <button
-                            id="submitBtn"
-                            onclick="extractVideo()"
-                            class="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-semibold py-3 rounded-xl shadow-lg shadow-sky-200 transition disabled:opacity-70 disabled:cursor-not-allowed"
-                        >
+                        <button id="submitBtn" onclick="extractVideo()"
+                            class="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-semibold py-3 rounded-xl shadow-lg shadow-sky-200 transition disabled:opacity-70 disabled:cursor-not-allowed">
                             <span id="submitLabel">Get download links</span>
                             <svg id="submitSpinner" class="hidden h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h3z"></path>
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h3z"></path>
                             </svg>
                         </button>
-                        <button
-                            type="button"
-                            id="copyBtn"
+                        <button type="button" id="copyBtn"
                             class="sm:w-44 w-full inline-flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-800 font-semibold py-3 rounded-xl shadow-sm hover:border-sky-300 hover:text-sky-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                            onclick="copyLastResult()"
-                        >
+                            onclick="copyLastResult()">
                             Copy video link
                         </button>
                     </div>
 
-                    <div id="adSpace" class="mt-6 p-5 bg-white/90 border border-blue-200 rounded-2xl text-center shadow-md">
+                    <div id="adSpace"
+                        class="mt-6 p-5 bg-white/90 border border-blue-200 rounded-2xl text-center shadow-md">
                         <p class="text-sm text-gray-800 font-semibold">
                             ⚡ Download slow? Your ISP might be throttling social media.
                         </p>
-                        <a
-                            href="https://nordvpn.com/"
-                            target="_blank"
-                            rel="noopener"
-                            class="mt-2 inline-flex items-center justify-center gap-1 text-blue-700 font-bold hover:underline"
-                        >
+                        <a href="https://nordvpn.com/" target="_blank" rel="noopener"
+                            class="mt-2 inline-flex items-center justify-center gap-1 text-blue-700 font-bold hover:underline">
                             Boost speed with NordVPN
                             <span aria-hidden="true">&rarr;</span>
                         </a>
@@ -107,20 +106,14 @@
                                 Download ready
                             </p>
                             <div class="grid gap-3 sm:grid-cols-2">
-                                <button
-                                    id="videoBtn"
-                                    type="button"
+                                <button id="videoBtn" type="button"
                                     class="inline-flex items-center justify-center gap-2 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-semibold shadow-md transition"
-                                    onclick="startDownload('video')"
-                                >
+                                    onclick="startDownload('video')">
                                     Download video
                                 </button>
-                                <button
-                                    id="thumbBtn"
-                                    type="button"
+                                <button id="thumbBtn" type="button"
                                     class="inline-flex items-center justify-center gap-2 w-full text-center bg-slate-800 hover:bg-slate-900 text-white py-3 rounded-xl font-semibold shadow-md transition"
-                                    onclick="startDownload('thumbnail')"
-                                >
+                                    onclick="startDownload('thumbnail')">
                                     Download thumbnail
                                 </button>
                             </div>
@@ -133,14 +126,15 @@
                         <p class="text-sm font-semibold text-sky-700 uppercase tracking-wide">Quick tips</p>
                         <p class="text-sm text-slate-700">• Use a public Bluesky post URL.</p>
                         <p class="text-sm text-slate-700">• After the links appear, you can download or copy them.</p>
-                        <p class="text-sm text-slate-700">• Swap the banner below the buttons with your own affiliate code.</p>
+                        <p class="text-sm text-slate-700">• Protect your data while downloading. Consider using a privacy-focused VPN.</p>
                     </div>
                 </div>
             </section>
         </main>
 
         <footer class="border-t border-sky-100 bg-white/70 backdrop-blur">
-            <div class="mx-auto max-w-6xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-600">
+            <div
+                class="mx-auto max-w-6xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-600">
                 <p>Made for quick Bluesky saves.</p>
                 <p class="text-slate-500">Questions? Double-check the URL and try again.</p>
             </div>
@@ -258,8 +252,8 @@
         }
 
         function startDownload(kind) {
-            const targetUrl = kind === "thumbnail" ? lastThumbnailUrl : lastVideoUrl;
-            if (!targetUrl) {
+            const mediaUrl = kind === "thumbnail" ? lastThumbnailUrl : lastVideoUrl;
+            if (!mediaUrl) {
                 const message = kind === "thumbnail"
                     ? "No thumbnail available yet. Try generating links first."
                     : "No video URL yet. Generate the download link first.";
@@ -268,29 +262,16 @@
             }
 
             const filename = kind === "thumbnail" ? "bluesky-thumbnail.jpg" : "bluesky-video.mp4";
-            const newTab = window.open(targetUrl, "_blank", "noopener");
 
-            if (newTab) {
-                const downloader = newTab.document.createElement("a");
-                downloader.href = targetUrl;
-                downloader.download = filename;
-                downloader.style.display = "none";
-                newTab.document.body.appendChild(downloader);
-                downloader.click();
-                downloader.remove();
-            } else {
-                const downloader = document.createElement("a");
-                downloader.href = targetUrl;
-                downloader.target = "_blank";
-                downloader.rel = "noopener";
-                downloader.download = filename;
-                document.body.appendChild(downloader);
-                downloader.click();
-                downloader.remove();
-            }
+            // Construct proxy URL to force download header server-side
+            const proxyUrl = `/api/download?url=${encodeURIComponent(mediaUrl)}&filename=${encodeURIComponent(filename)}`;
+
+            // Navigate the browser to the proxy URL, which forces download
+            window.location.href = proxyUrl;
 
             showStatus(`${kind === "thumbnail" ? "Thumbnail" : "Video"} download started.`, "success");
         }
     </script>
 </body>
+
 </html>
