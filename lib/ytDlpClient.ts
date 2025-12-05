@@ -40,7 +40,7 @@ async function ensureBinaryAvailable(): Promise<void> {
         return;
       }
       await mkdir(path.dirname(binaryPath), { recursive: true });
-      await YTDlpWrap.downloadFromGithub(binaryPath, selectGithubAsset());
+      await YTDlpWrap.downloadFromGithub(binaryPath, undefined, undefined, selectGithubAsset());
       await chmod(binaryPath, 0o755); // Ensure executable permissions
     })();
   }
