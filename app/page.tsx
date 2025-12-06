@@ -96,6 +96,36 @@ export default function HomePage(): React.ReactElement {
               Down.blue alternative
             </Link>
           </li>
+          <li>
+            <Link href="/blog/bluesky-gif-downloader" className="underline font-semibold">
+              Save Bluesky GIF-style posts as MP4
+            </Link>
+          </li>
+          <li>
+            <Link href="/blog/download-bluesky-videos-windows" className="underline font-semibold">
+              Download Bluesky videos on Windows
+            </Link>
+          </li>
+          <li>
+            <Link href="/blog/download-bluesky-video-mac" className="underline font-semibold">
+              Download Bluesky videos on Mac
+            </Link>
+          </li>
+          <li>
+            <Link href="/blog/download-bluesky-video-chromebook" className="underline font-semibold">
+              Download Bluesky videos on Chromebook
+            </Link>
+          </li>
+          <li>
+            <Link href="/blog/save-bluesky-video-offline" className="underline font-semibold">
+              Save Bluesky videos for offline viewing
+            </Link>
+          </li>
+          <li>
+            <Link href="/blog/best-bluesky-video-downloader" className="underline font-semibold">
+              Compare the best Bluesky downloaders
+            </Link>
+          </li>
         </ul>
       </section>
 
