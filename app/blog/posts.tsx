@@ -742,6 +742,24 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'How to Repost Bluesky Videos to Instagram or TikTok',
     description: 'Download Bluesky videos as MP4 and upload them to Instagram or TikTok with proper credits.',
     excerpt: 'Copy a Bluesky link, download the MP4, and repost to Instagram or TikTok with correct ratios.',
+    faqs: [
+      {
+        question: 'Why do I need to download the MP4 before reposting?',
+        answer: 'Saving the MP4 preserves quality and lets Instagram or TikTok ingest the file without relying on a live Bluesky link.'
+      },
+      {
+        question: 'What aspect ratio should I use when reposting?',
+        answer: 'Choose 9:16 for vertical reels or TikToks, 1:1 for square posts, and 16:9 for landscape feeds to avoid heavy cropping.'
+      },
+      {
+        question: 'Do I need to credit the original Bluesky creator?',
+        answer: 'Yes. Always tag or mention the original creator when cross-posting to respect ownership and community guidelines.'
+      },
+      {
+        question: 'Can I repost to both Instagram and TikTok from the same file?',
+        answer: 'Yes. Download once and upload the same MP4 to each platform. Adjust captions and covers per app.'
+      }
+    ],
     body: () => (
       <>
         <p className="mt-4">Cross-posting Bluesky videos boosts reach on Instagram and TikTok. Get a clean MP4 first.</p>
@@ -787,6 +805,24 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'Where Do Bluesky Downloads Go on iPhone, Android, and Desktop?',
     description: 'Find where your Bluesky downloads are stored across iPhone, Android, and computers.',
     excerpt: 'Locate downloaded Bluesky videos in Files/Photos on iPhone, Downloads on Android, and Finder/Explorer on desktop.',
+    faqs: [
+      {
+        question: 'Where do Bluesky downloads go on iPhone?',
+        answer: 'Safari saves to the Files app by default. Move the MP4 to Photos if you want it in your Camera Roll.'
+      },
+      {
+        question: 'Where do Bluesky downloads go on Android?',
+        answer: 'Most browsers store the MP4 in the Downloads folder. Check the Files app or your gallery’s Downloads or Recent section.'
+      },
+      {
+        question: 'Where do Bluesky downloads go on desktop?',
+        answer: 'Windows uses the Downloads folder in File Explorer; macOS uses the Downloads folder in Finder unless you pick another path.'
+      },
+      {
+        question: 'How can I find a missing download quickly?',
+        answer: 'Search for the file name in your Files app or Finder/Explorer and sort by recent downloads to surface the latest MP4.'
+      }
+    ],
     body: () => (
       <>
         <p className="mt-4">Not sure where your Bluesky download went? Here is how downloads are stored on every device.</p>
@@ -830,6 +866,24 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'How to Download Bluesky Videos Without Watermark (Free Tool)',
     description: 'Get clean, original Bluesky MP4 files without added watermarks using BlueVideoSaver.',
     excerpt: 'BlueVideoSaver keeps the original Bluesky stream so your download has no watermark.',
+    faqs: [
+      {
+        question: 'Do Bluesky videos come with a watermark by default?',
+        answer: 'No. Bluesky does not add watermarks. Most watermarks are injected by third-party downloaders that re-encode the video.'
+      },
+      {
+        question: 'Does BlueVideoSaver add any watermark or overlay?',
+        answer: 'No. It pulls the original stream and saves the MP4 without altering or branding the file.'
+      },
+      {
+        question: 'Will the video quality stay the same?',
+        answer: 'Yes. Because the stream is saved directly, resolution and audio stay identical to the source post.'
+      },
+      {
+        question: 'Do I need to install software to avoid watermarks?',
+        answer: 'No installs are required. Use the web downloader and save the MP4 directly in your browser.'
+      }
+    ],
     body: () => (
       <>
         <p className="mt-4">Some downloaders re-encode videos and inject watermarks. BlueVideoSaver keeps the original stream clean.</p>
