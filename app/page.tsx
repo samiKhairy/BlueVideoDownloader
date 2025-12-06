@@ -2,14 +2,18 @@ import Link from 'next/link';
 import type React from 'react';
 
 import { DownloadTool } from './components/DownloadTool';
-
+import { LogoHeader } from './components/LogoHeader';
 export default function HomePage(): React.ReactElement {
   return (
-    <main className="min-h-screen flex flex-col items-center px-4 py-10">
-      <section className="w-full max-w-5xl text-center space-y-4">
-        <h1 className="text-3xl md:text-4xl font-bold">
-          Bluesky Video Downloader – Download Bluesky Videos &amp; GIFs (Free)
-        </h1>
+    <main className="min-h-screen flex flex-col items-center px-4 py-10 gap-6">
+      <section className="w-full max-w-5xl text-center space-y-6">
+        <div className="flex items-center justify-center gap-4 md:gap-6">
+          <LogoHeader className="mt-1" />
+
+          <h1 className="text-3xl md:text-4xl font-bold text-left md:text-center">
+            Bluesky Video Downloader – Download Bluesky Videos &amp; GIFs (Free)
+          </h1>
+        </div>
 
         <p className="text-sm md:text-base text-gray-700 max-w-3xl mx-auto">
           Paste any public Bluesky post link and download the video or GIF as an MP4 file. Works on iPhone, Android, and desktop
