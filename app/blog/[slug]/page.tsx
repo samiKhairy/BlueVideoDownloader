@@ -35,12 +35,40 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
   }
 
   const Body = post.body;
+  const faqJsonLd =
+    post.faqs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: post.faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer
+            }
+          }))
+        }
+      : null;
 
   return (
     <main className="min-h-screen px-4 py-10">
       <article className="max-w-3xl mx-auto prose prose-sm md:prose-base">
         <h1>{post.title}</h1>
         <Body />
+        {post.faqs.length > 0 && (
+          <section className="mt-10">
+            <h2 className="text-xl font-semibold">Frequently asked questions</h2>
+            <dl className="mt-4 space-y-4 text-sm md:text-base text-gray-800">
+              {post.faqs.map((faq) => (
+                <div key={faq.question} className="space-y-2">
+                  <dt className="font-semibold">{faq.question}</dt>
+                  <dd className="leading-relaxed">{faq.answer}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
         <hr className="my-6" />
         <p className="text-sm text-gray-600">
           Use{' '}
@@ -49,6 +77,12 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
           </a>{' '}
           to download any public Bluesky video or GIF as an MP4 file.
         </p>
+        {faqJsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+        )}
       </article>
     </main>
   );
