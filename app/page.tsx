@@ -1,16 +1,72 @@
 import Link from 'next/link';
+import Script from 'next/script';
 import type React from 'react';
 
 import { DownloadTool } from './components/DownloadTool';
 import { LogoHeader } from './components/LogoHeader';
+
+const homepageFaqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How do I download Bluesky videos on iPhone?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          'Copy the Bluesky post link, open bluevideosaver.com in Safari, paste the link into the box, tap Download, then save the MP4 to Files or Photos.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I download Bluesky videos on Android?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          'Copy the Bluesky post link, open bluevideosaver.com in Chrome or Firefox, paste the link, tap Download, then open the MP4 from your Downloads folder.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Why does my downloaded Bluesky video have no sound?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          'Some downloaders skip the audio stream. BlueVideoSaver detects and merges audio and video when both exist so your MP4 includes sound when available.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I download videos from private Bluesky accounts?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. BlueVideoSaver works with public posts and does not bypass privacy settings or permissions.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Is BlueVideoSaver free to use?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. It is free to use, requires no signup, and runs in your browser with server-side processing.'
+      }
+    }
+  ]
+};
 export default function HomePage(): React.ReactElement {
   return (
-    <main className="min-h-screen flex flex-col items-center px-4 py-10 gap-6">
-      <section className="w-full max-w-5xl text-center space-y-6">
-        <div className="flex items-center justify-center gap-4 md:gap-6">
-          <LogoHeader className="mt-1" />
+    <>
+      <Script id="homepage-faq-schema" type="application/ld+json">
+        {JSON.stringify(homepageFaqJsonLd)}
+      </Script>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-left md:text-center">
+      <main className="min-h-screen flex flex-col items-center px-4 py-10 gap-6">
+        <section className="w-full max-w-5xl text-center space-y-6">
+          <div className="flex items-center justify-center gap-4 md:gap-6">
+            <LogoHeader className="mt-1" />
+
+            <h1 className="text-3xl md:text-4xl font-bold text-left md:text-center">
             Bluesky Video Downloader – Download Bluesky Videos &amp; GIFs (Free)
           </h1>
         </div>
@@ -154,6 +210,7 @@ export default function HomePage(): React.ReactElement {
           </div>
         </dl>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
