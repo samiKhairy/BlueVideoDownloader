@@ -67,8 +67,8 @@ export default function HomePage(): React.ReactElement {
             <LogoHeader className="mt-1" />
 
             <h1 className="text-3xl md:text-4xl font-bold text-left md:text-center">
-            Bluesky Video Downloader – Download Bluesky Videos &amp; GIFs (Free)
-          </h1>
+              Bluesky Video Downloader - Save Videos for Free (Mobile &amp; PC)
+            </h1>
         </div>
 
         <p className="text-sm md:text-base text-gray-700 max-w-3xl mx-auto">
