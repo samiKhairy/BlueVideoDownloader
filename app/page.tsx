@@ -25,11 +25,38 @@ export default function HomePage(): React.ReactElement {
         </div>
       </section>
 
+      <section className="w-full max-w-3xl mt-10 space-y-4 rounded-2xl border border-sky-100 bg-sky-50 p-6 shadow-sm">
+        <div className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold text-sky-900">
+          <span className="h-2 w-2 rounded-full bg-green-500" aria-hidden />
+          Fixes no sound issues
+        </div>
+        <h2 className="text-xl md:text-2xl font-semibold">How to Download Bluesky Videos WITH Sound (Audio Fix)</h2>
+        <p className="text-sm md:text-base text-gray-700 text-left">
+          Many Bluesky downloaders skip the audio track and give you a silent MP4. BlueVideoSaver automatically downloads audio
+          and video when they are split and merges them into one file, so your saved videos keep the soundtrack.
+        </p>
+        <ul className="list-disc pl-5 space-y-2 text-sm md:text-base text-gray-700 text-left">
+          <li>Detects separate audio/video streams and grabs both when available.</li>
+          <li>Merges the tracks server-side to deliver a single MP4 with sound.</li>
+          <li>Shows a quick note if the original upload is truly silent.</li>
+        </ul>
+      </section>
+
       <section className="w-full max-w-3xl mt-12 space-y-4">
         <h2 className="text-xl md:text-2xl font-semibold">How to download Bluesky videos</h2>
         <ol className="list-decimal pl-5 space-y-2 text-sm md:text-base text-gray-700 text-left">
-          <li>Open Bluesky and go to the post with the video or GIF you want.</li>
-          <li>Tap the three dots on the post and copy the link.</li>
+          <li>
+            Open Bluesky and go to the post with the video or GIF you want.{' '}
+            <Link href="/blog/download-bluesky-video-android" className="underline font-semibold text-sky-700">
+              Using Android? Read the full guide.
+            </Link>
+          </li>
+          <li>
+            Tap the three dots on the post and copy the link.{' '}
+            <Link href="/blog/download-bluesky-video-iphone" className="underline font-semibold text-sky-700">
+              On iPhone? Get the iOS steps.
+            </Link>
+          </li>
           <li>Paste the link above and click “Download”.</li>
           <li>Save the MP4 file to your device.</li>
         </ol>
@@ -43,15 +70,6 @@ export default function HomePage(): React.ReactElement {
           <li>Server-rendered HTML so bots and users see the tool immediately.</li>
           <li>Backend merges audio and video when needed to avoid silent downloads.</li>
         </ul>
-      </section>
-
-      <section className="w-full max-w-3xl mt-10 space-y-3">
-        <h2 className="text-xl md:text-2xl font-semibold">Why some Bluesky downloads have no sound</h2>
-        <p className="text-sm md:text-base text-gray-700 text-left">
-          Platforms often store audio and video separately. Some downloaders only capture the video stream, which leaves you with
-          a silent file. BlueVideoSaver detects and combines both streams into a single MP4 whenever audio is available, so your
-          saved videos include sound.
-        </p>
       </section>
 
       <section className="w-full max-w-3xl mt-10 space-y-3">
