@@ -71,7 +71,7 @@ const faqJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+  title: 'Bluesky Video Downloader – Save Bsky Videos Free (2026 Updated)',
   description:
     'BlueVideoSaver lets you download Bluesky videos and GIFs as MP4, no watermark. Works on iPhone, Android, and desktop – free and fast.',
   metadataBase: new URL('https://bluevideosaver.com'),
@@ -79,23 +79,24 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   openGraph: {
-    title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+    title: 'Bluesky Video Downloader – Save Bsky Videos Free (2026 Updated)',
     description: 'Paste any Bluesky post URL and save the video or GIF as MP4. Works on iOS, Android, and desktop.',
     url: 'https://bluevideosaver.com/',
     siteName: 'BlueVideoSaver'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+    title: 'Bluesky Video Downloader – Save Bsky Videos Free (2026 Updated)',
     description: 'Web-based Bluesky video downloader. Paste link, download MP4, no watermark.'
   },
   manifest: '/site.webmanifest',
   icons: {
     icon: [
-      { rel: 'icon', url: '/favicon.ico' },
+      { rel: 'icon', url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
       { rel: 'icon', url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { rel: 'icon', url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' }
     ],
+    shortcut: [{ rel: 'shortcut icon', url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' }],
     apple: [{ rel: 'apple-touch-icon', url: '/apple-touch-icon.png', sizes: '180x180' }]
   }
 
