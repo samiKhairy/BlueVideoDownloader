@@ -14,6 +14,18 @@ export type BlogPost = {
   body: () => React.ReactElement;
 };
 
+const DownloadNowCta = (): React.ReactElement => (
+  <div className="mt-6 flex justify-center">
+    <a
+      href="/"
+      className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+    >
+      <span aria-hidden>🚀</span>
+      Download Video Now
+    </a>
+  </div>
+);
+
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'download-bluesky-video-iphone',
@@ -49,6 +61,8 @@ export const BLOG_POSTS: BlogPost[] = [
           without installing anything.
         </p>
 
+        <DownloadNowCta />
+
         <h2 className="mt-6 text-xl font-semibold">Step 1: Copy the Bluesky link</h2>
         <ol className="list-decimal pl-5 space-y-2 mt-2">
           <li>Open the Bluesky app and find the post with the video.</li>
@@ -78,6 +92,8 @@ export const BLOG_POSTS: BlogPost[] = [
         <p className="mt-6 text-sm text-gray-600">
           Tip: Add BlueVideoSaver to your Home Screen from Safari’s share menu to use it like an app.
         </p>
+
+        <DownloadNowCta />
 
         <p className="mt-6 text-sm text-gray-600">
           Need Android steps? Read the{' '}
@@ -122,6 +138,8 @@ export const BLOG_POSTS: BlogPost[] = [
         <p className="mt-4">
           Use your Android browser with BlueVideoSaver to grab Bluesky videos as MP4 files—no installs or signups.
         </p>
+
+        <DownloadNowCta />
 
         <h2 className="mt-6 text-xl font-semibold">Step 1: Copy the link from the Bluesky app</h2>
         <ol className="list-decimal pl-5 space-y-2 mt-2">
@@ -175,6 +193,8 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>{' '}
           to start.
         </p>
+
+        <DownloadNowCta />
       </>
     )
   },
@@ -209,6 +229,8 @@ export const BLOG_POSTS: BlogPost[] = [
           audio into separate tracks (HLS). If the downloader skips the audio track, the final file is silent.
         </p>
 
+        <DownloadNowCta />
+
         <h2 className="mt-6 text-xl font-semibold">How BlueVideoSaver fixes it</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Detects when audio and video are separate.</li>
@@ -238,6 +260,8 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>
           .
         </p>
+
+        <DownloadNowCta />
       </>
     )
   },
@@ -272,6 +296,8 @@ export const BLOG_POSTS: BlogPost[] = [
           are risky or misleading.
         </p>
 
+        <DownloadNowCta />
+
         <h2 className="mt-6 text-xl font-semibold">What BlueVideoSaver does</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Downloads videos and GIFs from public Bluesky posts.</li>
@@ -300,6 +326,8 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>
           .
         </p>
+
+        <DownloadNowCta />
       </>
     )
   },
@@ -332,6 +360,8 @@ export const BLOG_POSTS: BlogPost[] = [
           Down.blue is a simple Bluesky downloader. If it fails on certain posts or returns silent videos, try BlueVideoSaver
           for a more reliable experience.
         </p>
+
+        <DownloadNowCta />
 
         <h2 className="mt-6 text-xl font-semibold">Common pain points with down.blue</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
@@ -366,6 +396,8 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>{' '}
           guides.
         </p>
+
+        <DownloadNowCta />
       </>
     )
   },
@@ -400,6 +432,8 @@ export const BLOG_POSTS: BlogPost[] = [
           GIF-style posts on Bluesky behave like short videos. To keep the animation and make sharing easier, download them
           as MP4 files with BlueVideoSaver.
         </p>
+
+        <DownloadNowCta />
 
         <h2 className="mt-6 text-xl font-semibold">How to copy a Bluesky GIF link</h2>
         <ol className="list-decimal pl-5 space-y-2 mt-2">
@@ -459,6 +493,8 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>{' '}
           and download a clean MP4.
         </p>
+
+        <DownloadNowCta />
       </>
     )
   },
@@ -484,6 +520,8 @@ export const BLOG_POSTS: BlogPost[] = [
     body: () => (
       <>
         <p className="mt-4">Download any Bluesky video on Windows in a couple of clicks using BlueVideoSaver.</p>
+
+        <DownloadNowCta />
 
         <h2 className="mt-6 text-xl font-semibold">Copy the link from your browser</h2>
         <ol className="list-decimal pl-5 space-y-2 mt-2">
@@ -554,6 +592,8 @@ export const BLOG_POSTS: BlogPost[] = [
       <>
         <p className="mt-4">Download Bluesky videos on macOS in minutes with Safari or Chrome—no installs required.</p>
 
+        <DownloadNowCta />
+
         <h2 className="mt-6 text-xl font-semibold">Copy the link from Safari or Chrome</h2>
         <ol className="list-decimal pl-5 space-y-2 mt-2">
           <li>Open Bluesky on the web.</li>
@@ -595,6 +635,8 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>
           .
         </p>
+
+        <DownloadNowCta />
       </>
     )
   },
@@ -620,6 +662,8 @@ export const BLOG_POSTS: BlogPost[] = [
     body: () => (
       <>
         <p className="mt-4">If your Bluesky video fails to save, it is usually a link issue, HLS fragmentation, or a device permission block.</p>
+
+        <DownloadNowCta />
 
         <h2 className="mt-6 text-xl font-semibold">Why downloads fail</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
@@ -664,6 +708,8 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>
           .
         </p>
+
+        <DownloadNowCta />
       </>
     )
   },
@@ -692,6 +738,8 @@ export const BLOG_POSTS: BlogPost[] = [
           Some Bluesky downloads end up mute because the downloader grabbed only the video track. Bluesky often streams audio
           separately using HLS. If a tool ignores that track, the final MP4 is silent.
         </p>
+
+        <DownloadNowCta />
 
         <h2 className="mt-6 text-xl font-semibold">How BlueVideoSaver restores audio</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
@@ -734,6 +782,10 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>
           .
         </p>
+
+        <DownloadNowCta />
+
+        <DownloadNowCta />
       </>
     )
   },
@@ -763,6 +815,8 @@ export const BLOG_POSTS: BlogPost[] = [
     body: () => (
       <>
         <p className="mt-4">Cross-posting Bluesky videos boosts reach on Instagram and TikTok. Get a clean MP4 first.</p>
+
+        <DownloadNowCta />
 
         <h2 className="mt-6 text-xl font-semibold">Steps to get the MP4</h2>
         <ol className="list-decimal pl-5 space-y-2 mt-2">
@@ -797,6 +851,8 @@ export const BLOG_POSTS: BlogPost[] = [
           </a>
           .
         </p>
+
+        <DownloadNowCta />
       </>
     )
   },
