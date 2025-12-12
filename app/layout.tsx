@@ -71,7 +71,7 @@ const faqJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+  title: 'Bluesky Video Downloader – Save Bsky Videos Free (2026 Updated)',
   description:
     'BlueVideoSaver lets you download Bluesky videos and GIFs as MP4, no watermark. Works on iPhone, Android, and desktop – free and fast.',
   metadataBase: new URL('https://bluevideosaver.com'),
@@ -79,14 +79,14 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   openGraph: {
-    title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+    title: 'Bluesky Video Downloader – Save Bsky Videos Free (2026 Updated)',
     description: 'Paste any Bluesky post URL and save the video or GIF as MP4. Works on iOS, Android, and desktop.',
     url: 'https://bluevideosaver.com/',
     siteName: 'BlueVideoSaver'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
+    title: 'Bluesky Video Downloader – Save Bsky Videos Free (2026 Updated)',
     description: 'Web-based Bluesky video downloader. Paste link, download MP4, no watermark.'
   },
   manifest: '/site.webmanifest',
