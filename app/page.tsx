@@ -1,8 +1,39 @@
 import Link from 'next/link';
 import type React from 'react';
 
+import type { FaqEntry } from '@/lib/schema/faq';
+import { buildFaqPageSchema } from '@/lib/schema/faq';
 import { DownloadTool } from './components/DownloadTool';
 import { LogoHeader } from './components/LogoHeader';
+
+const homepageFaqs: FaqEntry[] = [
+  {
+    question: 'How do I download Bluesky videos on iPhone?',
+    answer:
+      'Copy the post link, open bluevideosaver.com in Safari, paste it into the box, tap Download, then save the MP4 to Files or Photos.'
+  },
+  {
+    question: 'How do I download Bluesky videos on Android?',
+    answer:
+      'Copy the post link, open Chrome or Firefox to bluevideosaver.com, paste the link, and tap Download. The file saves to your Downloads folder.'
+  },
+  {
+    question: 'Why does my downloaded Bluesky video have no sound?',
+    answer:
+      'Some tools skip the audio stream. BlueVideoSaver detects and merges audio + video when both exist so your MP4 keeps the soundtrack.'
+  },
+  {
+    question: 'Can I download videos from private Bluesky accounts?',
+    answer:
+      'No. BlueVideoSaver works with public posts and does not bypass privacy settings or permissions.'
+  },
+  {
+    question: 'Is BlueVideoSaver free to use?',
+    answer: 'Yes. It’s free, requires no signup, and runs in your browser with server-side processing.'
+  }
+];
+
+const faqJsonLd = buildFaqPageSchema(homepageFaqs);
 export default function HomePage(): React.ReactElement {
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-10 gap-6">
@@ -172,6 +203,9 @@ export default function HomePage(): React.ReactElement {
           </div>
         </dl>
       </section>
+      {faqJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      )}
     </main>
   );
 }
