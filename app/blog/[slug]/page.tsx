@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type React from 'react';
 
+import { buildFaqPageSchema } from '@/lib/schema/faq';
 import { BLOG_POST_MAP, BLOG_POSTS } from '../posts';
 
 type BlogPageParams = {
@@ -35,32 +36,7 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
   }
 
   const Body = post.body;
-
-  // Slugs reported as duplicate FAQPages in GSC. We suppress the schema on these
-  // pages to consolidate the SEO signal on fewer, higher-priority pages.
-  const DUPLICATE_FAQ_SLUGS = [
-    'download-bluesky-video-chromebook',
-    'download-bluesky-video-android',
-    'save-bluesky-video-offline'
-  ];
-
-  const shouldSuppressFaqSchema = DUPLICATE_FAQ_SLUGS.includes(params.slug);
-
-  const faqJsonLd =
-    post.faqs.length > 0 && !shouldSuppressFaqSchema
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: post.faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer
-            }
-          }))
-        }
-      : null;
+  const faqJsonLd = buildFaqPageSchema(post.faqs);
 
   return (
     <main className="min-h-screen px-4 py-10">
