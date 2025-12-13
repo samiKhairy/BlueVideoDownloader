@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type React from 'react';
 
 import { BLOG_POST_MAP, BLOG_POSTS } from '../posts';
+import { buildFaqPageSchema } from '../../../lib/faqSchema';
 
 type BlogPageParams = {
   params: { slug: string };
@@ -47,20 +48,7 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
   const shouldSuppressFaqSchema = DUPLICATE_FAQ_SLUGS.includes(params.slug);
 
   const faqJsonLd =
-    post.faqs.length > 0 && !shouldSuppressFaqSchema
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: post.faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer
-            }
-          }))
-        }
-      : null;
+    !shouldSuppressFaqSchema ? buildFaqPageSchema(post.faqs) : null;
 
   return (
     <main className="min-h-screen px-4 py-10">
