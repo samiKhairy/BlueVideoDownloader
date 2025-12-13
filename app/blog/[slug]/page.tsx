@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import type React from 'react';
 
+import { buildFaqPageSchema } from '../../../lib/faqSchema';
 import { BLOG_POST_MAP, BLOG_POSTS } from '../posts';
 
 type BlogPageParams = {
@@ -35,32 +37,8 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
   }
 
   const Body = post.body;
-
-  // Slugs reported as duplicate FAQPages in GSC. We suppress the schema on these
-  // pages to consolidate the SEO signal on fewer, higher-priority pages.
-  const DUPLICATE_FAQ_SLUGS = [
-    'download-bluesky-video-chromebook',
-    'download-bluesky-video-android',
-    'save-bluesky-video-offline'
-  ];
-
-  const shouldSuppressFaqSchema = DUPLICATE_FAQ_SLUGS.includes(params.slug);
-
-  const faqJsonLd =
-    post.faqs.length > 0 && !shouldSuppressFaqSchema
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: post.faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer
-            }
-          }))
-        }
-      : null;
+  const faqJsonLd = buildFaqPageSchema(post.faqs);
+  const faqScriptId = `blog-faq-schema-${post.slug}`;
 
   return (
     <main className="min-h-screen px-4 py-10">
@@ -89,8 +67,10 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
           to download any public Bluesky video or GIF as an MP4 file.
         </p>
         {faqJsonLd && (
-          <script
+          <Script
+            id={faqScriptId}
             type="application/ld+json"
+            strategy="afterInteractive"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
           />
         )}
