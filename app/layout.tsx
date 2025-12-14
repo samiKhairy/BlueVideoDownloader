@@ -54,18 +54,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
     <html lang="en" className="h-full">
-      <head>
-        <script
+      <body className={`${inter.className} h-full text-slate-900`}>
+        <Script
+          id="software-ld-json"
           type="application/ld+json"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
         />
-      </head>
-      <body className={`${inter.className} h-full text-slate-900`}>
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3VRYPMT8S3" />
         <Script id="ga4-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+            function gtag(){dataLayer.push(arguments);} 
             gtag('js', new Date());
             gtag('config', 'G-3VRYPMT8S3', { anonymize_ip: true });
           `}
