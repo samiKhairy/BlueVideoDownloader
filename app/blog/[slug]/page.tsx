@@ -41,7 +41,8 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
   const DUPLICATE_FAQ_SLUGS = [
     'download-bluesky-video-chromebook',
     'download-bluesky-video-android',
-    'save-bluesky-video-offline'
+    'save-bluesky-video-offline',
+    'bluesky-gif-downloader'
   ];
 
   const shouldSuppressFaqSchema = DUPLICATE_FAQ_SLUGS.includes(params.slug);
