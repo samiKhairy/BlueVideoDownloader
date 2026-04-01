@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import type React from 'react';
-
 import { DownloadTool } from './components/DownloadTool';
-import { LogoHeader } from './components/LogoHeader';
+
+/* ─── Structured data ───────────────────────────────────────────── */
 
 const homepageFaqs = [
   {
@@ -16,6 +16,11 @@ const homepageFaqs = [
       'Copy the post link, open Chrome or Firefox to bluevideosaver.com, paste the link, and tap Download. The file saves to your Downloads folder.'
   },
   {
+    question: 'Can I download Bluesky GIFs?',
+    answer:
+      'Yes. Bluesky serves GIF-style posts as short video loops. BlueVideoSaver downloads them as MP4 files that play like GIFs on any device.'
+  },
+  {
     question: 'Why does my downloaded Bluesky video have no sound?',
     answer:
       'Some tools skip the audio stream. BlueVideoSaver detects and merges audio + video when both exist so your MP4 keeps the soundtrack.'
@@ -23,12 +28,12 @@ const homepageFaqs = [
   {
     question: 'Can I download videos from private Bluesky accounts?',
     answer:
-      'No. BlueVideoSaver works with public posts and does not bypass privacy settings or permissions.'
+      'No. BlueVideoSaver works with public posts only and does not bypass privacy settings or permissions.'
   },
   {
     question: 'Is BlueVideoSaver free to use?',
     answer:
-      "Yes. It's free, requires no signup, and runs in your browser with server-side processing."
+      'Yes. It is free, requires no signup, and runs in your browser with server-side processing.'
   }
 ];
 
@@ -38,23 +43,21 @@ const faqJsonLd = {
   mainEntity: homepageFaqs.map((faq) => ({
     '@type': 'Question',
     name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer
-    }
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer }
   }))
 };
 
 const howToJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
-  name: 'How to download Bluesky videos',
-  description: 'Save any public Bluesky video or GIF as an MP4 file using BlueVideoSaver.',
+  name: 'How to download Bluesky videos and GIFs',
+  description:
+    'Save any public Bluesky video or GIF as an MP4 file using BlueVideoSaver.',
   step: [
     {
       '@type': 'HowToStep',
       name: 'Copy the Bluesky link',
-      text: 'Open Bluesky and go to the post with the video or GIF you want. Tap the three dots on the post and copy the link.'
+      text: 'Open Bluesky and go to the post with the video or GIF. Tap the three dots and copy the link.'
     },
     {
       '@type': 'HowToStep',
@@ -68,144 +71,191 @@ const howToJsonLd = {
     }
   ]
 };
+
+/* ─── Page ──────────────────────────────────────────────────────── */
+
 export default function HomePage(): React.ReactElement {
   return (
-    <main className="min-h-screen flex flex-col items-center px-4 py-10 gap-6">
-      <section className="w-full max-w-5xl text-center space-y-6">
-        <div className="flex items-center justify-center gap-4 md:gap-6">
-          <LogoHeader className="mt-1" />
-
-          <h1 className="text-3xl md:text-4xl font-bold text-left md:text-center">
-            Bluesky Video Downloader – Download Bluesky Videos &amp; GIFs (Free)
+    <>
+      {/* Hero */}
+      <section className="px-4 pt-12 pb-8">
+        <div className="max-w-2xl mx-auto text-center space-y-4">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+            Bluesky Video &amp; GIF Downloader
           </h1>
-        </div>
-
-        <p className="text-sm md:text-base text-gray-700 max-w-3xl mx-auto">
-          Paste any public Bluesky post link and download the video or GIF as an MP4 file. Works on iPhone, Android, and desktop
-          – no signup, no watermark.
-        </p>
-
-        <div className="mt-8">
-          <DownloadTool showHeading={false} />
+          <p className="text-base text-slate-600 max-w-lg mx-auto">
+            Paste any public Bluesky post link to download the video or GIF as an MP4.
+            Free, no watermark, works on every device.
+          </p>
         </div>
       </section>
 
-      <section className="w-full max-w-3xl mt-12 space-y-4">
-        <h2 className="text-xl md:text-2xl font-semibold">How to download Bluesky videos</h2>
-        <ol className="list-decimal pl-5 space-y-2 text-sm md:text-base text-gray-700 text-left">
-          <li>Open Bluesky and go to the post with the video or GIF you want.</li>
-          <li>Tap the three dots on the post and copy the link.</li>
-          <li>Paste the link above and click “Download”.</li>
-          <li>Save the MP4 file to your device.</li>
-        </ol>
+      {/* Tool */}
+      <section className="px-4 pb-10">
+        <DownloadTool />
       </section>
 
-      <section className="w-full max-w-3xl mt-10 space-y-3">
-        <h2 className="text-xl md:text-2xl font-semibold">Features of BlueVideoSaver</h2>
-        <ul className="list-disc pl-5 space-y-2 text-sm md:text-base text-gray-700 text-left">
-          <li>Download Bluesky videos and GIFs as MP4 files with no watermark.</li>
-          <li>Optimized for mobile: full-width controls and 52px+ hit targets on phones.</li>
-          <li>Server-rendered HTML so bots and users see the tool immediately.</li>
-          <li>Backend merges audio and video when needed to avoid silent downloads.</li>
-        </ul>
-      </section>
-
-      <section className="w-full max-w-3xl mt-10 space-y-3">
-        <h2 className="text-xl md:text-2xl font-semibold">Why some Bluesky downloads have no sound</h2>
-        <p className="text-sm md:text-base text-gray-700 text-left">
-          Platforms often store audio and video separately. Some downloaders only capture the video stream, which leaves you with
-          a silent file. BlueVideoSaver detects and combines both streams into a single MP4 whenever audio is available, so your
-          saved videos include sound.
-        </p>
-      </section>
-
-      <section className="w-full max-w-3xl mt-10 space-y-3">
-        <h2 className="text-xl md:text-2xl font-semibold">Is it safe and legal to download Bluesky videos?</h2>
-        <p className="text-sm md:text-base text-gray-700 text-left">
-          BlueVideoSaver runs in the browser with server-side processing—no extensions or installs required. Always respect
-          creators’ rights and Bluesky’s terms: download only the content you have permission to save.
-        </p>
-        <p className="text-sm md:text-base text-gray-700 text-left">
-          Private or restricted posts cannot be downloaded if you do not have access to them on Bluesky.
-        </p>
-      </section>
-
-      <section className="w-full max-w-3xl mt-10 space-y-3">
-        <h2 className="text-xl md:text-2xl font-semibold">Guides &amp; tutorials</h2>
-        <p className="text-sm md:text-base text-gray-700 text-left">
-          Learn how to use BlueVideoSaver on different devices and fix common issues.
-        </p>
-        <ul className="list-disc pl-5 text-sm md:text-base text-sky-700 text-left">
-          <li>
-            <Link href="/blog/download-bluesky-video-iphone" className="underline font-semibold">
-              How to download Bluesky videos on iPhone
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/download-bluesky-video-android" className="underline font-semibold">
-              How to download Bluesky videos on Android
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/bluesky-download-no-sound-expanded" className="underline font-semibold">
-              Why your Bluesky download has no sound
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/download-private-bluesky-videos" className="underline font-semibold">
-              Can you download videos from private Bluesky accounts?
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/down-blue-alternative" className="underline font-semibold">
-              Down.blue alternative
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/bluesky-gif-downloader" className="underline font-semibold">
-              Save Bluesky GIF-style posts as MP4
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/download-bluesky-videos-windows" className="underline font-semibold">
-              Download Bluesky videos on Windows
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/download-bluesky-video-mac" className="underline font-semibold">
-              Download Bluesky videos on Mac
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/download-bluesky-video-chromebook" className="underline font-semibold">
-              Download Bluesky videos on Chromebook
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/save-bluesky-video-offline" className="underline font-semibold">
-              Save Bluesky videos for offline viewing
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog/best-bluesky-video-downloader" className="underline font-semibold">
-              Compare the best Bluesky downloaders
-            </Link>
-          </li>
-        </ul>
-      </section>
-
-      <section className="w-full max-w-3xl mt-10 space-y-3">
-        <h2 className="text-xl md:text-2xl font-semibold">Frequently asked questions</h2>
-        <dl className="space-y-4 text-left text-sm md:text-base text-gray-700">
-          {homepageFaqs.map((faq) => (
-            <div key={faq.question}>
-              <dt className="font-semibold">{faq.question}</dt>
-              <dd className="mt-1">{faq.answer}</dd>
+      {/* Trust signals */}
+      <section className="px-4 pb-12">
+        <div className="max-w-2xl mx-auto grid grid-cols-3 gap-3 text-center">
+          {[
+            { label: 'No watermark', detail: 'Original quality preserved' },
+            { label: 'No signup', detail: 'Works instantly in your browser' },
+            { label: 'Audio included', detail: 'Merges audio + video streams' }
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="py-4 px-3 rounded-xl bg-white border border-slate-100"
+            >
+              <p className="text-sm font-semibold text-slate-900">{item.label}</p>
+              <p className="text-xs text-slate-500 mt-1">{item.detail}</p>
             </div>
           ))}
-        </dl>
+        </div>
       </section>
 
+      {/* How it works */}
+      <section className="px-4 pb-12">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-xl font-semibold mb-5">
+            How to download Bluesky videos and GIFs
+          </h2>
+          <ol className="space-y-4">
+            {[
+              {
+                step: '1',
+                title: 'Copy the post link',
+                desc: 'Open Bluesky, find the post with the video or GIF, tap the three dots and copy the link.'
+              },
+              {
+                step: '2',
+                title: 'Paste and extract',
+                desc: 'Paste the link above and click Download. BlueVideoSaver finds the best video stream.'
+              },
+              {
+                step: '3',
+                title: 'Save to your device',
+                desc: 'Pick your format — Video, GIF, or Thumbnail — and download the file.'
+              }
+            ].map((item) => (
+              <li key={item.step} className="flex gap-4 items-start">
+                <span className="shrink-0 w-8 h-8 rounded-full bg-sky-100 text-sky-700 text-sm font-semibold flex items-center justify-center">
+                  {item.step}
+                </span>
+                <div>
+                  <p className="font-medium text-slate-900">{item.title}</p>
+                  <p className="text-sm text-slate-600 mt-0.5">{item.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="px-4 pb-12">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-xl font-semibold mb-5">
+            Why choose BlueVideoSaver
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              {
+                title: 'GIF-style posts supported',
+                desc: 'Bluesky serves GIFs as short video loops. We download them as clean MP4 files that play everywhere.'
+              },
+              {
+                title: 'Audio + video merged',
+                desc: 'Many tools return silent files because Bluesky splits audio and video. We merge both streams automatically.'
+              },
+              {
+                title: 'No watermark or re-encoding',
+                desc: 'The original stream is saved directly — no overlays, no quality loss, no branding added to your file.'
+              },
+              {
+                title: 'Works on every device',
+                desc: 'iPhone, Android, iPad, Windows, Mac, Chromebook — everything runs in your browser, no app needed.'
+              }
+            ].map((f) => (
+              <div key={f.title} className="p-4 rounded-xl bg-white border border-slate-100">
+                <p className="font-medium text-slate-900 text-sm">{f.title}</p>
+                <p className="text-sm text-slate-600 mt-1">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Affiliate — clean placement below the fold */}
+      <section className="px-4 pb-12">
+        <div className="max-w-2xl mx-auto">
+          <div className="px-5 py-4 rounded-xl bg-sky-50 border border-sky-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-medium text-slate-800">
+                Download slow? Your ISP might be throttling social media.
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">A VPN can bypass ISP throttling for faster downloads.</p>
+            </div>
+            <a
+              href="https://nordvpn.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium rounded-lg transition"
+            >
+              Try NordVPN &rarr;
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Guides */}
+      <section className="px-4 pb-12">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-xl font-semibold mb-4">Guides by device</h2>
+          <div className="grid sm:grid-cols-2 gap-2 text-sm">
+            {[
+              { href: '/blog/download-bluesky-video-iphone', label: 'Download on iPhone' },
+              { href: '/blog/download-bluesky-video-android', label: 'Download on Android' },
+              { href: '/blog/download-bluesky-videos-windows', label: 'Download on Windows' },
+              { href: '/blog/download-bluesky-video-mac', label: 'Download on Mac' },
+              { href: '/blog/bluesky-video-downloader-ipad', label: 'Download on iPad' },
+              { href: '/blog/download-bluesky-video-chromebook', label: 'Download on Chromebook' },
+              { href: '/blog/bluesky-gif-downloader', label: 'Save Bluesky GIFs as MP4' },
+              { href: '/blog/bluesky-download-no-sound-expanded', label: 'Fix: no sound on downloads' },
+              { href: '/blog/down-blue-alternative', label: 'Down.blue alternative' },
+              { href: '/blog/best-bluesky-video-downloader', label: 'Compare Bluesky downloaders' }
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-4 py-3 rounded-lg border border-slate-100 bg-white text-slate-700 hover:border-sky-200 hover:text-sky-700 transition"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="px-4 pb-16">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-xl font-semibold mb-5">Frequently asked questions</h2>
+          <dl className="space-y-4">
+            {homepageFaqs.map((faq) => (
+              <div
+                key={faq.question}
+                className="pb-4 border-b border-slate-100 last:border-0 last:pb-0"
+              >
+                <dt className="font-medium text-sm text-slate-900">{faq.question}</dt>
+                <dd className="mt-1 text-sm text-slate-600">{faq.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
@@ -214,6 +264,6 @@ export default function HomePage(): React.ReactElement {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
       />
-    </main>
+    </>
   );
 }

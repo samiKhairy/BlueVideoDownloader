@@ -95,7 +95,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'download-bluesky-video-android',
-    title: 'How to Download Bluesky Videos on Android',
+    title: 'How to Download Bluesky Videos on Android (2026)',
     description: 'Use your mobile browser with BlueVideoSaver to save Bluesky videos to your Android device.',
     excerpt: 'Quick steps for downloading Bluesky videos on Android with BlueVideoSaver in Chrome.',
     faqs: [
@@ -305,8 +305,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'down-blue-alternative',
-    title: 'Down.blue Alternative: A More Reliable Bluesky Video Downloader',
-    description: 'See how BlueVideoSaver compares to down.blue with better reliability, audio handling, and guides.',
+    title: 'Down.blue Not Working? Try BlueVideoSaver — Free Bluesky Downloader',
+    description: 'Down.blue failing or returning silent files? BlueVideoSaver merges audio and video, works on all devices, and has step-by-step guides.',
     excerpt: 'BlueVideoSaver focuses on reliability, audio merging, and mobile UX as a down.blue alternative.',
     faqs: [
       {
@@ -371,7 +371,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'bluesky-gif-downloader',
-    title: 'How to Save Bluesky GIFs as MP4',
+    title: 'Bluesky GIF Downloader — Save Bluesky GIFs as MP4 (Free, 2026)',
     description:
       'Turn looping GIF-style posts on Bluesky into MP4 files without quality loss using BlueVideoSaver.',
     excerpt: 'Copy the link to any Bluesky GIF post, paste it into BlueVideoSaver, and download a clean MP4.',
@@ -464,8 +464,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'download-bluesky-videos-windows',
-    title: 'How to Download Bluesky Videos on Windows',
-    description: 'Use BlueVideoSaver in your Windows browser to save Bluesky videos as MP4 files.',
+    title: 'Download Bluesky Videos on Windows — Chrome, Edge, Firefox (2026)',
+    description: 'Save Bluesky videos as MP4 on Windows using Chrome, Edge, or Firefox. Free, no software install, audio included.',
     excerpt: 'Copy the Bluesky link, paste it into BlueVideoSaver on Windows, and grab the MP4.',
     faqs: [
       {
@@ -918,8 +918,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'best-bluesky-video-downloader',
-    title: 'Best Bluesky Video Downloaders (2026 Comparison)',
-    description: 'Compare leading Bluesky download tools for audio support, mobile experience, and watermark handling.',
+    title: 'Best Bluesky Video Downloaders Compared — Features, Audio, Speed (2026)',
+    description: 'Honest comparison of Bluesky video downloaders in 2026: BlueVideoSaver, down.blue, BskySaver, Publer. Audio, speed, and mobile tested.',
     excerpt: 'Feature comparison of top Bluesky downloaders with why BlueVideoSaver leads in reliability.',
     faqs: [
       {
@@ -937,37 +937,71 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     body: () => (
       <>
-        <p className="mt-4">Here is a quick 2026 look at popular Bluesky downloaders and where each one shines.</p>
+        <p className="mt-4">
+          There are several Bluesky video downloaders available in 2026. Here is an honest comparison based on
+          actual testing — not just marketing copy. We cover audio support, mobile experience, watermark behavior,
+          and unique features for each tool.
+        </p>
 
-        <h2 className="mt-6 text-xl font-semibold">What to compare</h2>
+        <h2 className="mt-6 text-xl font-semibold">Feature comparison</h2>
+
+        <h3 className="mt-4 text-lg font-semibold">BlueVideoSaver</h3>
         <ul className="list-disc pl-5 space-y-2 mt-2">
-          <li>Audio support and stream merging.</li>
-          <li>Mobile friendliness on iPhone/Android.</li>
-          <li>Watermark or re-encode behavior.</li>
+          <li>Server-side processing — works in any browser on any device.</li>
+          <li>Detects split audio and video HLS streams and merges them into one MP4.</li>
+          <li>No watermark, no re-encoding, original quality preserved.</li>
+          <li>Device-specific guides for iPhone, Android, Windows, Mac, iPad, and Chromebook.</li>
+          <li>GIF-style posts download as clean MP4 loops.</li>
         </ul>
 
-        <h2 className="mt-6 text-xl font-semibold">Quick features table</h2>
+        <h3 className="mt-6 text-lg font-semibold">down.blue (downloader.notx.blue)</h3>
         <ul className="list-disc pl-5 space-y-2 mt-2">
-          <li>
-            <strong>BlueVideoSaver:</strong> Audio + video merge, mobile-first UI, no watermark.
-          </li>
-          <li>
-            <strong>down.blue:</strong> Simple UI; may miss audio on fragmented streams.
-          </li>
-          <li>
-            <strong>Generic browser extensions:</strong> Vary by site; some add watermarks or fail on HLS.
-          </li>
+          <li>Open-source project built in Brazil by a single developer.</li>
+          <li>Client-side WASM FFmpeg — conversion happens in your browser, no server needed.</li>
+          <li>Unique Bluesky bot: mention @down.blue in a reply to get a download link.</li>
+          <li>Can export as actual GIF format, not just MP4.</li>
+          <li>Also offers an iOS Shortcut for quick mobile downloads.</li>
+          <li>Downside: client-side conversion can be slow on older phones, and the UI is minimal.</li>
         </ul>
 
-        <h2 className="mt-6 text-xl font-semibold">Why BlueVideoSaver wins</h2>
-        <p className="mt-2">Reliability on HLS streams, audio merging, and clear guides for every device make it the safest pick.</p>
+        <h3 className="mt-6 text-lg font-semibold">BskySaver (bskysaver.com)</h3>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li>Clean interface with multiple resolution options before downloading.</li>
+          <li>Works well on mobile browsers.</li>
+          <li>Audio support varies by video — some downloads may be silent on certain posts.</li>
+        </ul>
+
+        <h3 className="mt-6 text-lg font-semibold">BskyDownloader (bskydownloader.com)</h3>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li>Offers MP4 and TS format options.</li>
+          <li>Shows a progress bar during server-side processing.</li>
+          <li>Basic UI without device-specific guidance.</li>
+        </ul>
+
+        <h3 className="mt-6 text-lg font-semibold">Publer</h3>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li>Part of a larger social media scheduling suite.</li>
+          <li>Good quality downloads with no watermark.</li>
+          <li>Also offers Bluesky hashtag generators, caption tools, and post schedulers.</li>
+          <li>The video downloader is a free tool within a larger product.</li>
+        </ul>
+
+        <h2 className="mt-8 text-xl font-semibold">Which one should you use?</h2>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li><strong>For everyday downloads:</strong> BlueVideoSaver — paste, click, done.</li>
+          <li><strong>For real GIF format:</strong> down.blue exports as actual .gif files.</li>
+          <li><strong>For resolution choices:</strong> BskySaver lets you pick video quality.</li>
+          <li><strong>For automation:</strong> down.blue&apos;s Bluesky bot and iOS Shortcut.</li>
+          <li><strong>If one tool fails:</strong> Keep two bookmarked — different backends handle different streams.</li>
+        </ul>
 
         <p className="mt-6 text-sm text-gray-700">
-          Try it now by pasting your link on the{' '}
+          Start with{' '}
           <a href="/" className="underline" rel="noreferrer">
-            homepage
-          </a>
-          .
+            BlueVideoSaver
+          </a>{' '}
+          — paste your link and download in seconds. If you need a different format, try one of the alternatives
+          above.
         </p>
       </>
     )
@@ -1125,8 +1159,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'bluesky-video-downloader-ipad',
-    title: 'Bluesky Video Downloader for iPad',
-    description: 'Use Safari on iPad with BlueVideoSaver to download Bluesky videos into Files or Photos.',
+    title: 'Download Bluesky Videos on iPad — Free, No App Needed (2026)',
+    description: 'Download Bluesky videos and GIFs on iPad using Safari. No app install — paste the link and save the MP4.',
     excerpt: 'Download Bluesky videos on iPad via Safari and store them in Files or Photos.',
     faqs: [
       {
