@@ -17,7 +17,7 @@ export type BlogPost = {
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'download-bluesky-video-iphone',
-    title: 'How to Download Bluesky Videos on iPhone (2025 Guide)',
+    title: 'How to Download Bluesky Videos on iPhone (2026 Guide)',
     description: 'Step-by-step guide to saving Bluesky videos from Bluesky to your iPhone using BlueVideoSaver.',
     excerpt: 'Save Bluesky videos to your iPhone Photos or Files app with BlueVideoSaver in a few taps.',
     faqs: [
@@ -918,7 +918,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'best-bluesky-video-downloader',
-    title: 'Best Bluesky Video Downloaders (2025 Comparison)',
+    title: 'Best Bluesky Video Downloaders (2026 Comparison)',
     description: 'Compare leading Bluesky download tools for audio support, mobile experience, and watermark handling.',
     excerpt: 'Feature comparison of top Bluesky downloaders with why BlueVideoSaver leads in reliability.',
     faqs: [
@@ -937,7 +937,7 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     body: () => (
       <>
-        <p className="mt-4">Here is a quick 2025 look at popular Bluesky downloaders and where each one shines.</p>
+        <p className="mt-4">Here is a quick 2026 look at popular Bluesky downloaders and where each one shines.</p>
 
         <h2 className="mt-6 text-xl font-semibold">What to compare</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">

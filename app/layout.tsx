@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     'BlueVideoSaver lets you download Bluesky videos and GIFs as MP4, no watermark. Works on iPhone, Android, and desktop – free and fast.',
   metadataBase: new URL('https://bluevideosaver.com'),
   alternates: {
-    canonical: '/https://bluevideosaver.com'
+    canonical: '/'
   },
   openGraph: {
     title: 'Bluesky Video Downloader – Download Bluesky Videos & GIFs (Free)',
@@ -55,16 +55,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
     <html lang="en" className="h-full">
-      {/*
+      <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-        */}
+      </head>
       <body className={`${inter.className} h-full text-slate-900`}>
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3VRYPMT8S3" />
         <Script id="ga4-init" strategy="afterInteractive">

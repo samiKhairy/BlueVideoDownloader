@@ -3,6 +3,71 @@ import type React from 'react';
 
 import { DownloadTool } from './components/DownloadTool';
 import { LogoHeader } from './components/LogoHeader';
+
+const homepageFaqs = [
+  {
+    question: 'How do I download Bluesky videos on iPhone?',
+    answer:
+      'Copy the post link, open bluevideosaver.com in Safari, paste it into the box, tap Download, then save the MP4 to Files or Photos.'
+  },
+  {
+    question: 'How do I download Bluesky videos on Android?',
+    answer:
+      'Copy the post link, open Chrome or Firefox to bluevideosaver.com, paste the link, and tap Download. The file saves to your Downloads folder.'
+  },
+  {
+    question: 'Why does my downloaded Bluesky video have no sound?',
+    answer:
+      'Some tools skip the audio stream. BlueVideoSaver detects and merges audio + video when both exist so your MP4 keeps the soundtrack.'
+  },
+  {
+    question: 'Can I download videos from private Bluesky accounts?',
+    answer:
+      'No. BlueVideoSaver works with public posts and does not bypass privacy settings or permissions.'
+  },
+  {
+    question: 'Is BlueVideoSaver free to use?',
+    answer:
+      "Yes. It's free, requires no signup, and runs in your browser with server-side processing."
+  }
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: homepageFaqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer
+    }
+  }))
+};
+
+const howToJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to download Bluesky videos',
+  description: 'Save any public Bluesky video or GIF as an MP4 file using BlueVideoSaver.',
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: 'Copy the Bluesky link',
+      text: 'Open Bluesky and go to the post with the video or GIF you want. Tap the three dots on the post and copy the link.'
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Paste the link',
+      text: 'Go to bluevideosaver.com and paste the link into the download box.'
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Download the MP4',
+      text: 'Click Download and save the MP4 file to your device.'
+    }
+  ]
+};
 export default function HomePage(): React.ReactElement {
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-10 gap-6">
@@ -82,7 +147,7 @@ export default function HomePage(): React.ReactElement {
             </Link>
           </li>
           <li>
-            <Link href="/blog/bluesky-download-no-sound" className="underline font-semibold">
+            <Link href="/blog/bluesky-download-no-sound-expanded" className="underline font-semibold">
               Why your Bluesky download has no sound
             </Link>
           </li>
@@ -132,28 +197,23 @@ export default function HomePage(): React.ReactElement {
       <section className="w-full max-w-3xl mt-10 space-y-3">
         <h2 className="text-xl md:text-2xl font-semibold">Frequently asked questions</h2>
         <dl className="space-y-4 text-left text-sm md:text-base text-gray-700">
-          <div>
-            <dt className="font-semibold">How do I download Bluesky videos on iPhone?</dt>
-            <dd className="mt-1">Copy the post link, open bluevideosaver.com in Safari, paste it into the box, tap Download, then save the MP4 to Files or Photos.</dd>
-          </div>
-          <div>
-            <dt className="font-semibold">How do I download Bluesky videos on Android?</dt>
-            <dd className="mt-1">Copy the post link, open Chrome or Firefox to bluevideosaver.com, paste the link, and tap Download. The file saves to your Downloads folder.</dd>
-          </div>
-          <div>
-            <dt className="font-semibold">Why does my downloaded Bluesky video have no sound?</dt>
-            <dd className="mt-1">Some tools skip the audio stream. BlueVideoSaver detects and merges audio + video when both exist so your MP4 keeps the soundtrack.</dd>
-          </div>
-          <div>
-            <dt className="font-semibold">Can I download videos from private Bluesky accounts?</dt>
-            <dd className="mt-1">No. BlueVideoSaver works with public posts and does not bypass privacy settings or permissions.</dd>
-          </div>
-          <div>
-            <dt className="font-semibold">Is BlueVideoSaver free to use?</dt>
-            <dd className="mt-1">Yes. It’s free, requires no signup, and runs in your browser with server-side processing.</dd>
-          </div>
+          {homepageFaqs.map((faq) => (
+            <div key={faq.question}>
+              <dt className="font-semibold">{faq.question}</dt>
+              <dd className="mt-1">{faq.answer}</dd>
+            </div>
+          ))}
         </dl>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
     </main>
   );
 }

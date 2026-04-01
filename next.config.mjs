@@ -5,6 +5,13 @@ const nextConfig = {
   experimental: {
     typedRoutes: true
   },
+  redirects: async () => [
+    {
+      source: '/blog/bluesky-download-no-sound',
+      destination: '/blog/bluesky-download-no-sound-expanded',
+      permanent: true
+    }
+  ],
   headers: async () => [
     {
       source: '/(.*)',
