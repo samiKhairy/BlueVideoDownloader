@@ -227,7 +227,7 @@ export default function HomePage(): React.ReactElement {
             ].map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                href={link.href as any}
                 className="px-4 py-3 rounded-lg border border-slate-100 bg-white text-slate-700 hover:border-sky-200 hover:text-sky-700 transition"
               >
                 {link.label}
