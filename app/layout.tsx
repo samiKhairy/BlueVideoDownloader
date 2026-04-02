@@ -28,7 +28,12 @@ export const metadata: Metadata = {
     'Download Bluesky videos and GIFs as MP4 for free. No watermark, no signup. Works on iPhone, Android, and desktop. Fast and reliable.',
   metadataBase: new URL('https://bluevideosaver.com'),
   alternates: {
-    canonical: '/'
+    canonical: '/',
+    languages: {
+      'en': '/',
+      'pt': '/pt',
+      'es': '/es'
+    }
   },
   openGraph: {
     title: 'Bluesky Video & GIF Downloader – Free, No Watermark',
