@@ -76,7 +76,7 @@ export const BLOG_POSTS: BlogPost[] = [
         </p>
 
         <p className="mt-6 text-sm text-gray-600">
-          Tip: Add BlueVideoSaver to your Home Screen from Safari’s share menu to use it like an app.
+          Tip: Add BlueVideoSaver to your Home Screen from Safariâ€™s share menu to use it like an app.
         </p>
 
         <p className="mt-6 text-sm text-gray-600">
@@ -104,9 +104,9 @@ export const BLOG_POSTS: BlogPost[] = [
         answer: 'Most browsers save to the Downloads folder. Open your Files app or gallery to play the MP4.'
       },
       {
-        question: 'Why can’t my Android phone play the downloaded video?',
+        question: 'Why canâ€™t my Android phone play the downloaded video?',
         answer:
-          'If playback fails, update your video player or re-download on Wi‑Fi to avoid partial files. BlueVideoSaver delivers a standard MP4 that Android players support.'
+          'If playback fails, update your video player or re-download on Wiâ€‘Fi to avoid partial files. BlueVideoSaver delivers a standard MP4 that Android players support.'
       },
       {
         question: 'Does BlueVideoSaver work on Samsung and Xiaomi devices?',
@@ -120,7 +120,7 @@ export const BLOG_POSTS: BlogPost[] = [
     body: () => (
       <>
         <p className="mt-4">
-          Use your Android browser with BlueVideoSaver to grab Bluesky videos as MP4 files—no installs or signups.
+          Use your Android browser with BlueVideoSaver to grab Bluesky videos as MP4 filesâ€”no installs or signups.
         </p>
 
         <h2 className="mt-6 text-xl font-semibold">Step 1: Copy the link from the Bluesky app</h2>
@@ -158,7 +158,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <h3 className="mt-6 text-lg font-semibold">Tips</h3>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Add BlueVideoSaver to your Home Screen from your browser menu for faster access.</li>
-          <li>Use Wi‑Fi for large files to avoid heavy data usage.</li>
+          <li>Use Wiâ€‘Fi for large files to avoid heavy data usage.</li>
           <li>
             If you get no audio, read{' '}
             <a href="/blog/bluesky-download-no-sound" className="underline" rel="noreferrer">
@@ -199,7 +199,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         question: 'Can low volume be a device issue?',
-        answer: 'Yes. Check your phone’s mute switch, media volume, or Bluetooth outputs before re-downloading.'
+        answer: 'Yes. Check your phoneâ€™s mute switch, media volume, or Bluetooth outputs before re-downloading.'
       }
     ],
     body: () => (
@@ -219,7 +219,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <h2 className="mt-6 text-xl font-semibold">When there still might be no sound</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>The original post has no audio track or was uploaded muted.</li>
-          <li>A network hiccup caused a partial download; try again on Wi‑Fi.</li>
+          <li>A network hiccup caused a partial download; try again on Wiâ€‘Fi.</li>
           <li>On iPhone, check the mute switch or system volume if playback is muted.</li>
         </ul>
 
@@ -246,7 +246,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'Can You Download Videos from Private Bluesky Accounts? [Honest Answer]',
     description:
       'Understand the limits of downloading private Bluesky posts and what BlueVideoSaver can and cannot do.',
-    excerpt: 'Private Bluesky posts cannot be downloaded without access—BlueVideoSaver works with public content only.',
+    excerpt: 'Private Bluesky posts cannot be downloaded without accessâ€”BlueVideoSaver works with public content only.',
     faqs: [
       {
         question: 'Can I download Bluesky videos from private accounts?',
@@ -262,7 +262,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         question: 'What if I remove a viewer from a private post?',
-        answer: 'Once access is revoked, that person cannot download the post. Deleting the post also removes the original media from BlueVideoSaver’s reach.'
+        answer: 'Once access is revoked, that person cannot download the post. Deleting the post also removes the original media from BlueVideoSaverâ€™s reach.'
       }
     ],
     body: () => (
@@ -276,12 +276,12 @@ export const BLOG_POSTS: BlogPost[] = [
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Downloads videos and GIFs from public Bluesky posts.</li>
           <li>Does not bypass permissions, brute-force links, or scrape private content.</li>
-          <li>Respects Bluesky’s terms of service and creator rights.</li>
+          <li>Respects Blueskyâ€™s terms of service and creator rights.</li>
         </ul>
 
         <h2 className="mt-6 text-xl font-semibold">FAQ</h2>
         <p className="mt-2">
-          <strong>Can others download my private posts?</strong> No—only people who can already view your private post could
+          <strong>Can others download my private posts?</strong> Noâ€”only people who can already view your private post could
           attempt a download. If you revoke access or delete the post, new downloads stop.
         </p>
         <p className="mt-2">
@@ -305,7 +305,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'down-blue-alternative',
-    title: 'Down.blue Not Working? Try BlueVideoSaver — Free Bluesky Downloader',
+    title: 'Down.blue Not Working? Try BlueVideoSaver â€” Free Bluesky Downloader',
     description: 'Down.blue failing or returning silent files? BlueVideoSaver merges audio and video, works on all devices, and has step-by-step guides.',
     excerpt: 'BlueVideoSaver focuses on reliability, audio merging, and mobile UX as a down.blue alternative.',
     faqs: [
@@ -371,7 +371,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'bluesky-gif-downloader',
-    title: 'Bluesky GIF Downloader — Save Bluesky GIFs as MP4 (Free, 2026)',
+    title: 'Bluesky GIF Downloader â€” Save Bluesky GIFs as MP4 (Free, 2026)',
     description:
       'Turn looping GIF-style posts on Bluesky into MP4 files without quality loss using BlueVideoSaver.',
     excerpt: 'Copy the link to any Bluesky GIF post, paste it into BlueVideoSaver, and download a clean MP4.',
@@ -408,7 +408,7 @@ export const BLOG_POSTS: BlogPost[] = [
           <li>Select <strong>Copy link</strong>.</li>
         </ol>
 
-        <h2 className="mt-6 text-xl font-semibold">Paste in BlueVideoSaver → MP4 output</h2>
+        <h2 className="mt-6 text-xl font-semibold">Paste in BlueVideoSaver â†’ MP4 output</h2>
         <ol className="list-decimal pl-5 space-y-2 mt-2">
           <li>
             Visit{' '}
@@ -442,7 +442,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
         <h2 className="mt-6 text-xl font-semibold">Troubleshooting</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
-          <li>Animation missing? Recopy the link and retry on Wi‑Fi.</li>
+          <li>Animation missing? Recopy the link and retry on Wiâ€‘Fi.</li>
           <li>Corrupted file? Clear your browser cache and download again.</li>
           <li>Need sound? Check out the{' '}
             <a href="/blog/bluesky-download-no-sound" className="underline" rel="noreferrer">
@@ -464,7 +464,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'download-bluesky-videos-windows',
-    title: 'Download Bluesky Videos on Windows — Chrome, Edge, Firefox (2026)',
+    title: 'Download Bluesky Videos on Windows â€” Chrome, Edge, Firefox (2026)',
     description: 'Save Bluesky videos as MP4 on Windows using Chrome, Edge, or Firefox. Free, no software install, audio included.',
     excerpt: 'Copy the Bluesky link, paste it into BlueVideoSaver on Windows, and grab the MP4.',
     faqs: [
@@ -474,7 +474,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         question: 'Do I need special software on Windows?',
-        answer: 'No. Use Chrome, Edge, or Firefox—everything runs in the browser with no installs or extensions.'
+        answer: 'No. Use Chrome, Edge, or Firefoxâ€”everything runs in the browser with no installs or extensions.'
       },
       {
         question: 'Can I convert the MP4 after downloading?',
@@ -506,12 +506,12 @@ export const BLOG_POSTS: BlogPost[] = [
         </ol>
 
         <h2 className="mt-6 text-xl font-semibold">Where the file goes on Windows</h2>
-        <p className="mt-2">Check the <strong>Downloads</strong> folder. If you changed your browser’s save location, follow the prompt to pick a folder.</p>
+        <p className="mt-2">Check the <strong>Downloads</strong> folder. If you changed your browserâ€™s save location, follow the prompt to pick a folder.</p>
 
         <h3 className="mt-6 text-lg font-semibold">Browser notes</h3>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Chrome and Edge show the download bar at the bottom or top; click the file to open.</li>
-          <li>Firefox may ask to open or save—choose <strong>Save</strong>.</li>
+          <li>Firefox may ask to open or saveâ€”choose <strong>Save</strong>.</li>
         </ul>
 
         <h2 className="mt-6 text-xl font-semibold">Convert MP4 if needed</h2>
@@ -543,16 +543,16 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         question: 'Can I AirDrop the MP4 to my iPhone?',
-        answer: 'Yes. Right-click the MP4 in Finder, choose Share → AirDrop, and pick your iPhone to transfer instantly.'
+        answer: 'Yes. Right-click the MP4 in Finder, choose Share â†’ AirDrop, and pick your iPhone to transfer instantly.'
       },
       {
         question: 'Do I need an app to download on macOS?',
-        answer: 'No. Use your browser only—BlueVideoSaver handles the download server-side.'
+        answer: 'No. Use your browser onlyâ€”BlueVideoSaver handles the download server-side.'
       }
     ],
     body: () => (
       <>
-        <p className="mt-4">Download Bluesky videos on macOS in minutes with Safari or Chrome—no installs required.</p>
+        <p className="mt-4">Download Bluesky videos on macOS in minutes with Safari or Chromeâ€”no installs required.</p>
 
         <h2 className="mt-6 text-xl font-semibold">Copy the link from Safari or Chrome</h2>
         <ol className="list-decimal pl-5 space-y-2 mt-2">
@@ -600,9 +600,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'bluesky-video-not-saving',
-    title: "Bluesky Video Doesn't Save? Here’s How to Fix It",
-    description: 'Solve failed Bluesky downloads with simple steps for iPhone, Android, and desktop.',
-    excerpt: 'Fix Bluesky videos not saving by using BlueVideoSaver and adjusting device settings.',
+    title: 'Bluesky Video Not Working? Fix Failed Downloads in 2 Minutes (2026)',
+    description: 'Fix Bluesky videos not saving, not working, or failing to process. Step-by-step solutions for iPhone, Android, and desktop.',
+    excerpt: 'Fix Bluesky videos not saving or failing to process — quick solutions for every device.',
     faqs: [
       {
         question: 'Why is my Bluesky download failing?',
@@ -613,8 +613,8 @@ export const BLOG_POSTS: BlogPost[] = [
         answer: 'Accept storage or file-saving prompts in Safari or Chrome. Without permission, the MP4 cannot be written to your device.'
       },
       {
-        question: 'Does Wi‑Fi make a difference?',
-        answer: 'Yes. Large videos can time out on poor connections. Downloading over Wi‑Fi reduces corruption and retries.'
+        question: 'Does Wiâ€‘Fi make a difference?',
+        answer: 'Yes. Large videos can time out on poor connections. Downloading over Wiâ€‘Fi reduces corruption and retries.'
       }
     ],
     body: () => (
@@ -643,7 +643,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <h2 className="mt-6 text-xl font-semibold">Device-specific tips</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>
-            <strong>iPhone Safari:</strong> If Save Video is missing, ensure Files storage is available and try again over Wi‑Fi.
+            <strong>iPhone Safari:</strong> If Save Video is missing, ensure Files storage is available and try again over Wiâ€‘Fi.
           </li>
           <li>
             <strong>Android:</strong> Grant storage permission when Chrome asks. Check the Downloads folder after saving.
@@ -671,7 +671,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: 'bluesky-download-no-sound-expanded',
     title: 'Why Bluesky Downloads Have No Sound (Full Fix Guide)',
     description: 'Deep dive into silent Bluesky downloads and how BlueVideoSaver merges audio and video streams.',
-    excerpt: 'Understand silent Bluesky downloads and fix them with BlueVideoSaver’s audio + video merge.',
+    excerpt: 'Understand silent Bluesky downloads and fix them with BlueVideoSaverâ€™s audio + video merge.',
     faqs: [
       {
         question: 'Why do some Bluesky downloads ship without audio?',
@@ -703,7 +703,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <h2 className="mt-6 text-xl font-semibold">Legitimate reasons a video is silent</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>The creator uploaded a muted clip or GIF-style loop.</li>
-          <li>A Live Photo–style post has no separate audio track.</li>
+          <li>A Live Photoâ€“style post has no separate audio track.</li>
           <li>Volume is intentionally set to zero on the original file.</li>
         </ul>
 
@@ -779,7 +779,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <h2 className="mt-6 text-xl font-semibold">Upload to Instagram or TikTok</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Open the Instagram or TikTok app and choose the downloaded MP4.</li>
-          <li>Adjust the aspect ratio—use 9:16 for vertical, 1:1 for square.</li>
+          <li>Adjust the aspect ratioâ€”use 9:16 for vertical, 1:1 for square.</li>
           <li>Add captions and tag the original creator when possible.</li>
         </ul>
 
@@ -812,7 +812,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         question: 'Where do Bluesky downloads go on Android?',
-        answer: 'Most browsers store the MP4 in the Downloads folder. Check the Files app or your gallery’s Downloads or Recent section.'
+        answer: 'Most browsers store the MP4 in the Downloads folder. Check the Files app or your galleryâ€™s Downloads or Recent section.'
       },
       {
         question: 'Where do Bluesky downloads go on desktop?',
@@ -834,13 +834,13 @@ export const BLOG_POSTS: BlogPost[] = [
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Safari saves to the <strong>Files</strong> app by default.</li>
           <li>Move the MP4 to <strong>Photos</strong> if you want it in your Camera Roll.</li>
-          <li>Search “Downloads” inside Files if you cannot find it.</li>
+          <li>Search â€œDownloadsâ€ inside Files if you cannot find it.</li>
         </ul>
 
         <h2 className="mt-6 text-xl font-semibold">Android</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Chrome and most browsers save to the <strong>Downloads</strong> folder.</li>
-          <li>Open the Files app or your gallery’s Downloads/Recent section.</li>
+          <li>Open the Files app or your galleryâ€™s Downloads/Recent section.</li>
           <li>If prompted, choose a folder and remember the path shown.</li>
         </ul>
 
@@ -903,7 +903,7 @@ export const BLOG_POSTS: BlogPost[] = [
             </a>{' '}
             and hit <strong>Download</strong>.
           </li>
-          <li>Save the MP4—no extra watermark is added.</li>
+          <li>Save the MP4â€”no extra watermark is added.</li>
         </ol>
 
         <p className="mt-6 text-sm text-gray-700">
@@ -918,9 +918,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'best-bluesky-video-downloader',
-    title: 'Best Bluesky Video Downloaders Compared — Features, Audio, Speed (2026)',
-    description: 'Honest comparison of Bluesky video downloaders in 2026: BlueVideoSaver, down.blue, BskySaver, Publer. Audio, speed, and mobile tested.',
-    excerpt: 'Feature comparison of top Bluesky downloaders with why BlueVideoSaver leads in reliability.',
+    title: '5 Best Bluesky Video Downloaders (Tested & Ranked 2026)',
+    description: 'We tested every Bluesky video downloader in 2026. See which handles audio, GIFs, and mobile best â€” BlueVideoSaver, down.blue, BskySaver, and more.',
+    excerpt: 'We tested 5 Bluesky video downloaders head-to-head. See which one actually works best.',
     faqs: [
       {
         question: 'What makes a Bluesky downloader worth using?',
@@ -939,7 +939,7 @@ export const BLOG_POSTS: BlogPost[] = [
       <>
         <p className="mt-4">
           There are several Bluesky video downloaders available in 2026. Here is an honest comparison based on
-          actual testing — not just marketing copy. We cover audio support, mobile experience, watermark behavior,
+          actual testing â€” not just marketing copy. We cover audio support, mobile experience, watermark behavior,
           and unique features for each tool.
         </p>
 
@@ -947,7 +947,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
         <h3 className="mt-4 text-lg font-semibold">BlueVideoSaver</h3>
         <ul className="list-disc pl-5 space-y-2 mt-2">
-          <li>Server-side processing — works in any browser on any device.</li>
+          <li>Server-side processing â€” works in any browser on any device.</li>
           <li>Detects split audio and video HLS streams and merges them into one MP4.</li>
           <li>No watermark, no re-encoding, original quality preserved.</li>
           <li>Device-specific guides for iPhone, Android, Windows, Mac, iPad, and Chromebook.</li>
@@ -957,7 +957,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <h3 className="mt-6 text-lg font-semibold">down.blue (downloader.notx.blue)</h3>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Open-source project built in Brazil by a single developer.</li>
-          <li>Client-side WASM FFmpeg — conversion happens in your browser, no server needed.</li>
+          <li>Client-side WASM FFmpeg â€” conversion happens in your browser, no server needed.</li>
           <li>Unique Bluesky bot: mention @down.blue in a reply to get a download link.</li>
           <li>Can export as actual GIF format, not just MP4.</li>
           <li>Also offers an iOS Shortcut for quick mobile downloads.</li>
@@ -968,7 +968,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Clean interface with multiple resolution options before downloading.</li>
           <li>Works well on mobile browsers.</li>
-          <li>Audio support varies by video — some downloads may be silent on certain posts.</li>
+          <li>Audio support varies by video â€” some downloads may be silent on certain posts.</li>
         </ul>
 
         <h3 className="mt-6 text-lg font-semibold">BskyDownloader (bskydownloader.com)</h3>
@@ -988,11 +988,11 @@ export const BLOG_POSTS: BlogPost[] = [
 
         <h2 className="mt-8 text-xl font-semibold">Which one should you use?</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
-          <li><strong>For everyday downloads:</strong> BlueVideoSaver — paste, click, done.</li>
+          <li><strong>For everyday downloads:</strong> BlueVideoSaver â€” paste, click, done.</li>
           <li><strong>For real GIF format:</strong> down.blue exports as actual .gif files.</li>
           <li><strong>For resolution choices:</strong> BskySaver lets you pick video quality.</li>
           <li><strong>For automation:</strong> down.blue&apos;s Bluesky bot and iOS Shortcut.</li>
-          <li><strong>If one tool fails:</strong> Keep two bookmarked — different backends handle different streams.</li>
+          <li><strong>If one tool fails:</strong> Keep two bookmarked â€” different backends handle different streams.</li>
         </ul>
 
         <p className="mt-6 text-sm text-gray-700">
@@ -1000,7 +1000,7 @@ export const BLOG_POSTS: BlogPost[] = [
           <a href="/" className="underline" rel="noreferrer">
             BlueVideoSaver
           </a>{' '}
-          — paste your link and download in seconds. If you need a different format, try one of the alternatives
+          â€” paste your link and download in seconds. If you need a different format, try one of the alternatives
           above.
         </p>
       </>
@@ -1014,7 +1014,7 @@ export const BLOG_POSTS: BlogPost[] = [
     faqs: [
       {
         question: 'Do I need an extension on Chromebook?',
-        answer: 'No. Use the Chrome browser and BlueVideoSaver—everything runs online without extra installs.'
+        answer: 'No. Use the Chrome browser and BlueVideoSaverâ€”everything runs online without extra installs.'
       },
       {
         question: 'Where is the downloaded MP4 stored on ChromeOS?',
@@ -1065,8 +1065,8 @@ export const BLOG_POSTS: BlogPost[] = [
         answer: 'Yes. Once the MP4 is saved, you can play it offline on your phone, tablet, or laptop.'
       },
       {
-        question: 'Should I download over Wi‑Fi?',
-        answer: 'Wi‑Fi is best for large files to avoid data caps and reduce the chance of partial downloads.'
+        question: 'Should I download over Wiâ€‘Fi?',
+        answer: 'Wiâ€‘Fi is best for large files to avoid data caps and reduce the chance of partial downloads.'
       },
       {
         question: 'Where should I store offline videos on mobile?',
@@ -1091,7 +1091,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
         <h2 className="mt-6 text-xl font-semibold">Offline tips</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
-          <li>Download over Wi‑Fi before traveling.</li>
+          <li>Download over Wiâ€‘Fi before traveling.</li>
           <li>Move files to Photos (iPhone) or Gallery (Android) for easier playback.</li>
           <li>On desktop, store videos in a synced folder if you want cloud backup.</li>
         </ul>
@@ -1159,8 +1159,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'bluesky-video-downloader-ipad',
-    title: 'Download Bluesky Videos on iPad — Free, No App Needed (2026)',
-    description: 'Download Bluesky videos and GIFs on iPad using Safari. No app install — paste the link and save the MP4.',
+    title: 'Download Bluesky Videos on iPad â€” Free, No App Needed (2026)',
+    description: 'Download Bluesky videos and GIFs on iPad using Safari. No app install â€” paste the link and save the MP4.',
     excerpt: 'Download Bluesky videos on iPad via Safari and store them in Files or Photos.',
     faqs: [
       {
@@ -1173,7 +1173,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         question: 'Do I need an App Store download?',
-        answer: 'No. Everything runs in Safari—no extra apps or extensions required.'
+        answer: 'No. Everything runs in Safariâ€”no extra apps or extensions required.'
       }
     ],
     body: () => (
@@ -1208,7 +1208,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'download-bluesky-audio-only',
     title: 'How to Download Bluesky Audio Only',
-    description: 'Extract just the audio track from Bluesky posts using BlueVideoSaver’s merged MP4 output.',
+    description: 'Extract just the audio track from Bluesky posts using BlueVideoSaverâ€™s merged MP4 output.',
     excerpt: 'Download Bluesky posts and keep only the audio by converting the MP4 after saving.',
     faqs: [
       {
@@ -1262,12 +1262,12 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt: 'Troubleshoot Bluesky link copying so you can download videos without errors.',
     faqs: [
       {
-        question: 'Why won’t the Bluesky app copy my link?',
+        question: 'Why wonâ€™t the Bluesky app copy my link?',
         answer: 'The app may be outdated or temporarily glitching. Update the app and use the share arrow as a fallback.'
       },
       {
         question: 'Can I copy the link from desktop instead?',
-        answer: 'Yes. Open the post on the web and copy the URL from the address bar—any valid post link works in BlueVideoSaver.'
+        answer: 'Yes. Open the post on the web and copy the URL from the address barâ€”any valid post link works in BlueVideoSaver.'
       },
       {
         question: 'What if the link I copied is incomplete?',
@@ -1281,7 +1281,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <h2 className="mt-6 text-xl font-semibold">Quick fixes for Copy link</h2>
         <ul className="list-disc pl-5 space-y-2 mt-2">
           <li>Update the Bluesky app to the latest version.</li>
-          <li>Tap the share arrow if the three dots menu fails—select <strong>Copy</strong>.</li>
+          <li>Tap the share arrow if the three dots menu failsâ€”select <strong>Copy</strong>.</li>
           <li>On desktop, copy the URL from the address bar after opening the post.</li>
         </ul>
 

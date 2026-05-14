@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import type React from 'react';
+import React from 'react';
 import { DownloadTool } from './components/DownloadTool';
 
 /* ─── Structured data ───────────────────────────────────────────── */
@@ -92,7 +91,9 @@ export default function HomePage(): React.ReactElement {
 
       {/* Tool */}
       <section className="px-4 pb-10">
-        <DownloadTool />
+        <React.Suspense fallback={<div className="text-center py-20">Loading tool...</div>}>
+          <DownloadTool />
+        </React.Suspense>
       </section>
 
       {/* Trust signals */}
@@ -224,14 +225,14 @@ export default function HomePage(): React.ReactElement {
               { href: '/blog/bluesky-download-no-sound-expanded', label: 'Fix: no sound on downloads' },
               { href: '/blog/down-blue-alternative', label: 'Down.blue alternative' },
               { href: '/blog/best-bluesky-video-downloader', label: 'Compare Bluesky downloaders' }
-            ].map((link) => (
-              <Link
+            ].map((link: { href: string; label: string }) => (
+              <a
                 key={link.href}
-                href={link.href as any}
+                href={link.href}
                 className="px-4 py-3 rounded-lg border border-slate-100 bg-white text-slate-700 hover:border-sky-200 hover:text-sky-700 transition"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
         </div>

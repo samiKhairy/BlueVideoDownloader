@@ -1,11 +1,23 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter } from 'next/font/google';
+import { headers } from 'next/headers';
 import './globals.css';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
+
+function getPageLang(): string {
+  const headersList = headers();
+  const pathname = headersList.get('x-pathname') || '/';
+  if (pathname.startsWith('/pt')) return 'pt';
+  if (pathname.startsWith('/es')) return 'es';
+  if (pathname.startsWith('/de')) return 'de';
+  if (pathname.startsWith('/fr')) return 'fr';
+  if (pathname.startsWith('/id')) return 'id';
+  return 'en';
+}
 
 const softwareJsonLd = {
   '@context': 'https://schema.org',
@@ -32,7 +44,10 @@ export const metadata: Metadata = {
     languages: {
       'en': '/',
       'pt': '/pt',
-      'es': '/es'
+      'es': '/es',
+      'de': '/de',
+      'fr': '/fr',
+      'id': '/id'
     }
   },
   openGraph: {
@@ -68,7 +83,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }): React.ReactElement {
   return (
-    <html lang="en" className="h-full">
+    <html lang={getPageLang()} className="h-full">
       <head>
         <script
           type="application/ld+json"

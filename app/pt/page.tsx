@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import type React from 'react';
+import React from 'react';
 import { DownloadTool } from '../components/DownloadTool';
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Baixe vídeos e GIFs do Bluesky como MP4 grátis. Sem marca d'água, sem cadastro. Funciona no iPhone, Android e computador.",
   alternates: {
     canonical: '/pt',
-    languages: { en: '/', pt: '/pt', es: '/es' }
+    languages: { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id' }
   },
   openGraph: {
     title: "Baixar Vídeos do Bluesky — Grátis, Sem Marca D'Água",
@@ -76,12 +76,18 @@ export default function PtPage(): React.ReactElement {
     <>
       <section className="px-4 pt-12 pb-8">
         <div className="max-w-2xl mx-auto text-center space-y-4">
-          <div className="flex justify-center gap-3 text-sm">
+          <div className="flex justify-center gap-3 text-sm flex-wrap">
             <Link href="/" className="text-slate-500 hover:text-sky-700 transition">English</Link>
             <span className="text-slate-300">|</span>
             <span className="font-medium text-sky-700">Português</span>
             <span className="text-slate-300">|</span>
             <Link href="/es" className="text-slate-500 hover:text-sky-700 transition">Español</Link>
+            <span className="text-slate-300">|</span>
+            <Link href="/de" className="text-slate-500 hover:text-sky-700 transition">Deutsch</Link>
+            <span className="text-slate-300">|</span>
+            <Link href="/fr" className="text-slate-500 hover:text-sky-700 transition">Français</Link>
+            <span className="text-slate-300">|</span>
+            <Link href="/id" className="text-slate-500 hover:text-sky-700 transition">Indonesia</Link>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
             Baixar Vídeos e GIFs do Bluesky
@@ -94,7 +100,9 @@ export default function PtPage(): React.ReactElement {
       </section>
 
       <section className="px-4 pb-10">
-        <DownloadTool />
+        <React.Suspense fallback={<div className="text-center py-20">Loading tool...</div>}>
+          <DownloadTool />
+        </React.Suspense>
       </section>
 
       <section className="px-4 pb-12">

@@ -4,47 +4,47 @@ import React from 'react';
 import { DownloadTool } from '../components/DownloadTool';
 
 export const metadata: Metadata = {
-  title: 'Descargar Vídeos de Bluesky — Gratis, Sin Marca de Agua (2026)',
+  title: 'Bluesky Video Downloader — Kostenlos Bluesky Videos & GIFs herunterladen (2026)',
   description:
-    'Descarga vídeos y GIFs de Bluesky como MP4 gratis. Sin marca de agua, sin registro. Funciona en iPhone, Android y computadora.',
+    'Lade Bluesky Videos und GIFs kostenlos als MP4 herunter. Kein Wasserzeichen, keine Anmeldung. Funktioniert auf iPhone, Android und Desktop.',
   alternates: {
-    canonical: '/es',
+    canonical: '/de',
     languages: { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id' }
   },
   openGraph: {
-    title: 'Descargar Vídeos de Bluesky — Gratis, Sin Marca de Agua',
+    title: 'Bluesky Video Downloader — Kostenlos, Ohne Wasserzeichen',
     description:
-      'Pega el enlace de cualquier publicación de Bluesky y guarda el vídeo o GIF como MP4. Funciona en todos los dispositivos.',
-    url: 'https://bluevideosaver.com/es',
+      'Füge den Link eines Bluesky-Beitrags ein und speichere das Video oder GIF als MP4. Funktioniert auf allen Geräten.',
+    url: 'https://bluevideosaver.com/de',
     siteName: 'BlueVideoSaver'
   }
 };
 
 const faqs = [
   {
-    question: '¿Cómo descargar vídeos de Bluesky en iPhone?',
+    question: 'Wie lade ich Bluesky-Videos auf dem iPhone herunter?',
     answer:
-      'Copia el enlace de la publicación, abre bluevideosaver.com en Safari, pega en la caja, toca Download y guarda el MP4 en Archivos o Fotos.'
+      'Kopiere den Post-Link, öffne bluevideosaver.com in Safari, füge ihn in das Feld ein, tippe auf Download und speichere die MP4-Datei in Dateien oder Fotos.'
   },
   {
-    question: '¿Cómo descargar vídeos de Bluesky en Android?',
+    question: 'Wie lade ich Bluesky-Videos auf Android herunter?',
     answer:
-      'Copia el enlace, abre Chrome y ve a bluevideosaver.com, pega el enlace y toca Download. El archivo se guarda en la carpeta Descargas.'
+      'Kopiere den Post-Link, öffne Chrome und gehe zu bluevideosaver.com, füge den Link ein und tippe auf Download. Die Datei wird im Download-Ordner gespeichert.'
   },
   {
-    question: '¿Puedo descargar GIFs de Bluesky?',
+    question: 'Kann ich Bluesky-GIFs herunterladen?',
     answer:
-      'Sí. Bluesky muestra GIFs como vídeos cortos en bucle. BlueVideoSaver los descarga como archivos MP4 que funcionan en cualquier dispositivo.'
+      'Ja. Bluesky zeigt GIFs als kurze Video-Loops an. BlueVideoSaver lädt sie als MP4-Dateien herunter, die auf jedem Gerät funktionieren.'
   },
   {
-    question: '¿Por qué el vídeo descargado no tiene sonido?',
+    question: 'Warum hat das heruntergeladene Video keinen Ton?',
     answer:
-      'Algunas herramientas ignoran la pista de audio. BlueVideoSaver detecta y combina audio y vídeo cuando ambos existen.'
+      'Einige Tools ignorieren die Audiospur. BlueVideoSaver erkennt und kombiniert Audio und Video, wenn beides vorhanden ist.'
   },
   {
-    question: '¿BlueVideoSaver es gratuito?',
+    question: 'Ist BlueVideoSaver kostenlos?',
     answer:
-      'Sí. Es gratuito, no necesita registro y funciona directamente en el navegador.'
+      'Ja. Es ist kostenlos, erfordert keine Anmeldung und funktioniert direkt im Browser.'
   }
 ];
 
@@ -61,17 +61,17 @@ const faqJsonLd = {
 const howToJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
-  name: 'Cómo descargar vídeos de Bluesky',
-  description: 'Guarda cualquier vídeo o GIF público de Bluesky como MP4 usando BlueVideoSaver.',
-  inLanguage: 'es',
+  name: 'So lädst du Bluesky-Videos herunter',
+  description: 'Speichere jedes öffentliche Bluesky-Video oder GIF als MP4 mit BlueVideoSaver.',
+  inLanguage: 'de',
   step: [
-    { '@type': 'HowToStep', name: 'Copia el enlace', text: 'Abre Bluesky, encuentra la publicación con el vídeo o GIF, toca los tres puntos y copia el enlace.' },
-    { '@type': 'HowToStep', name: 'Pega el enlace', text: 'Ve a bluevideosaver.com y pega el enlace en la caja de descarga.' },
-    { '@type': 'HowToStep', name: 'Descarga el MP4', text: 'Haz clic en Download y guarda el archivo MP4 en tu dispositivo.' }
+    { '@type': 'HowToStep', name: 'Link kopieren', text: 'Öffne Bluesky, finde den Beitrag mit dem Video oder GIF, tippe auf die drei Punkte und kopiere den Link.' },
+    { '@type': 'HowToStep', name: 'Link einfügen', text: 'Gehe zu bluevideosaver.com und füge den Link in das Download-Feld ein.' },
+    { '@type': 'HowToStep', name: 'MP4 herunterladen', text: 'Klicke auf Download und speichere die MP4-Datei auf deinem Gerät.' }
   ]
 };
 
-export default function EsPage(): React.ReactElement {
+export default function DePage(): React.ReactElement {
   return (
     <>
       <section className="px-4 pt-12 pb-8">
@@ -81,20 +81,20 @@ export default function EsPage(): React.ReactElement {
             <span className="text-slate-300">|</span>
             <Link href="/pt" className="text-slate-500 hover:text-sky-700 transition">Português</Link>
             <span className="text-slate-300">|</span>
-            <span className="font-medium text-sky-700">Español</span>
+            <Link href="/es" className="text-slate-500 hover:text-sky-700 transition">Español</Link>
             <span className="text-slate-300">|</span>
-            <Link href="/de" className="text-slate-500 hover:text-sky-700 transition">Deutsch</Link>
+            <span className="font-medium text-sky-700">Deutsch</span>
             <span className="text-slate-300">|</span>
             <Link href="/fr" className="text-slate-500 hover:text-sky-700 transition">Français</Link>
             <span className="text-slate-300">|</span>
             <Link href="/id" className="text-slate-500 hover:text-sky-700 transition">Indonesia</Link>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Descargar Vídeos y GIFs de Bluesky
+            Bluesky Videos & GIFs herunterladen
           </h1>
           <p className="text-base text-slate-600 max-w-lg mx-auto">
-            Pega el enlace de cualquier publicación pública de Bluesky para descargar el vídeo o GIF como MP4.
-            Gratis, sin marca de agua, funciona en todos los dispositivos.
+            Füge den Link eines öffentlichen Bluesky-Beitrags ein, um das Video oder GIF als MP4 herunterzuladen.
+            Kostenlos, ohne Wasserzeichen, funktioniert auf allen Geräten.
           </p>
         </div>
       </section>
@@ -108,9 +108,9 @@ export default function EsPage(): React.ReactElement {
       <section className="px-4 pb-12">
         <div className="max-w-2xl mx-auto grid grid-cols-3 gap-3 text-center">
           {[
-            { label: 'Sin marca de agua', detail: 'Calidad original preservada' },
-            { label: 'Sin registro', detail: 'Funciona directo en el navegador' },
-            { label: 'Con audio', detail: 'Combina audio y vídeo automáticamente' }
+            { label: 'Kein Wasserzeichen', detail: 'Originalqualität bleibt erhalten' },
+            { label: 'Keine Anmeldung', detail: 'Funktioniert sofort im Browser' },
+            { label: 'Mit Audio', detail: 'Audio und Video automatisch zusammengeführt' }
           ].map((item) => (
             <div key={item.label} className="py-4 px-3 rounded-xl bg-white border border-slate-100">
               <p className="text-sm font-semibold text-slate-900">{item.label}</p>
@@ -122,12 +122,12 @@ export default function EsPage(): React.ReactElement {
 
       <section className="px-4 pb-12">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-5">Cómo descargar vídeos de Bluesky</h2>
+          <h2 className="text-xl font-semibold mb-5">So lädst du Bluesky-Videos herunter</h2>
           <ol className="space-y-4">
             {[
-              { step: '1', title: 'Copia el enlace', desc: 'Abre Bluesky, encuentra la publicación con el vídeo o GIF, toca los tres puntos y copia el enlace.' },
-              { step: '2', title: 'Pega y extrae', desc: 'Pega el enlace arriba y haz clic en Download. BlueVideoSaver encuentra la mejor calidad disponible.' },
-              { step: '3', title: 'Guarda en tu dispositivo', desc: 'Elige el formato — Vídeo, GIF o Miniatura — y descarga el archivo.' }
+              { step: '1', title: 'Link kopieren', desc: 'Öffne Bluesky, finde den Beitrag mit dem Video oder GIF, tippe auf die drei Punkte und kopiere den Link.' },
+              { step: '2', title: 'Einfügen und extrahieren', desc: 'Füge den Link oben ein und klicke auf Download. BlueVideoSaver findet die beste verfügbare Qualität.' },
+              { step: '3', title: 'Auf deinem Gerät speichern', desc: 'Wähle das Format — Video, GIF oder Vorschaubild — und lade die Datei herunter.' }
             ].map((item) => (
               <li key={item.step} className="flex gap-4 items-start">
                 <span className="shrink-0 w-8 h-8 rounded-full bg-sky-100 text-sky-700 text-sm font-semibold flex items-center justify-center">{item.step}</span>
@@ -143,13 +143,13 @@ export default function EsPage(): React.ReactElement {
 
       <section className="px-4 pb-12">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-5">¿Por qué usar BlueVideoSaver?</h2>
+          <h2 className="text-xl font-semibold mb-5">Warum BlueVideoSaver?</h2>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
-              { title: 'GIFs de Bluesky soportados', desc: 'Bluesky muestra GIFs como vídeos cortos en bucle. Los descargamos como MP4 que funcionan en cualquier dispositivo.' },
-              { title: 'Audio y vídeo combinados', desc: 'Muchas herramientas devuelven archivos sin sonido. Nosotros combinamos las pistas de audio y vídeo automáticamente.' },
-              { title: 'Sin marca de agua', desc: 'El stream original se guarda directamente — sin superposiciones, sin pérdida de calidad.' },
-              { title: 'Funciona en todos los dispositivos', desc: 'iPhone, Android, iPad, Windows, Mac, Chromebook — todo funciona en tu navegador.' }
+              { title: 'Bluesky-GIFs unterstützt', desc: 'Bluesky zeigt GIFs als kurze Video-Loops. Wir laden sie als MP4 herunter, die auf jedem Gerät funktionieren.' },
+              { title: 'Audio und Video zusammengeführt', desc: 'Viele Tools liefern stumme Dateien. Wir fügen Audio- und Videospuren automatisch zusammen.' },
+              { title: 'Kein Wasserzeichen', desc: 'Der Originalstream wird direkt gespeichert — keine Overlays, kein Qualitätsverlust.' },
+              { title: 'Funktioniert auf allen Geräten', desc: 'iPhone, Android, iPad, Windows, Mac, Chromebook — alles läuft in deinem Browser.' }
             ].map((f) => (
               <div key={f.title} className="p-4 rounded-xl bg-white border border-slate-100">
                 <p className="font-medium text-slate-900 text-sm">{f.title}</p>
@@ -162,7 +162,7 @@ export default function EsPage(): React.ReactElement {
 
       <section className="px-4 pb-16">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-5">Preguntas frecuentes</h2>
+          <h2 className="text-xl font-semibold mb-5">Häufig gestellte Fragen</h2>
           <dl className="space-y-4">
             {faqs.map((faq) => (
               <div key={faq.question} className="pb-4 border-b border-slate-100 last:border-0 last:pb-0">

@@ -1,7 +1,8 @@
 'use client';
 
 import type React from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 
 export type ExtractionResponse = {
@@ -42,7 +43,7 @@ export function DownloadTool(): React.ReactElement {
   }, [showStatus]);
 
   const requestExtraction = useCallback(
-    async (event?: React.FormEvent<HTMLFormElement>) => {
+    async (event?: React.FormEvent<HTMLFormElement>, initialUrl?: string) => {
       event?.preventDefault();
       setStatus(null);
       setLoading(true);
@@ -50,7 +51,7 @@ export function DownloadTool(): React.ReactElement {
       setThumbnailUrl('');
       trackEvent('download_start', { event_category: 'engagement', event_label: 'bluesky_video' });
 
-      const trimmed = url.trim();
+      const trimmed = (initialUrl ?? url).trim();
       if (!trimmed) {
         showStatus('Paste a Bluesky post URL first.', 'error');
         setLoading(false);
@@ -82,6 +83,19 @@ export function DownloadTool(): React.ReactElement {
     },
     [url, showStatus]
   );
+
+  const searchParams = useSearchParams();
+  const autoExtractionTriggeredRef = useRef(false);
+
+  useEffect(() => {
+    const paramUrl = searchParams?.get('url')?.trim();
+
+    if (!autoExtractionTriggeredRef.current && paramUrl) {
+      autoExtractionTriggeredRef.current = true;
+      setUrl(paramUrl);
+      void requestExtraction(undefined, paramUrl);
+    }
+  }, [searchParams, requestExtraction]);
 
   const startDownload = useCallback(() => {
     if (!videoUrl) {

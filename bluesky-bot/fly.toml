@@ -1,0 +1,9 @@
+app = "bluevideosaver-bot"
+primary_region = "iad"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  POLL_INTERVAL_MS = "30000"
+  SITE_URL = "https://bluevideosaver.com"
