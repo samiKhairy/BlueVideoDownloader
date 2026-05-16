@@ -1,9 +1,22 @@
-app = "bluevideosaver-bot"
-primary_region = "iad"
+# fly.toml app configuration file generated for bluevideosaver-bot on 2026-05-16T16:09:09+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'bluevideosaver-bot'
+primary_region = 'iad'
 
 [build]
 
 [env]
-  NODE_ENV = "production"
-  POLL_INTERVAL_MS = "30000"
-  SITE_URL = "https://bluevideosaver.com"
+  NODE_ENV = 'production'
+  POLL_INTERVAL_MS = '15000'
+  SITE_URL = 'https://bluevideosaver.com'
+
+
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024

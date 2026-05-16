@@ -126,7 +126,7 @@ async function processNotifications() {
 
         if (!parentPost || parentPost.$type?.endsWith('NotFound') || parentPost.$type?.endsWith('Blocked')) continue;
 
-        const targetPost = parentPost;
+        const targetPost = parentPost.post ? parentPost.post : parentPost;
 
         const hasVid = hasVideoEmbed(targetPost.record);
 
@@ -136,13 +136,16 @@ async function processNotifications() {
         const richText = new RichText({ text: replyText });
         await richText.detectFacets(agent);
 
+        const mentionRecord = mention.record as any;
+        const rootRef = mentionRecord.reply?.root || { uri: mention.uri, cid: mention.cid };
+
         await agent.post({
           text: richText.text,
           facets: richText.facets,
           reply: {
-            root: mentionUri,
-            parent: mentionUri
-          } as any
+            root: rootRef,
+            parent: { uri: mention.uri, cid: mention.cid }
+          }
         });
 
         if (hasVid) {
