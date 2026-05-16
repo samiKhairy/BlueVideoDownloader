@@ -8,6 +8,8 @@ import { trackEvent } from '@/lib/analytics';
 export type ExtractionResponse = {
   video_url: string;
   thumbnail_url?: string | null;
+  title?: string | null;
+  platform?: string | null;
 };
 
 type DownloadFormat = 'video' | 'gif' | 'thumbnail';
@@ -21,12 +23,68 @@ const variantStyles: Record<StatusVariant, string> = {
   info: 'bg-sky-50 border-sky-200 text-sky-800'
 };
 
-export function DownloadTool(): React.ReactElement {
+/* ─── Platform configuration ────────────────────────────────────── */
+
+type PlatformKey = 'universal' | 'bluesky' | 'twitter' | 'tiktok';
+
+interface PlatformUi {
+  placeholder: string;
+  buttonLabel: string;
+  downloadPrefix: string;
+  accentColor: string;
+  accentHover: string;
+  accentActive: string;
+}
+
+const PLATFORM_UI: Record<PlatformKey, PlatformUi> = {
+  universal: {
+    placeholder: 'Paste a video link from Bluesky, Twitter/X, or TikTok…',
+    buttonLabel: 'Download Video',
+    downloadPrefix: 'video',
+    accentColor: 'bg-sky-600',
+    accentHover: 'hover:bg-sky-700',
+    accentActive: 'active:bg-sky-800'
+  },
+  bluesky: {
+    placeholder: 'https://bsky.app/profile/handle/post/abc123',
+    buttonLabel: 'Download Bluesky Video or GIF',
+    downloadPrefix: 'bluesky',
+    accentColor: 'bg-sky-600',
+    accentHover: 'hover:bg-sky-700',
+    accentActive: 'active:bg-sky-800'
+  },
+  twitter: {
+    placeholder: 'https://x.com/user/status/123456789…',
+    buttonLabel: 'Download Twitter/X Video',
+    downloadPrefix: 'twitter',
+    accentColor: 'bg-slate-900',
+    accentHover: 'hover:bg-slate-800',
+    accentActive: 'active:bg-slate-700'
+  },
+  tiktok: {
+    placeholder: 'https://www.tiktok.com/@user/video/123456789…',
+    buttonLabel: 'Download TikTok Video',
+    downloadPrefix: 'tiktok',
+    accentColor: 'bg-rose-600',
+    accentHover: 'hover:bg-rose-700',
+    accentActive: 'active:bg-rose-800'
+  }
+};
+
+/* ─── Component ─────────────────────────────────────────────────── */
+
+export function DownloadTool({
+  platform = 'universal'
+}: {
+  platform?: PlatformKey;
+}): React.ReactElement {
+  const ui = PLATFORM_UI[platform];
   const [url, setUrl] = useState('');
   const [status, setStatus] = useState<{ message: string; variant: StatusVariant } | null>(null);
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [detectedPlatform, setDetectedPlatform] = useState('');
   const [selectedFormat, setSelectedFormat] = useState<DownloadFormat>('video');
 
   const showStatus = useCallback((message: string, variant: StatusVariant = 'info') => {
@@ -49,11 +107,12 @@ export function DownloadTool(): React.ReactElement {
       setLoading(true);
       setVideoUrl('');
       setThumbnailUrl('');
-      trackEvent('download_start', { event_category: 'engagement', event_label: 'bluesky_video' });
+      setDetectedPlatform('');
+      trackEvent('download_start', { event_category: 'engagement', event_label: platform });
 
       const trimmed = (initialUrl ?? url).trim();
       if (!trimmed) {
-        showStatus('Paste a Bluesky post URL first.', 'error');
+        showStatus('Paste a video URL first.', 'error');
         setLoading(false);
         return;
       }
@@ -67,21 +126,25 @@ export function DownloadTool(): React.ReactElement {
         const data: ExtractionResponse & { error?: string } = await res.json();
 
         if (!res.ok || data.error) throw new Error(data.error || 'Unable to process this URL.');
-        if (!data.video_url) throw new Error('No video found in this post.');
+        if (!data.video_url) throw new Error('No video found at this URL.');
 
         setVideoUrl(data.video_url);
         setThumbnailUrl(data.thumbnail_url || '');
+        setDetectedPlatform(data.platform || '');
         showStatus('Ready to download.', 'success');
-        trackEvent('download_success', { event_category: 'engagement', event_label: 'bluesky_video' });
+        trackEvent('download_success', {
+          event_category: 'engagement',
+          event_label: data.platform || platform
+        });
       } catch (error) {
         const msg = error instanceof Error ? error.message : 'Unexpected error';
         showStatus(msg, 'error');
-        trackEvent('download_error', { event_category: 'engagement', event_label: 'bluesky_video' });
+        trackEvent('download_error', { event_category: 'engagement', event_label: platform });
       } finally {
         setLoading(false);
       }
     },
-    [url, showStatus]
+    [url, showStatus, platform]
   );
 
   const searchParams = useSearchParams();
@@ -97,6 +160,8 @@ export function DownloadTool(): React.ReactElement {
     }
   }, [searchParams, requestExtraction]);
 
+  const filePrefix = detectedPlatform || ui.downloadPrefix;
+
   const startDownload = useCallback(() => {
     if (!videoUrl) {
       showStatus('Extract the video first.', 'warning');
@@ -108,15 +173,16 @@ export function DownloadTool(): React.ReactElement {
         showStatus('No thumbnail available for this post.', 'warning');
         return;
       }
-      window.location.href = `/api/download?url=${encodeURIComponent(thumbnailUrl)}&filename=bluesky-thumbnail.jpg`;
+      window.location.href = `/api/download?url=${encodeURIComponent(thumbnailUrl)}&filename=${filePrefix}-thumbnail.jpg`;
       return;
     }
 
-    // Both 'video' and 'gif' download the MP4 — Bluesky GIFs are already MP4
-    const filename = selectedFormat === 'gif' ? 'bluesky-gif.mp4' : 'bluesky-video.mp4';
+    // Both 'video' and 'gif' download the MP4
+    const filename =
+      selectedFormat === 'gif' ? `${filePrefix}-gif.mp4` : `${filePrefix}-video.mp4`;
     window.location.href = `/api/download?url=${encodeURIComponent(videoUrl)}&filename=${encodeURIComponent(filename)}`;
     showStatus('Download started.', 'success');
-  }, [videoUrl, thumbnailUrl, selectedFormat, showStatus]);
+  }, [videoUrl, thumbnailUrl, selectedFormat, showStatus, filePrefix]);
 
   const copyVideoUrl = useCallback(async () => {
     if (!videoUrl) {
@@ -142,7 +208,7 @@ export function DownloadTool(): React.ReactElement {
             id="urlInput"
             type="url"
             inputMode="url"
-            placeholder="https://bsky.app/profile/handle/post/abc123"
+            placeholder={ui.placeholder}
             className="flex-1 px-4 py-3 min-h-[48px] rounded-xl border border-slate-200 bg-white shadow-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-100 outline-none transition text-sm"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
@@ -164,7 +230,7 @@ export function DownloadTool(): React.ReactElement {
 
         <button
           type="submit"
-          className="w-full inline-flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white font-semibold py-3 min-h-[48px] rounded-xl shadow-sm transition text-sm"
+          className={`w-full inline-flex items-center justify-center gap-2 ${ui.accentColor} ${ui.accentHover} ${ui.accentActive} text-white font-semibold py-3 min-h-[48px] rounded-xl shadow-sm transition text-sm`}
           disabled={loading}
         >
           {loading ? (
@@ -173,18 +239,28 @@ export function DownloadTool(): React.ReactElement {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h3z" />
               </svg>
-              Extracting...
+              Extracting…
             </>
           ) : (
             <>
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              Download Bluesky Video or GIF
+              {ui.buttonLabel}
             </>
           )}
         </button>
       </form>
+
+      {/* Platform badge (universal mode) */}
+      {platform === 'universal' && detectedPlatform && (
+        <div className="flex items-center gap-2 text-xs text-slate-500">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100 text-slate-600 font-medium capitalize">
+            {detectedPlatform === 'twitter' ? 'Twitter/X' : detectedPlatform}
+          </span>
+          <span>video detected</span>
+        </div>
+      )}
 
       {/* Status message */}
       {status && (
@@ -240,7 +316,7 @@ export function DownloadTool(): React.ReactElement {
               </div>
               {selectedFormat === 'gif' && (
                 <p className="text-xs text-slate-500 mt-2">
-                  Bluesky serves GIF-style posts as short MP4 loops. The download preserves full quality.
+                  GIF-style posts are saved as short MP4 loops. The download preserves full quality.
                 </p>
               )}
             </div>

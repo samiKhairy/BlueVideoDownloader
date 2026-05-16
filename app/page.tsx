@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { DownloadTool } from './components/DownloadTool';
 
 /* ─── Structured data ───────────────────────────────────────────── */
@@ -15,19 +16,24 @@ const homepageFaqs = [
       'Copy the post link, open Chrome or Firefox to bluevideosaver.com, paste the link, and tap Download. The file saves to your Downloads folder.'
   },
   {
+    question: 'Can I download Twitter/X videos?',
+    answer:
+      'Yes. Paste any tweet URL from twitter.com or x.com and BlueVideoSaver will download the video as an MP4 with audio included.'
+  },
+  {
+    question: 'Can I download TikTok videos without watermark?',
+    answer:
+      'Yes. Paste any TikTok link and the video downloads as a clean MP4 without the TikTok watermark overlay.'
+  },
+  {
     question: 'Can I download Bluesky GIFs?',
     answer:
       'Yes. Bluesky serves GIF-style posts as short video loops. BlueVideoSaver downloads them as MP4 files that play like GIFs on any device.'
   },
   {
-    question: 'Why does my downloaded Bluesky video have no sound?',
+    question: 'Why does my downloaded video have no sound?',
     answer:
       'Some tools skip the audio stream. BlueVideoSaver detects and merges audio + video when both exist so your MP4 keeps the soundtrack.'
-  },
-  {
-    question: 'Can I download videos from private Bluesky accounts?',
-    answer:
-      'No. BlueVideoSaver works with public posts only and does not bypass privacy settings or permissions.'
   },
   {
     question: 'Is BlueVideoSaver free to use?',
@@ -49,14 +55,14 @@ const faqJsonLd = {
 const howToJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
-  name: 'How to download Bluesky videos and GIFs',
+  name: 'How to download videos from Bluesky, Twitter, and TikTok',
   description:
-    'Save any public Bluesky video or GIF as an MP4 file using BlueVideoSaver.',
+    'Save any public video from Bluesky, Twitter/X, or TikTok as an MP4 file using BlueVideoSaver.',
   step: [
     {
       '@type': 'HowToStep',
-      name: 'Copy the Bluesky link',
-      text: 'Open Bluesky and go to the post with the video or GIF. Tap the three dots and copy the link.'
+      name: 'Copy the video link',
+      text: 'Open Bluesky, Twitter/X, or TikTok and find the post with the video. Copy the link from the share menu.'
     },
     {
       '@type': 'HowToStep',
@@ -80,10 +86,10 @@ export default function HomePage(): React.ReactElement {
       <section className="px-4 pt-12 pb-8">
         <div className="max-w-2xl mx-auto text-center space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Bluesky Video &amp; GIF Downloader
+            Video Downloader — Bluesky, Twitter/X &amp; TikTok
           </h1>
           <p className="text-base text-slate-600 max-w-lg mx-auto">
-            Paste any public Bluesky post link to download the video or GIF as an MP4.
+            Paste any video link from Bluesky, Twitter/X, or TikTok to download it as MP4.
             Free, no watermark, works on every device.
           </p>
         </div>
@@ -92,8 +98,34 @@ export default function HomePage(): React.ReactElement {
       {/* Tool */}
       <section className="px-4 pb-10">
         <React.Suspense fallback={<div className="text-center py-20">Loading tool...</div>}>
-          <DownloadTool />
+          <DownloadTool platform="universal" />
         </React.Suspense>
+      </section>
+
+      {/* Supported platforms */}
+      <section className="px-4 pb-10">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-2 text-sm">
+            {([
+              { href: '/twitter-video-downloader' as const, label: 'Twitter/X', icon: '𝕏' },
+              { href: '/tiktok-video-downloader' as const, label: 'TikTok', icon: '♪' },
+              { href: '/' as const, label: 'Bluesky', icon: '🦋', active: true as const }
+            ] as const).map((p) => (
+              <a
+                key={p.href}
+                href={p.href}
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full border transition font-medium ${
+                  'active' in p && p.active
+                    ? 'bg-sky-50 border-sky-200 text-sky-700'
+                    : 'bg-white border-slate-200 text-slate-600 hover:border-sky-200 hover:text-sky-700'
+                }`}
+              >
+                <span>{p.icon}</span>
+                {p.label}
+              </a>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Trust signals */}
@@ -119,19 +151,19 @@ export default function HomePage(): React.ReactElement {
       <section className="px-4 pb-12">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-xl font-semibold mb-5">
-            How to download Bluesky videos and GIFs
+            How to download videos from social media
           </h2>
           <ol className="space-y-4">
             {[
               {
                 step: '1',
                 title: 'Copy the post link',
-                desc: 'Open Bluesky, find the post with the video or GIF, tap the three dots and copy the link.'
+                desc: 'Open Bluesky, Twitter/X, or TikTok. Find the post with the video and copy the link from the share menu.'
               },
               {
                 step: '2',
                 title: 'Paste and extract',
-                desc: 'Paste the link above and click Download. BlueVideoSaver finds the best video stream.'
+                desc: 'Paste the link above and click Download. BlueVideoSaver auto-detects the platform and finds the best video stream.'
               },
               {
                 step: '3',
@@ -162,12 +194,12 @@ export default function HomePage(): React.ReactElement {
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               {
-                title: 'GIF-style posts supported',
-                desc: 'Bluesky serves GIFs as short video loops. We download them as clean MP4 files that play everywhere.'
+                title: 'Multi-platform support',
+                desc: 'Download videos from Bluesky, Twitter/X, and TikTok — all from one tool. No switching between sites.'
               },
               {
                 title: 'Audio + video merged',
-                desc: 'Many tools return silent files because Bluesky splits audio and video. We merge both streams automatically.'
+                desc: 'Many tools return silent files because platforms split audio and video. We merge both streams automatically.'
               },
               {
                 title: 'No watermark or re-encoding',
@@ -212,9 +244,11 @@ export default function HomePage(): React.ReactElement {
       {/* Guides */}
       <section className="px-4 pb-12">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-4">Guides by device</h2>
+          <h2 className="text-xl font-semibold mb-4">Download tools &amp; guides</h2>
           <div className="grid sm:grid-cols-2 gap-2 text-sm">
             {[
+              { href: '/twitter-video-downloader', label: 'Twitter/X Video Downloader' },
+              { href: '/tiktok-video-downloader', label: 'TikTok Video Downloader' },
               { href: '/blog/download-bluesky-video-iphone', label: 'Download on iPhone' },
               { href: '/blog/download-bluesky-video-android', label: 'Download on Android' },
               { href: '/blog/download-bluesky-videos-windows', label: 'Download on Windows' },

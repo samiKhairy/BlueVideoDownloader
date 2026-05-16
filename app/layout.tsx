@@ -26,7 +26,7 @@ const softwareJsonLd = {
   applicationCategory: 'MultimediaApplication',
   operatingSystem: 'Web, iOS, Android, Windows, macOS',
   description:
-    'Free Bluesky video and GIF downloader. Save Bluesky videos and GIFs as MP4 with no watermark.',
+    'Free video downloader for Bluesky, Twitter/X, and TikTok. Save social media videos as MP4 with no watermark.',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -35,9 +35,9 @@ const softwareJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: 'Bluesky Video & GIF Downloader – Save Bluesky Videos Free (2026)',
+  title: 'Video Downloader — Bluesky, Twitter/X & TikTok – Free, No Watermark (2026)',
   description:
-    'Download Bluesky videos and GIFs as MP4 for free. No watermark, no signup. Works on iPhone, Android, and desktop. Fast and reliable.',
+    'Download videos from Bluesky, Twitter/X, and TikTok as MP4 for free. No watermark, no signup. Works on iPhone, Android, and desktop.',
   metadataBase: new URL('https://bluevideosaver.com'),
   alternates: {
     canonical: '/',
@@ -51,17 +51,17 @@ export const metadata: Metadata = {
     }
   },
   openGraph: {
-    title: 'Bluesky Video & GIF Downloader – Free, No Watermark',
+    title: 'Video Downloader — Bluesky, Twitter/X & TikTok – Free, No Watermark',
     description:
-      'Paste any Bluesky post URL and save the video or GIF as MP4. Works on iPhone, Android, and desktop.',
+      'Paste any video URL from Bluesky, Twitter/X, or TikTok and save it as MP4. Works on iPhone, Android, and desktop.',
     url: 'https://bluevideosaver.com/',
     siteName: 'BlueVideoSaver'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bluesky Video & GIF Downloader – Free, No Watermark',
+    title: 'Video Downloader — Bluesky, Twitter/X & TikTok – Free, No Watermark',
     description:
-      'Save Bluesky videos and GIFs as MP4. No watermark, no signup. Works on all devices.'
+      'Save videos from Bluesky, Twitter/X, and TikTok as MP4. No watermark, no signup. Works on all devices.'
   },
   manifest: '/site.webmanifest',
   icons: {

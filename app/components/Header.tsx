@@ -17,9 +17,10 @@ export function Header(): React.ReactElement {
         </Link>
 
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+          <Link href="/twitter-video-downloader" className="hover:text-sky-700 transition-colors">Twitter/X</Link>
+          <Link href="/tiktok-video-downloader" className="hover:text-sky-700 transition-colors">TikTok</Link>
           <Link href="/blog" className="hover:text-sky-700 transition-colors">Guides</Link>
           <Link href="/blog/bluesky-gif-downloader" className="hover:text-sky-700 transition-colors">GIF Downloader</Link>
-          <Link href="/blog/best-bluesky-video-downloader" className="hover:text-sky-700 transition-colors">Compare Tools</Link>
           <Link href="/about" className="hover:text-sky-700 transition-colors">About</Link>
         </div>
 
@@ -41,6 +42,8 @@ export function Header(): React.ReactElement {
 
       {menuOpen && (
         <div className="md:hidden border-t border-slate-100 bg-white px-4 py-3 space-y-2 text-sm font-medium text-slate-600">
+          <Link href="/twitter-video-downloader" className="block py-2 hover:text-sky-700" onClick={() => setMenuOpen(false)}>Twitter/X Downloader</Link>
+          <Link href="/tiktok-video-downloader" className="block py-2 hover:text-sky-700" onClick={() => setMenuOpen(false)}>TikTok Downloader</Link>
           <Link href="/blog" className="block py-2 hover:text-sky-700" onClick={() => setMenuOpen(false)}>Guides</Link>
           <Link href="/blog/bluesky-gif-downloader" className="block py-2 hover:text-sky-700" onClick={() => setMenuOpen(false)}>GIF Downloader</Link>
           <Link href="/blog/best-bluesky-video-downloader" className="block py-2 hover:text-sky-700" onClick={() => setMenuOpen(false)}>Compare Tools</Link>

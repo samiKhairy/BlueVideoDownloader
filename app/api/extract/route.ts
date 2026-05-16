@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { z } from 'zod';
-import { extractBluesky } from '@/lib/blueskyExtractor';
+import { extractVideo } from '@/lib/genericExtractor';
 import { ClientError, ExtractionError } from '@/lib/errors';
 
 const requestSchema = z.object({
@@ -12,13 +12,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body = await request.json();
     const parsed = requestSchema.safeParse(body);
     if (!parsed.success) {
-      throw new ClientError('Please provide a Bluesky post URL.');
+      throw new ClientError('Please provide a video URL.');
     }
 
-    const result = await extractBluesky(parsed.data.url);
+    const result = await extractVideo(parsed.data.url);
     return NextResponse.json({
       video_url: result.videoUrl,
-      thumbnail_url: result.thumbnailUrl
+      thumbnail_url: result.thumbnailUrl,
+      title: result.title,
+      platform: result.platform
     });
   } catch (error) {
     if (error instanceof ClientError) {

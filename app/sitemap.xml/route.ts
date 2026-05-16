@@ -4,7 +4,7 @@ import { BLOG_POSTS } from '../blog/posts';
 
 export const dynamic = 'force-dynamic';
 
-const STATIC_PATHS = ['/', '/about', '/blog', '/pt', '/es', '/de', '/fr', '/id'];
+const STATIC_PATHS = ['/', '/about', '/blog', '/pt', '/es', '/de', '/fr', '/id', '/twitter-video-downloader', '/tiktok-video-downloader'];
 
 const BLOG_PATHS = BLOG_POSTS.map((post) => `/blog/${post.slug}`);
 
