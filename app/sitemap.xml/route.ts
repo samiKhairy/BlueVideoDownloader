@@ -4,19 +4,20 @@ import { BLOG_POSTS } from '../blog/posts';
 
 export const dynamic = 'force-dynamic';
 
-const STATIC_PATHS = ['/', '/about', '/blog', '/pt', '/es', '/de', '/fr', '/id', '/twitter-video-downloader', '/tiktok-video-downloader'];
+const STATIC_PATHS = ['/', '/about', '/blog', '/pt', '/es', '/de', '/fr', '/id', '/twitter-video-downloader', '/tiktok-video-downloader', '/shortcuts'];
 
 const BLOG_PATHS = BLOG_POSTS.map((post) => `/blog/${post.slug}`);
 
 // Pages with language alternates
-const ALL_LANGS = { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id' };
+const ALL_LANGS = { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' };
 const HREFLANG_PAGES = [
   { path: '/', langs: ALL_LANGS },
   { path: '/pt', langs: ALL_LANGS },
   { path: '/es', langs: ALL_LANGS },
   { path: '/de', langs: ALL_LANGS },
   { path: '/fr', langs: ALL_LANGS },
-  { path: '/id', langs: ALL_LANGS }
+  { path: '/id', langs: ALL_LANGS },
+  { path: '/ja', langs: ALL_LANGS }
 ];
 
 export async function GET(request: Request): Promise<NextResponse> {

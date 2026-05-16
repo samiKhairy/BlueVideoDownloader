@@ -47,7 +47,8 @@ export const metadata: Metadata = {
       'es': '/es',
       'de': '/de',
       'fr': '/fr',
-      'id': '/id'
+      'id': '/id',
+      'ja': '/ja'
     }
   },
   openGraph: {
@@ -77,6 +78,8 @@ export const metadata: Metadata = {
   }
 };
 
+import { Toaster } from 'sonner';
+
 export default function RootLayout({
   children
 }: {
@@ -90,7 +93,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
         />
       </head>
-      <body className={`${inter.className} flex min-h-full flex-col text-slate-900`}>
+      <body className={`${inter.className} flex min-h-full flex-col text-slate-900 bg-[#f9fafb] dark:bg-slate-950 dark:text-slate-100`}>
+        <Toaster position="bottom-right" />
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-3VRYPMT8S3"

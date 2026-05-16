@@ -9,14 +9,14 @@ export function Header(): React.ReactElement {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-slate-200/60 dark:border-slate-800/60 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-2 text-slate-900 hover:text-sky-700 transition-colors">
+        <Link href="/" className="flex items-center gap-2 text-slate-900 dark:text-slate-100 hover:text-sky-700 transition-colors">
           <Logo />
           <span className="font-semibold text-base hidden sm:inline">BlueVideoSaver</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
           <Link href="/twitter-video-downloader" className="hover:text-sky-700 transition-colors">Twitter/X</Link>
           <Link href="/tiktok-video-downloader" className="hover:text-sky-700 transition-colors">TikTok</Link>
           <Link href="/blog" className="hover:text-sky-700 transition-colors">Guides</Link>
@@ -26,7 +26,7 @@ export function Header(): React.ReactElement {
 
         <button
           type="button"
-          className="md:hidden p-2 text-slate-600 hover:text-slate-900"
+          className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -41,7 +41,7 @@ export function Header(): React.ReactElement {
       </nav>
 
       {menuOpen && (
-        <div className="md:hidden border-t border-slate-100 bg-white px-4 py-3 space-y-2 text-sm font-medium text-slate-600">
+        <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-3 space-y-2 text-sm font-medium text-slate-600 dark:text-slate-300">
           <Link href="/twitter-video-downloader" className="block py-2 hover:text-sky-700" onClick={() => setMenuOpen(false)}>Twitter/X Downloader</Link>
           <Link href="/tiktok-video-downloader" className="block py-2 hover:text-sky-700" onClick={() => setMenuOpen(false)}>TikTok Downloader</Link>
           <Link href="/blog" className="block py-2 hover:text-sky-700" onClick={() => setMenuOpen(false)}>Guides</Link>

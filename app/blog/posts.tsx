@@ -16,6 +16,42 @@ export type BlogPost = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'bluesky-image-downloader',
+    title: 'Bluesky Image Downloader — Save Photos from Any Bluesky Post (2026)',
+    description: 'Learn how to download and save images and photos from Bluesky posts in high quality JPEG format. Free bluesky image downloader tool.',
+    excerpt: 'Save photos from Bluesky to your device in high quality without losing resolution using our Bluesky Image Downloader.',
+    faqs: [
+      {
+        question: 'Can I download multiple images from a single Bluesky post?',
+        answer: 'Yes. If a Bluesky post contains a carousel of multiple images, BlueVideoSaver extracts all of them and provides a grid with individual download buttons for each photo.'
+      },
+      {
+        question: 'What format are the images saved in?',
+        answer: 'Images are saved as high-quality JPEGs. This ensures maximum compatibility with all devices, messaging apps, and photo editors.'
+      },
+      {
+        question: 'Is it free to download images from Bluesky?',
+        answer: 'Yes, downloading images with BlueVideoSaver is 100% free and requires no signup or installation.'
+      }
+    ],
+    body: () => (
+      <>
+        <p className="mt-4">
+          Sometimes you want to save a high-quality photo or image carousel from Bluesky, but the app might not make it easy depending on your device. Our <strong>Bluesky Image Downloader</strong> lets you extract and save images from any public post in full resolution.
+        </p>
+        <h2 className="text-2xl font-bold mt-8 mb-4 text-slate-900">How to use the Bluesky Image Downloader</h2>
+        <ul className="list-disc pl-5 space-y-2 mb-6">
+          <li><strong>Copy the link:</strong> Open the Bluesky post containing the images and copy its URL.</li>
+          <li><strong>Paste the link:</strong> Go to BlueVideoSaver and paste the URL into the download box.</li>
+          <li><strong>Download your photos:</strong> The tool will detect the images and display them in a grid. Click the &quot;Download&quot; button under each image you want to save.</li>
+        </ul>
+        <p>
+          Unlike some native sharing options that might compress photos or save them in less compatible formats like WebP, BlueVideoSaver fetches the images directly from Bluesky&apos;s content delivery network and converts them to standard JPEGs, ensuring they look great and work everywhere.
+        </p>
+      </>
+    )
+  },
+  {
     slug: 'download-bluesky-video-iphone',
     title: 'How to Download Bluesky Videos on iPhone (2026 Guide)',
     description: 'Step-by-step guide to saving Bluesky videos from Bluesky to your iPhone using BlueVideoSaver.',

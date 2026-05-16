@@ -88,6 +88,8 @@ export default function EsPage(): React.ReactElement {
             <Link href="/fr" className="text-slate-500 hover:text-sky-700 transition">Français</Link>
             <span className="text-slate-300">|</span>
             <Link href="/id" className="text-slate-500 hover:text-sky-700 transition">Indonesia</Link>
+            <span className="text-slate-300">|</span>
+            <Link href="/ja" className="text-slate-500 hover:text-sky-700 transition">日本語</Link>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
             Descargar Vídeos y GIFs de Bluesky

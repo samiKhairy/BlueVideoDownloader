@@ -41,6 +41,8 @@ export default function IdPage(): React.ReactElement {
             <Link href="/fr" className="text-slate-500 hover:text-sky-700 transition">Français</Link>
             <span className="text-slate-300">|</span>
             <span className="font-medium text-sky-700">Indonesia</span>
+            <span className="text-slate-300">|</span>
+            <Link href="/ja" className="text-slate-500 hover:text-sky-700 transition">日本語</Link>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Download Video & GIF Bluesky</h1>
           <p className="text-base text-slate-600 max-w-lg mx-auto">Tempel link postingan publik Bluesky untuk download video atau GIF sebagai MP4. Gratis, tanpa watermark.</p>

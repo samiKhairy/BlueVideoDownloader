@@ -1,6 +1,7 @@
 import React from 'react';
-
+import { Download, Shield, Volume2, Smartphone } from 'lucide-react';
 import { DownloadTool } from './components/DownloadTool';
+import { ScrollAnimationInit } from './components/ScrollAnimationInit';
 
 /* ─── Structured data ───────────────────────────────────────────── */
 
@@ -85,15 +86,24 @@ export default function HomePage(): React.ReactElement {
       {/* Hero */}
       <section className="px-4 pt-12 pb-8">
         <div className="max-w-2xl mx-auto text-center space-y-4">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Video Downloader — Bluesky, Twitter/X &amp; TikTok
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-indigo-500">Video &amp; GIF</span> Downloader — Bluesky, Twitter/X &amp; TikTok
           </h1>
-          <p className="text-base text-slate-600 max-w-lg mx-auto">
+          <p className="text-base text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
             Paste any video link from Bluesky, Twitter/X, or TikTok to download it as MP4.
             Free, no watermark, works on every device.
           </p>
         </div>
       </section>
+
+      {/* Trust banner */}
+      <div className="max-w-2xl mx-auto mb-6 px-4 text-center text-sm font-medium text-slate-600 dark:text-slate-400 flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+        <span className="inline-flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Free to use — no account required</span>
+        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+        <span>Works on iPhone, Android, Windows, Mac</span>
+        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+        <span>No watermark · Audio included</span>
+      </div>
 
       {/* Tool */}
       <section className="px-4 pb-10">
@@ -128,24 +138,7 @@ export default function HomePage(): React.ReactElement {
         </div>
       </section>
 
-      {/* Trust signals */}
-      <section className="px-4 pb-12">
-        <div className="max-w-2xl mx-auto grid grid-cols-3 gap-3 text-center">
-          {[
-            { label: 'No watermark', detail: 'Original quality preserved' },
-            { label: 'No signup', detail: 'Works instantly in your browser' },
-            { label: 'Audio included', detail: 'Merges audio + video streams' }
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="py-4 px-3 rounded-xl bg-white border border-slate-100"
-            >
-              <p className="text-sm font-semibold text-slate-900">{item.label}</p>
-              <p className="text-xs text-slate-500 mt-1">{item.detail}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* How it works */}
       <section className="px-4 pb-12">
@@ -186,33 +179,40 @@ export default function HomePage(): React.ReactElement {
       </section>
 
       {/* Features */}
-      <section className="px-4 pb-12">
+      <section className="px-4 pb-12 animate-on-scroll">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-5">
+          <h2 className="text-xl font-semibold mb-5 dark:text-white">
             Why choose BlueVideoSaver
           </h2>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               {
                 title: 'Multi-platform support',
-                desc: 'Download videos from Bluesky, Twitter/X, and TikTok — all from one tool. No switching between sites.'
+                desc: 'Download videos from Bluesky, Twitter/X, and TikTok — all from one tool. No switching between sites.',
+                icon: <Download className="w-5 h-5 text-sky-600" />
               },
               {
                 title: 'Audio + video merged',
-                desc: 'Many tools return silent files because platforms split audio and video. We merge both streams automatically.'
+                desc: 'Many tools return silent files because platforms split audio and video. We merge both streams automatically.',
+                icon: <Volume2 className="w-5 h-5 text-sky-600" />
               },
               {
                 title: 'No watermark or re-encoding',
-                desc: 'The original stream is saved directly — no overlays, no quality loss, no branding added to your file.'
+                desc: 'The original stream is saved directly — no overlays, no quality loss, no branding added to your file.',
+                icon: <Shield className="w-5 h-5 text-sky-600" />
               },
               {
                 title: 'Works on every device',
-                desc: 'iPhone, Android, iPad, Windows, Mac, Chromebook — everything runs in your browser, no app needed.'
+                desc: 'iPhone, Android, iPad, Windows, Mac, Chromebook — everything runs in your browser, no app needed.',
+                icon: <Smartphone className="w-5 h-5 text-sky-600" />
               }
             ].map((f) => (
-              <div key={f.title} className="p-4 rounded-xl bg-white border border-slate-100">
-                <p className="font-medium text-slate-900 text-sm">{f.title}</p>
-                <p className="text-sm text-slate-600 mt-1">{f.desc}</p>
+              <div key={f.title} className="p-4 rounded-xl bg-white shadow-sm ring-1 ring-slate-900/5 hover:-translate-y-1 hover:shadow-md transition-all duration-200 dark:bg-slate-900 dark:ring-slate-800">
+                <div className="rounded-xl bg-sky-50 dark:bg-sky-900/30 p-2 w-fit mb-3">
+                  {f.icon}
+                </div>
+                <p className="font-medium text-slate-900 text-sm dark:text-white">{f.title}</p>
+                <p className="text-sm text-slate-600 mt-1 dark:text-slate-400">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -242,7 +242,7 @@ export default function HomePage(): React.ReactElement {
       </section>
 
       {/* Guides */}
-      <section className="px-4 pb-12">
+      <section className="px-4 pb-12 animate-on-scroll">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-xl font-semibold mb-4">Download tools &amp; guides</h2>
           <div className="grid sm:grid-cols-2 gap-2 text-sm">
@@ -273,7 +273,7 @@ export default function HomePage(): React.ReactElement {
       </section>
 
       {/* FAQ */}
-      <section className="px-4 pb-16">
+      <section className="px-4 pb-16 animate-on-scroll">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-xl font-semibold mb-5">Frequently asked questions</h2>
           <dl className="space-y-4">
@@ -299,6 +299,7 @@ export default function HomePage(): React.ReactElement {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
       />
+      <ScrollAnimationInit />
     </>
   );
 }

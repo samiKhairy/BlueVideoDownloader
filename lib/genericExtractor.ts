@@ -75,7 +75,8 @@ const extractionSchema = z.object({
 });
 
 export type ExtractionResult = {
-  videoUrl: string;
+  videoUrl?: string;
+  images?: string[];
   thumbnailUrl?: string;
   title?: string;
   platform: Platform;
@@ -151,39 +152,85 @@ export async function extractVideo(url: string): Promise<ExtractionResult> {
     normalized
   ];
 
-  const rawOutput = await new Promise<string>((resolve, reject) => {
-    execFile(
-      binaryPath,
-      args,
-      { maxBuffer: 1024 * 1024 * 10, encoding: 'utf8', timeout: 30000 },
-      (error, stdout) => {
-        if (error) {
-          reject(
-            new ExtractionError(
-              `Failed to extract from ${config.label}: ${error.message}`
-            )
-          );
-          return;
-        }
-        resolve(stdout);
-      }
-    );
-  });
+  let parsedRawOutput: unknown;
+  let rawOutput = '';
+  let ytdlpFailed = false;
 
-  const parsed = extractionSchema.safeParse(JSON.parse(rawOutput));
-  if (!parsed.success) {
-    throw new ExtractionError(`Failed to parse response for ${config.label} video.`);
+  try {
+    rawOutput = await new Promise<string>((resolve, reject) => {
+      execFile(
+        binaryPath,
+        args,
+        { maxBuffer: 1024 * 1024 * 10, encoding: 'utf8', timeout: 30000 },
+        (error, stdout) => {
+          if (error) {
+            reject(
+              new ExtractionError(
+                `Failed to extract from ${config.label}: ${error.message}`
+              )
+            );
+            return;
+          }
+          resolve(stdout);
+        }
+      );
+    });
+    parsedRawOutput = JSON.parse(rawOutput);
+  } catch (e) {
+    ytdlpFailed = true;
   }
 
-  const videoUrl = selectDirectVideo(parsed.data, platform);
-  if (!videoUrl) {
-    throw new ExtractionError('No downloadable video stream found.');
+  let videoUrl: string | undefined;
+  let thumbnailUrl: string | undefined;
+  let title: string | undefined;
+  let images: string[] | undefined;
+
+  if (!ytdlpFailed && parsedRawOutput) {
+    const parsed = extractionSchema.safeParse(parsedRawOutput);
+    if (parsed.success) {
+      videoUrl = selectDirectVideo(parsed.data, platform);
+      thumbnailUrl = parsed.data.thumbnail;
+      title = parsed.data.title;
+    }
+  }
+
+  // Fallback for Bluesky (for images or if yt-dlp fails on new URLs)
+  if (platform === 'bluesky' && !videoUrl) {
+    const match = normalized.match(/profile\/([^/]+)\/post\/([^/?#]+)/i);
+    if (match) {
+      const handle = match[1];
+      const rkey = match[2];
+      try {
+        const bskyRes = await fetch(`https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=at://${handle}/app.bsky.feed.post/${rkey}`);
+        if (bskyRes.ok) {
+          const data = await bskyRes.json();
+          const post = data.thread?.post;
+          if (post) {
+            title = post.record?.text;
+            const embed = post.embed;
+            if (embed?.$type === 'app.bsky.embed.images#view' && Array.isArray(embed.images)) {
+              images = embed.images.map((img: { fullsize: string }) => img.fullsize + '?format=jpeg');
+            } else if (embed?.$type === 'app.bsky.embed.video#view' && embed.playlist) {
+              videoUrl = embed.playlist;
+              thumbnailUrl = embed.thumbnail;
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Bluesky API fallback failed', err);
+      }
+    }
+  }
+
+  if (!videoUrl && (!images || images.length === 0)) {
+    throw new ExtractionError('No downloadable video or image found.');
   }
 
   return {
     videoUrl,
-    thumbnailUrl: parsed.data.thumbnail,
-    title: parsed.data.title,
+    images,
+    thumbnailUrl,
+    title,
     platform
   };
 }
@@ -192,7 +239,7 @@ export async function extractVideo(url: string): Promise<ExtractionResult> {
 
 export async function extractBluesky(
   url: string
-): Promise<{ videoUrl: string; thumbnailUrl?: string }> {
+): Promise<{ videoUrl?: string; images?: string[]; thumbnailUrl?: string }> {
   const result = await extractVideo(url);
-  return { videoUrl: result.videoUrl, thumbnailUrl: result.thumbnailUrl };
+  return { videoUrl: result.videoUrl, images: result.images, thumbnailUrl: result.thumbnailUrl };
 }

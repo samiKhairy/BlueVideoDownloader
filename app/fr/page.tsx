@@ -41,6 +41,8 @@ export default function FrPage(): React.ReactElement {
             <span className="font-medium text-sky-700">Français</span>
             <span className="text-slate-300">|</span>
             <Link href="/id" className="text-slate-500 hover:text-sky-700 transition">Indonesia</Link>
+            <span className="text-slate-300">|</span>
+            <Link href="/ja" className="text-slate-500 hover:text-sky-700 transition">日本語</Link>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Télécharger des Vidéos et GIFs Bluesky</h1>
           <p className="text-base text-slate-600 max-w-lg mx-auto">Collez le lien de n&apos;importe quelle publication Bluesky pour télécharger la vidéo ou le GIF en MP4. Gratuit, sans filigrane.</p>

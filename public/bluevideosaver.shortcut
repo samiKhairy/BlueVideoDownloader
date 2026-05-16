@@ -1,0 +1,50 @@
+{
+  "WFWorkflowMinimumClientVersion": 900,
+  "WFWorkflowMinimumClientVersionString": "900",
+  "WFWorkflowTypes": ["ActionExtension"],
+  "WFWorkflowInputContentItemClasses": ["WFURLContentItem", "WFStringContentItem"],
+  "WFWorkflowActions": [
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "text": "https://bluevideosaver.com/?url="
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.text.combine",
+      "WFWorkflowActionParameters": {
+        "text": {
+          "Value": {
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "Type": "Variable",
+                "VariableName": "ShortcutInput"
+              }
+            },
+            "string": "\uFFFC"
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.openurl",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputName": "Text",
+                "OutputUUID": "CombineText",
+                "Type": "ActionOutput"
+              }
+            },
+            "string": "\uFFFC"
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    }
+  ],
+  "WFWorkflowName": "BlueVideoSaver"
+}

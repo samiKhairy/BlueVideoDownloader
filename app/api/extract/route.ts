@@ -18,6 +18,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const result = await extractVideo(parsed.data.url);
     return NextResponse.json({
       video_url: result.videoUrl,
+      images: result.images,
       thumbnail_url: result.thumbnailUrl,
       title: result.title,
       platform: result.platform

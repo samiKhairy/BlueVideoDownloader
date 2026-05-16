@@ -1,27 +1,23 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
+import { toast } from 'sonner';
 
 export type ExtractionResponse = {
   video_url: string;
-  thumbnail_url?: string | null;
-  title?: string | null;
-  platform?: string | null;
+  images?: string[];
+  thumbnail_url?: string;
+  title?: string;
+  platform?: string;
 };
 
-type DownloadFormat = 'video' | 'gif' | 'thumbnail';
+type DownloadFormat = 'video' | 'gif' | 'thumbnail' | 'image';
 
-type StatusVariant = 'success' | 'error' | 'warning' | 'info';
 
-const variantStyles: Record<StatusVariant, string> = {
-  success: 'bg-emerald-50 border-emerald-200 text-emerald-800',
-  error: 'bg-rose-50 border-rose-200 text-rose-800',
-  warning: 'bg-amber-50 border-amber-200 text-amber-800',
-  info: 'bg-sky-50 border-sky-200 text-sky-800'
-};
 
 /* ─── Platform configuration ────────────────────────────────────── */
 
@@ -80,42 +76,39 @@ export function DownloadTool({
 }): React.ReactElement {
   const ui = PLATFORM_UI[platform];
   const [url, setUrl] = useState('');
-  const [status, setStatus] = useState<{ message: string; variant: StatusVariant } | null>(null);
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
+  const [images, setImages] = useState<string[]>([]);
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [detectedPlatform, setDetectedPlatform] = useState('');
   const [selectedFormat, setSelectedFormat] = useState<DownloadFormat>('video');
-
-  const showStatus = useCallback((message: string, variant: StatusVariant = 'info') => {
-    setStatus({ message, variant });
-  }, []);
 
   const pasteFromClipboard = useCallback(async () => {
     try {
       const text = await navigator.clipboard.readText();
       if (text) setUrl(text.trim());
     } catch {
-      showStatus('Clipboard access blocked. Paste manually.', 'warning');
+      toast.warning('Clipboard access blocked. Paste manually.');
     }
-  }, [showStatus]);
+  }, []);
 
   const requestExtraction = useCallback(
     async (event?: React.FormEvent<HTMLFormElement>, initialUrl?: string) => {
       event?.preventDefault();
-      setStatus(null);
+      
+      const trimmed = (initialUrl ?? url).trim();
+      if (!trimmed) {
+        toast.error('Paste a video URL first.');
+        return;
+      }
+
+      const toastId = toast.loading('Extracting video...');
       setLoading(true);
       setVideoUrl('');
+      setImages([]);
       setThumbnailUrl('');
       setDetectedPlatform('');
       trackEvent('download_start', { event_category: 'engagement', event_label: platform });
-
-      const trimmed = (initialUrl ?? url).trim();
-      if (!trimmed) {
-        showStatus('Paste a video URL first.', 'error');
-        setLoading(false);
-        return;
-      }
 
       try {
         const res = await fetch('/api/extract', {
@@ -126,25 +119,31 @@ export function DownloadTool({
         const data: ExtractionResponse & { error?: string } = await res.json();
 
         if (!res.ok || data.error) throw new Error(data.error || 'Unable to process this URL.');
-        if (!data.video_url) throw new Error('No video found at this URL.');
+        if (!data.video_url && (!data.images || data.images.length === 0)) throw new Error('No media found at this URL.');
 
-        setVideoUrl(data.video_url);
+        setVideoUrl(data.video_url || '');
+        setImages(data.images || []);
         setThumbnailUrl(data.thumbnail_url || '');
         setDetectedPlatform(data.platform || '');
-        showStatus('Ready to download.', 'success');
+        if (!data.video_url && data.images?.length) {
+          setSelectedFormat('image');
+        } else {
+          setSelectedFormat('video');
+        }
+        toast.success('Ready to download.', { id: toastId });
         trackEvent('download_success', {
           event_category: 'engagement',
           event_label: data.platform || platform
         });
       } catch (error) {
         const msg = error instanceof Error ? error.message : 'Unexpected error';
-        showStatus(msg, 'error');
+        toast.error(msg, { id: toastId });
         trackEvent('download_error', { event_category: 'engagement', event_label: platform });
       } finally {
         setLoading(false);
       }
     },
-    [url, showStatus, platform]
+    [url, platform]
   );
 
   const searchParams = useSearchParams();
@@ -164,13 +163,13 @@ export function DownloadTool({
 
   const startDownload = useCallback(() => {
     if (!videoUrl) {
-      showStatus('Extract the video first.', 'warning');
+      toast.warning('Extract the video first.');
       return;
     }
 
     if (selectedFormat === 'thumbnail') {
       if (!thumbnailUrl) {
-        showStatus('No thumbnail available for this post.', 'warning');
+        toast.warning('No thumbnail available for this post.');
         return;
       }
       window.location.href = `/api/download?url=${encodeURIComponent(thumbnailUrl)}&filename=${filePrefix}-thumbnail.jpg`;
@@ -181,23 +180,23 @@ export function DownloadTool({
     const filename =
       selectedFormat === 'gif' ? `${filePrefix}-gif.mp4` : `${filePrefix}-video.mp4`;
     window.location.href = `/api/download?url=${encodeURIComponent(videoUrl)}&filename=${encodeURIComponent(filename)}`;
-    showStatus('Download started.', 'success');
-  }, [videoUrl, thumbnailUrl, selectedFormat, showStatus, filePrefix]);
+    toast.success('Download started.');
+  }, [videoUrl, thumbnailUrl, selectedFormat, filePrefix]);
 
   const copyVideoUrl = useCallback(async () => {
     if (!videoUrl) {
-      showStatus('Extract the video first.', 'warning');
+      toast.warning('Extract the video first.');
       return;
     }
     try {
       await navigator.clipboard.writeText(videoUrl);
-      showStatus('Video URL copied.', 'success');
+      toast.success('Video URL copied.');
     } catch {
-      showStatus('Could not copy. Try again.', 'warning');
+      toast.error('Could not copy. Try again.');
     }
-  }, [videoUrl, showStatus]);
+  }, [videoUrl]);
 
-  const hasResults = Boolean(videoUrl);
+  const hasResults = Boolean(videoUrl) || images.length > 0;
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-5">
@@ -209,7 +208,7 @@ export function DownloadTool({
             type="url"
             inputMode="url"
             placeholder={ui.placeholder}
-            className="flex-1 px-4 py-3 min-h-[48px] rounded-xl border border-slate-200 bg-white shadow-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-100 outline-none transition text-sm"
+            className={`flex-1 px-4 py-4 min-h-[48px] rounded-xl border-0 ring-1 ring-slate-200 shadow-lg shadow-slate-200/60 focus:ring-2 focus:ring-sky-500 focus:shadow-sky-100/60 outline-none transition-all duration-200 text-sm dark:bg-slate-900 dark:text-slate-100 dark:ring-slate-800 dark:shadow-none dark:focus:ring-sky-500 ${loading ? 'ring-2 ring-sky-400 shadow-sky-200 animate-pulse' : ''}`}
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             onKeyDown={(e) => {
@@ -222,7 +221,7 @@ export function DownloadTool({
           <button
             type="button"
             onClick={() => void pasteFromClipboard()}
-            className="px-4 min-h-[48px] rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:border-sky-300 hover:bg-sky-50 transition shrink-0"
+            className="px-4 min-h-[48px] rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:border-sky-300 hover:bg-sky-50 transition shrink-0 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800"
           >
             Paste
           </button>
@@ -230,7 +229,7 @@ export function DownloadTool({
 
         <button
           type="submit"
-          className={`w-full inline-flex items-center justify-center gap-2 ${ui.accentColor} ${ui.accentHover} ${ui.accentActive} text-white font-semibold py-3 min-h-[48px] rounded-xl shadow-sm transition text-sm`}
+          className={`w-full inline-flex items-center justify-center gap-2 bg-gradient-to-b from-sky-500 to-sky-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-sky-500/25 transition-all duration-150 text-white font-semibold py-3 min-h-[48px] rounded-xl text-sm group`}
           disabled={loading}
         >
           {loading ? (
@@ -243,7 +242,7 @@ export function DownloadTool({
             </>
           ) : (
             <>
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
               {ui.buttonLabel}
@@ -262,18 +261,22 @@ export function DownloadTool({
         </div>
       )}
 
-      {/* Status message */}
-      {status && (
-        <div className={`px-4 py-3 rounded-xl border text-sm ${variantStyles[status.variant]}`}>
-          {status.message}
+      {/* Skeleton loading state */}
+      {loading && !hasResults && (
+        <div className="p-4 rounded-xl border border-slate-100 bg-white animate-pulse flex gap-4 mt-6 dark:bg-slate-900 dark:border-slate-800">
+          <div className="w-24 h-24 bg-slate-200 rounded-lg dark:bg-slate-800"></div>
+          <div className="flex-1 space-y-3 py-2">
+            <div className="h-4 bg-slate-200 rounded w-3/4 dark:bg-slate-800"></div>
+            <div className="h-4 bg-slate-200 rounded w-1/2 dark:bg-slate-800"></div>
+          </div>
         </div>
       )}
 
       {/* Results area */}
-      {hasResults && (
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-          {/* Preview */}
-          {thumbnailUrl && (
+      {hasResults && !loading && (
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden dark:bg-slate-900 dark:border-slate-800">
+          {/* Preview for video/gif/thumbnail */}
+          {thumbnailUrl && selectedFormat !== 'image' && (
             <div className="relative bg-slate-900">
               <img
                 src={thumbnailUrl}
@@ -289,15 +292,37 @@ export function DownloadTool({
             </div>
           )}
 
+          {/* Preview for images */}
+          {selectedFormat === 'image' && images.length > 0 && (
+            <div className="bg-slate-100 p-4 dark:bg-slate-950">
+              <div className={`grid gap-2 ${images.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                {images.slice(0, 4).map((img, idx) => (
+                  <div key={idx} className="relative group rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 bg-white">
+                    <img src={img} alt={`Image ${idx + 1}`} className="w-full h-48 object-cover" loading="lazy" />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <a
+                        href={`/api/download?url=${encodeURIComponent(img)}&filename=${filePrefix}-img${idx+1}.jpg`}
+                        className="bg-white text-slate-900 px-4 py-2 rounded-lg font-medium text-sm shadow-lg hover:bg-sky-50 transition"
+                      >
+                        Download
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="p-4 space-y-4">
             {/* Format selector */}
             <div>
               <p className="text-xs font-medium text-slate-500 mb-2 uppercase tracking-wider">Format</p>
               <div className="flex gap-2">
                 {([
-                  { key: 'video' as const, label: 'Video (MP4)', icon: '▶' },
-                  { key: 'gif' as const, label: 'GIF loop', icon: '◎' },
-                  ...(thumbnailUrl ? [{ key: 'thumbnail' as const, label: 'Thumbnail', icon: '◻' }] : [])
+                  ...(videoUrl ? [{ key: 'video' as const, label: 'Video (MP4)', icon: '▶' }] : []),
+                  ...(videoUrl ? [{ key: 'gif' as const, label: 'GIF loop', icon: '◎' }] : []),
+                  ...(images.length > 0 ? [{ key: 'image' as const, label: `Images (${images.length})`, icon: '🖼' }] : []),
+                  ...(thumbnailUrl && videoUrl ? [{ key: 'thumbnail' as const, label: 'Thumbnail', icon: '◻' }] : [])
                 ]).map(({ key, label, icon }) => (
                   <button
                     key={key}
@@ -321,29 +346,31 @@ export function DownloadTool({
               )}
             </div>
 
-            {/* Download actions */}
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={startDownload}
-                className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition text-sm"
-              >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                Download {selectedFormat === 'thumbnail' ? 'thumbnail' : selectedFormat === 'gif' ? 'GIF' : 'video'}
-              </button>
-              <button
-                type="button"
-                onClick={() => void copyVideoUrl()}
-                className="px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:border-sky-300 transition"
-                title="Copy direct link"
-              >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                </svg>
-              </button>
-            </div>
+            {/* Download actions for non-image formats */}
+            {selectedFormat !== 'image' && (
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={startDownload}
+                  className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition text-sm"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Download {selectedFormat === 'thumbnail' ? 'thumbnail' : selectedFormat === 'gif' ? 'GIF' : 'video'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void copyVideoUrl()}
+                  className="px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:border-sky-300 transition"
+                  title="Copy direct link"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
