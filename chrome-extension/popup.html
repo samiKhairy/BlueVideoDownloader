@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      width: 300px;
+      margin: 0;
+      padding: 16px;
+      background-color: #ffffff;
+      color: #0f1419;
+    }
+    h1 {
+      font-size: 16px;
+      margin: 0 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo {
+      width: 24px;
+      height: 24px;
+      background-color: #0ea5e9;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .logo svg {
+      width: 16px;
+      height: 16px;
+    }
+    p {
+      font-size: 13px;
+      color: #536471;
+      margin: 0 0 12px 0;
+    }
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      border: 1px solid #cfd9de;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    input:focus {
+      border-color: #0ea5e9;
+    }
+    button {
+      width: 100%;
+      background-color: #0ea5e9;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #0284c7;
+    }
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+    }
+    .footer a {
+      color: #0ea5e9;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+    </div>
+    BlueVideoSaver
+  </h1>
+  <p>Paste any Bluesky post URL to download</p>
+  <input type="url" id="urlInput" placeholder="https://bsky.app/profile/...">
+  <button id="downloadBtn">Download</button>
+  <div class="footer">
+    <a href="#" id="homeLink">Open BlueVideoSaver &rarr;</a>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

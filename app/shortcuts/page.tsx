@@ -58,8 +58,9 @@ export default function ShortcutsPage(): React.ReactElement {
 
             <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
               <a
-                href="/bluevideosaver.shortcut"
-                download
+                href="#insert-icloud-link-here"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-8 rounded-xl shadow-sm transition text-base"
               >
                 <Download className="w-5 h-5" />

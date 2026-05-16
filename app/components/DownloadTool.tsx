@@ -83,6 +83,13 @@ export function DownloadTool({
   const [detectedPlatform, setDetectedPlatform] = useState('');
   const [selectedFormat, setSelectedFormat] = useState<DownloadFormat>('video');
 
+  // Trimmer state
+  const [showTrimmer, setShowTrimmer] = useState(false);
+  const [trimStart, setTrimStart] = useState<number>(0);
+  const [trimEnd, setTrimEnd] = useState<number>(0);
+  const [trimmerLoading, setTrimmerLoading] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const pasteFromClipboard = useCallback(async () => {
     try {
       const text = await navigator.clipboard.readText();
@@ -195,6 +202,58 @@ export function DownloadTool({
       toast.error('Could not copy. Try again.');
     }
   }, [videoUrl]);
+
+  const handleExportClip = useCallback(async (exportFormat: 'mp4' | 'gif' = 'mp4') => {
+    if (!videoUrl) return;
+    setTrimmerLoading(true);
+    const toastId = toast.loading(exportFormat === 'gif' ? 'Converting to GIF...' : 'Trimming your clip...');
+    try {
+      const { FFmpeg } = await import('@ffmpeg/ffmpeg');
+      const { fetchFile } = await import('@ffmpeg/util');
+
+      const ffmpeg = new FFmpeg();
+      await ffmpeg.load({
+        coreURL: '/ffmpeg/ffmpeg-core.js',
+        wasmURL: '/ffmpeg/ffmpeg-core.wasm'
+      });
+
+      const videoData = await fetchFile(videoUrl);
+      await ffmpeg.writeFile('input.mp4', videoData);
+
+      const outputName = exportFormat === 'gif' ? 'output.gif' : 'output.mp4';
+      const ffmpegArgs = ['-i', 'input.mp4', '-ss', trimStart.toString(), '-to', trimEnd.toString()];
+      
+      if (exportFormat === 'gif') {
+        ffmpegArgs.push('-vf', 'fps=10,scale=480:-1', '-f', 'gif');
+      } else {
+        ffmpegArgs.push('-c', 'copy');
+      }
+      ffmpegArgs.push(outputName);
+
+      await ffmpeg.exec(ffmpegArgs);
+      
+      const fileData = await ffmpeg.readFile(outputName);
+      const data = new Uint8Array(fileData as ArrayBuffer);
+      
+      const blob = new Blob([data.buffer], { type: exportFormat === 'gif' ? 'image/gif' : 'video/mp4' });
+      const objectUrl = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = objectUrl;
+      a.download = `${filePrefix}-clip.${exportFormat}`;
+      a.click();
+      
+      URL.revokeObjectURL(objectUrl);
+      toast.success(exportFormat === 'gif' ? 'GIF saved!' : 'Clip saved!', { id: toastId });
+      setShowTrimmer(false);
+    } catch (err) {
+      console.error(err);
+      toast.error('Export failed — download the full video instead', { id: toastId });
+      setShowTrimmer(false);
+    } finally {
+      setTrimmerLoading(false);
+    }
+  }, [videoUrl, trimStart, trimEnd, filePrefix]);
 
   const hasResults = Boolean(videoUrl) || images.length > 0;
 
@@ -369,6 +428,98 @@ export function DownloadTool({
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                   </svg>
                 </button>
+              </div>
+            )}
+
+            {selectedFormat === 'video' && videoUrl && !showTrimmer && (
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowTrimmer(true)}
+                  className="w-full py-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-medium transition dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700"
+                >
+                  ✂️ Trim clip
+                </button>
+              </div>
+            )}
+
+            {showTrimmer && (
+              <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-4 dark:bg-slate-800 dark:border-slate-700">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Trim Video</h3>
+                  <button type="button" onClick={() => setShowTrimmer(false)} className="text-slate-500 hover:text-slate-700 dark:text-slate-400">✕</button>
+                </div>
+                <video
+                  ref={videoRef}
+                  src={videoUrl}
+                  controls
+                  className="w-full rounded-lg bg-black max-h-64"
+                  onLoadedMetadata={(e) => {
+                    if (trimEnd === 0) setTrimEnd(Number(e.currentTarget.duration.toFixed(2)));
+                  }}
+                />
+                <div className="flex gap-4">
+                  <div className="flex-1 space-y-1">
+                    <label className="text-xs font-medium text-slate-700 dark:text-slate-300">Start (seconds)</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="number"
+                        min={0}
+                        step="0.1"
+                        value={trimStart}
+                        onChange={(e) => setTrimStart(Number(e.target.value))}
+                        className="w-full px-2 py-1.5 text-sm border border-slate-300 rounded-md dark:bg-slate-900 dark:border-slate-600 dark:text-slate-100 outline-none focus:border-sky-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => videoRef.current && setTrimStart(Number(videoRef.current.currentTime.toFixed(2)))}
+                        className="px-2 py-1 text-xs bg-slate-200 hover:bg-slate-300 rounded-md font-medium text-slate-700 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 transition"
+                        title="Set to current time"
+                      >
+                        Set
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-1">
+                    <label className="text-xs font-medium text-slate-700 dark:text-slate-300">End (seconds)</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="number"
+                        min={0}
+                        step="0.1"
+                        value={trimEnd}
+                        onChange={(e) => setTrimEnd(Number(e.target.value))}
+                        className="w-full px-2 py-1.5 text-sm border border-slate-300 rounded-md dark:bg-slate-900 dark:border-slate-600 dark:text-slate-100 outline-none focus:border-sky-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => videoRef.current && setTrimEnd(Number(videoRef.current.currentTime.toFixed(2)))}
+                        className="px-2 py-1 text-xs bg-slate-200 hover:bg-slate-300 rounded-md font-medium text-slate-700 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 transition"
+                        title="Set to current time"
+                      >
+                        Set
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => void handleExportClip('mp4')}
+                    disabled={trimmerLoading}
+                    className="flex-1 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-semibold transition disabled:opacity-50 flex items-center justify-center"
+                  >
+                    {trimmerLoading ? 'Exporting...' : 'Export Clip'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void handleExportClip('gif')}
+                    disabled={trimmerLoading}
+                    className="flex-1 py-2.5 border border-sky-600 text-sky-700 hover:bg-sky-50 rounded-lg text-sm font-semibold transition disabled:opacity-50 flex items-center justify-center dark:border-sky-500 dark:text-sky-400 dark:hover:bg-sky-900/30"
+                  >
+                    {trimmerLoading ? 'Converting...' : 'Export as GIF'}
+                  </button>
+                </div>
               </div>
             )}
           </div>

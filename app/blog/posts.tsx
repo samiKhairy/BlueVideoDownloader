@@ -16,6 +16,43 @@ export type BlogPost = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'trim-bluesky-video',
+    title: 'How to Trim Bluesky Videos Online — Free Clip Tool (2026)',
+    description: 'Cut and trim Bluesky videos online without downloading heavy software. Free Bluesky video clipper tool, no watermark.',
+    excerpt: 'Easily cut and save specific clips from Bluesky videos right in your browser using our fast video trimmer.',
+    faqs: [
+      {
+        question: 'Do I need to install anything to trim videos?',
+        answer: 'No. BlueVideoSaver uses WebAssembly to trim the video entirely inside your browser. No software installation is required.'
+      },
+      {
+        question: 'Will the video lose quality after trimming?',
+        answer: 'No! Our trimmer uses a stream-copy method that cuts the video without re-encoding it. The quality remains exactly the same as the original.'
+      },
+      {
+        question: 'Is it free to use?',
+        answer: 'Yes, the Bluesky video clipper is 100% free with no watermarks and no signups.'
+      }
+    ],
+    body: () => (
+      <>
+        <p className="mt-4">
+          Sometimes you only want to share a specific moment from a long Bluesky video. Instead of downloading the whole file and using a separate editing app, you can use our <strong>Bluesky Video Clipper</strong> to trim it instantly.
+        </p>
+        <h2 className="text-2xl font-bold mt-8 mb-4 text-slate-900">How to cut a Bluesky video online</h2>
+        <ul className="list-disc pl-5 space-y-2 mb-6">
+          <li><strong>Extract the video:</strong> Paste the Bluesky link into the box above and click Download.</li>
+          <li><strong>Open the trimmer:</strong> Once the video is ready, click the &quot;✂️ Trim clip&quot; button.</li>
+          <li><strong>Set your timestamps:</strong> Use the preview player to find the exact start and end times you want, then click &quot;Set&quot;.</li>
+          <li><strong>Export:</strong> Click &quot;Export Clip&quot; and your trimmed video will save instantly!</li>
+        </ul>
+        <p>
+          Because our tool processes the video directly in your browser without re-encoding, it&apos;s lightning fast and completely private. Try trimming your favorite Bluesky clips today!
+        </p>
+      </>
+    )
+  },
+  {
     slug: 'bluesky-image-downloader',
     title: 'Bluesky Image Downloader — Save Photos from Any Bluesky Post (2026)',
     description: 'Learn how to download and save images and photos from Bluesky posts in high quality JPEG format. Free bluesky image downloader tool.',

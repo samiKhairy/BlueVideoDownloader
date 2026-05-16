@@ -1,0 +1,35 @@
+/* content.css */
+.bvs-download-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  color: #71768b; /* Matches Bluesky's inactive icon color */
+  margin-left: 4px;
+}
+
+.bvs-download-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.bvs-download-btn:hover {
+  background-color: rgba(2, 132, 199, 0.1);
+  color: #0284c7; /* Sky blue */
+}
+
+/* For dark mode compatibility on bsky */
+@media (prefers-color-scheme: dark) {
+  .bvs-download-btn {
+    color: #aeafb4;
+  }
+  .bvs-download-btn:hover {
+    background-color: rgba(2, 132, 199, 0.2);
+    color: #38bdf8;
+  }
+}
