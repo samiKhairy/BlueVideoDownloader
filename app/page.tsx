@@ -1,7 +1,30 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { Download, Shield, Volume2, Smartphone } from 'lucide-react';
 import { DownloadTool } from './components/DownloadTool';
 import { ScrollAnimationInit } from './components/ScrollAnimationInit';
+
+// Homepage-specific metadata. Overrides the generic site default from layout.tsx
+// to lead with the high-opportunity "Bluesky video downloader" / GIF queries.
+// metadataBase, canonical and hreflang alternates are inherited from layout.tsx.
+export const metadata: Metadata = {
+  title: 'Bluesky Video Downloader — Save Videos & GIFs Free (2026)',
+  description:
+    'Download Bluesky videos and GIFs as MP4 — free, no signup, no watermark. Paste any post link and save in seconds on iPhone, Android, or desktop.',
+  openGraph: {
+    title: 'Bluesky Video Downloader — Save Videos & GIFs Free',
+    description:
+      'Paste any Bluesky post link and save the video or GIF as MP4. Free, no watermark, no signup. Works on iPhone, Android, and desktop.',
+    url: 'https://bluevideosaver.com/',
+    siteName: 'BlueVideoSaver'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bluesky Video Downloader — Save Videos & GIFs Free',
+    description:
+      'Save Bluesky videos and GIFs as MP4. Free, no watermark, no signup. Works on all devices.'
+  }
+};
 
 /* ─── Structured data ───────────────────────────────────────────── */
 

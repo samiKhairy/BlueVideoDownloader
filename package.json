@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gsc": "node scripts/gsc-report.mjs"
   },
   "dependencies": {
     "@ffmpeg/core": "^0.12.10",

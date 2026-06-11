@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 
-import { BLOG_POSTS } from '../blog/posts';
+import { LIVE_BLOG_POSTS } from '../blog/posts';
 
 export const dynamic = 'force-dynamic';
 
 const STATIC_PATHS = ['/', '/about', '/blog', '/pt', '/es', '/de', '/fr', '/id', '/twitter-video-downloader', '/tiktok-video-downloader', '/shortcuts'];
 
-const BLOG_PATHS = BLOG_POSTS.map((post) => `/blog/${post.slug}`);
+const BLOG_PATHS = LIVE_BLOG_POSTS.map((post) => `/blog/${post.slug}`);
 
 // Pages with language alternates
 const ALL_LANGS = { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' };

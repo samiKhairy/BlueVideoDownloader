@@ -1382,3 +1382,14 @@ export const BLOG_POSTS: BlogPost[] = [
 ];
 
 export const BLOG_POST_MAP = new Map(BLOG_POSTS.map((post) => [post.slug, post]));
+
+// Slugs that now 301-redirect (see next.config.mjs). They must NOT appear in the
+// sitemap or the blog index, or we advertise redirecting URLs to Google and users.
+export const RETIRED_SLUGS = new Set<string>([
+  'bluesky-download-no-sound',
+  'bluesky-links-wont-copy',
+  'where-are-bluesky-downloads-saved'
+]);
+
+// Live posts only — use this for the sitemap and the blog listing.
+export const LIVE_BLOG_POSTS = BLOG_POSTS.filter((post) => !RETIRED_SLUGS.has(post.slug));

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type React from 'react';
 
-import { BLOG_POSTS } from './posts';
+import { LIVE_BLOG_POSTS } from './posts';
 
 export default function BlogIndexPage(): React.ReactElement {
   return (
@@ -13,7 +13,7 @@ export default function BlogIndexPage(): React.ReactElement {
         </p>
 
         <div className="mt-6 space-y-4">
-          {BLOG_POSTS.map((post) => (
+          {LIVE_BLOG_POSTS.map((post) => (
             <article key={post.slug} className="border rounded-lg p-4">
               <h2 className="text-xl font-semibold">
                 <Link href={`/blog/${post.slug}`}>{post.title}</Link>
