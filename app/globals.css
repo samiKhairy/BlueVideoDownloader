@@ -6,10 +6,24 @@
   color-scheme: light;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #f9fafb;
+  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #fff6ee; /* dawn — warm near-white */
+  color: #1c2530;
   min-height: 100vh;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #15191f; /* night */
+    color: #eceef1;
+  }
 }
 
 button:disabled {
@@ -17,36 +31,64 @@ button:disabled {
   opacity: 0.6;
 }
 
-/* Smooth scroll for anchor links */
 html {
   scroll-behavior: smooth;
 }
 
-/* Focus-visible for keyboard users only */
+/* Headings carry the display face */
+h1, h2, h3 {
+  font-family: var(--font-display), var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
 :focus:not(:focus-visible) {
   outline: none;
 }
 
 :focus-visible {
-  outline: 2px solid #0284c7;
+  outline: 2px solid #0a7aff;
   outline-offset: 2px;
 }
 
-h1, h2, h3 {
-  letter-spacing: -0.025em;
+/* Dawn-sky atmosphere: a soft cool glow at the very top fading into the
+   warm dawn background, plus a faint honey warmth low on the hero. */
+.dawn-sky {
+  background:
+    radial-gradient(120% 70% at 50% -8%, rgba(10, 122, 255, 0.12), transparent 58%),
+    radial-gradient(90% 60% at 85% 8%, rgba(244, 169, 60, 0.07), transparent 60%);
 }
 
-@keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (prefers-color-scheme: dark) {
+  .dawn-sky {
+    background:
+      radial-gradient(120% 70% at 50% -8%, rgba(10, 122, 255, 0.20), transparent 58%),
+      radial-gradient(90% 60% at 85% 8%, rgba(244, 169, 60, 0.06), transparent 60%);
+  }
 }
 
+/* Scroll-reveal — one quiet orchestrated moment, not scattered effects. */
 .animate-on-scroll {
-  animation: fadeSlideUp 0.5s ease forwards;
+  animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-play-state: paused;
   opacity: 0;
 }
 
 .animate-on-scroll.visible {
   animation-play-state: running;
+}
+
+/* Respect reduced-motion: no rise, no ambient, no smooth scroll. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-on-scroll {
+    opacity: 1;
+  }
 }

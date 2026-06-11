@@ -1,12 +1,18 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Inter } from 'next/font/google';
+import { Inter, Bricolage_Grotesque } from 'next/font/google';
 import { headers } from 'next/headers';
 import './globals.css';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' });
+const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['600', '700', '800'],
+  variable: '--font-display'
+});
 
 function getPageLang(): string {
   const headersList = headers();
@@ -86,14 +92,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }): React.ReactElement {
   return (
-    <html lang={getPageLang()} className="h-full">
+    <html lang={getPageLang()} className={`h-full ${inter.variable} ${bricolage.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
         />
       </head>
-      <body className={`${inter.className} flex min-h-full flex-col text-slate-900 bg-[#f9fafb] dark:bg-slate-950 dark:text-slate-100`}>
+      <body className="font-sans flex min-h-full flex-col text-ink bg-dawn dark:bg-night dark:text-[#eceef1]">
         <Toaster position="bottom-right" />
         <Script
           async

@@ -106,37 +106,43 @@ const howToJsonLd = {
 export default function HomePage(): React.ReactElement {
   return (
     <>
-      {/* Hero */}
-      <section className="px-4 pt-12 pb-8">
-        <div className="max-w-2xl mx-auto text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-indigo-500">Video &amp; GIF</span> Downloader — Bluesky, Twitter/X &amp; TikTok
+      {/* Hero — the paste box is the thesis: paste a link, get your video. */}
+      <section className="dawn-sky px-4 pt-14 pb-12 sm:pt-20 sm:pb-16">
+        <div className="max-w-2xl mx-auto text-center">
+          <span className="animate-rise inline-flex items-center gap-1.5 rounded-full bg-brand-soft/70 dark:bg-brand/15 px-3 py-1 text-xs font-semibold text-brand-deep dark:text-brand ring-1 ring-brand/15">
+            <span className="text-sm leading-none">🦋</span> The calm way to save Bluesky media
+          </span>
+          <h1 className="animate-rise mt-5 text-[2.6rem] leading-[1.05] sm:text-6xl font-extrabold tracking-tight text-ink dark:text-white" style={{ animationDelay: '60ms' }}>
+            Save any Bluesky video
+            <br className="hidden sm:block" /> in two taps.
           </h1>
-          <p className="text-base text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
-            Paste any video link from Bluesky, Twitter/X, or TikTok to download it as MP4.
-            Free, no watermark, works on every device.
+          <p className="animate-rise mt-4 text-base sm:text-lg text-muted dark:text-slate-400 max-w-lg mx-auto" style={{ animationDelay: '120ms' }}>
+            Paste a link and get a clean MP4 or GIF — free, no watermark, no sign-up.
+            Works the same on iPhone, Android, and desktop.
           </p>
+
+          {/* Tool — floats on the dawn gradient */}
+          <div className="animate-rise mt-9" style={{ animationDelay: '180ms' }}>
+            <React.Suspense fallback={<div className="text-center py-20 text-muted">Loading tool…</div>}>
+              <DownloadTool platform="universal" />
+            </React.Suspense>
+          </div>
+
+          {/* Trust line — the one honey spark */}
+          <div className="animate-rise mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-muted dark:text-slate-400" style={{ animationDelay: '240ms' }}>
+            <span className="inline-flex items-center gap-1.5 font-medium">
+              <span className="w-2 h-2 rounded-full bg-honey"></span> Free, no account
+            </span>
+            <span className="hidden sm:inline text-ink/15 dark:text-white/15">·</span>
+            <span>No watermark, audio kept</span>
+            <span className="hidden sm:inline text-ink/15 dark:text-white/15">·</span>
+            <span>Also Twitter/X &amp; TikTok</span>
+          </div>
         </div>
       </section>
 
-      {/* Trust banner */}
-      <div className="max-w-2xl mx-auto mb-6 px-4 text-center text-sm font-medium text-slate-600 dark:text-slate-400 flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
-        <span className="inline-flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Free to use — no account required</span>
-        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
-        <span>Works on iPhone, Android, Windows, Mac</span>
-        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
-        <span>No watermark · Audio included</span>
-      </div>
-
-      {/* Tool */}
-      <section className="px-4 pb-10">
-        <React.Suspense fallback={<div className="text-center py-20">Loading tool...</div>}>
-          <DownloadTool platform="universal" />
-        </React.Suspense>
-      </section>
-
       {/* Supported platforms */}
-      <section className="px-4 pb-10">
+      <section className="px-4 pb-12">
         <div className="max-w-2xl mx-auto">
           <div className="flex flex-wrap justify-center gap-2 text-sm">
             {([
@@ -149,8 +155,8 @@ export default function HomePage(): React.ReactElement {
                 href={p.href}
                 className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full border transition font-medium ${
                   'active' in p && p.active
-                    ? 'bg-sky-50 border-sky-200 text-sky-700'
-                    : 'bg-white border-slate-200 text-slate-600 hover:border-sky-200 hover:text-sky-700'
+                    ? 'bg-brand-soft border-brand/30 text-brand-deep dark:bg-brand/15 dark:text-brand'
+                    : 'bg-surface border-ink/10 text-muted hover:border-brand/30 hover:text-brand dark:bg-night-surface dark:border-white/10 dark:text-slate-300'
                 }`}
               >
                 <span>{p.icon}</span>
@@ -166,7 +172,7 @@ export default function HomePage(): React.ReactElement {
       {/* How it works */}
       <section className="px-4 pb-12">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-5">
+          <h2 className="text-2xl font-bold mb-6 text-ink dark:text-white">
             How to download videos from social media
           </h2>
           <ol className="space-y-4">
@@ -188,12 +194,12 @@ export default function HomePage(): React.ReactElement {
               }
             ].map((item) => (
               <li key={item.step} className="flex gap-4 items-start">
-                <span className="shrink-0 w-8 h-8 rounded-full bg-sky-100 text-sky-700 text-sm font-semibold flex items-center justify-center">
+                <span className="shrink-0 w-9 h-9 rounded-full bg-brand-soft text-brand-deep text-sm font-bold flex items-center justify-center ring-1 ring-brand/15 dark:bg-brand/15 dark:text-brand dark:ring-brand/20">
                   {item.step}
                 </span>
                 <div>
-                  <p className="font-medium text-slate-900">{item.title}</p>
-                  <p className="text-sm text-slate-600 mt-0.5">{item.desc}</p>
+                  <p className="font-semibold text-ink dark:text-white">{item.title}</p>
+                  <p className="text-sm text-muted mt-0.5 dark:text-slate-400">{item.desc}</p>
                 </div>
               </li>
             ))}
@@ -204,7 +210,7 @@ export default function HomePage(): React.ReactElement {
       {/* Features */}
       <section className="px-4 pb-12 animate-on-scroll">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-5 dark:text-white">
+          <h2 className="text-2xl font-bold mb-6 text-ink dark:text-white">
             Why choose BlueVideoSaver
           </h2>
           <div className="grid sm:grid-cols-2 gap-3">
@@ -212,30 +218,30 @@ export default function HomePage(): React.ReactElement {
               {
                 title: 'Multi-platform support',
                 desc: 'Download videos from Bluesky, Twitter/X, and TikTok — all from one tool. No switching between sites.',
-                icon: <Download className="w-5 h-5 text-sky-600" />
+                icon: <Download className="w-5 h-5 text-brand" />
               },
               {
                 title: 'Audio + video merged',
                 desc: 'Many tools return silent files because platforms split audio and video. We merge both streams automatically.',
-                icon: <Volume2 className="w-5 h-5 text-sky-600" />
+                icon: <Volume2 className="w-5 h-5 text-brand" />
               },
               {
                 title: 'No watermark or re-encoding',
                 desc: 'The original stream is saved directly — no overlays, no quality loss, no branding added to your file.',
-                icon: <Shield className="w-5 h-5 text-sky-600" />
+                icon: <Shield className="w-5 h-5 text-brand" />
               },
               {
                 title: 'Works on every device',
                 desc: 'iPhone, Android, iPad, Windows, Mac, Chromebook — everything runs in your browser, no app needed.',
-                icon: <Smartphone className="w-5 h-5 text-sky-600" />
+                icon: <Smartphone className="w-5 h-5 text-brand" />
               }
             ].map((f) => (
-              <div key={f.title} className="p-4 rounded-xl bg-white shadow-sm ring-1 ring-slate-900/5 hover:-translate-y-1 hover:shadow-md transition-all duration-200 dark:bg-slate-900 dark:ring-slate-800">
-                <div className="rounded-xl bg-sky-50 dark:bg-sky-900/30 p-2 w-fit mb-3">
+              <div key={f.title} className="p-5 rounded-2xl bg-surface shadow-soft ring-1 ring-ink/[0.04] hover:-translate-y-1 hover:shadow-lift transition-all duration-200 dark:bg-night-surface dark:ring-white/5">
+                <div className="rounded-xl bg-brand-soft dark:bg-brand/15 p-2.5 w-fit mb-3">
                   {f.icon}
                 </div>
-                <p className="font-medium text-slate-900 text-sm dark:text-white">{f.title}</p>
-                <p className="text-sm text-slate-600 mt-1 dark:text-slate-400">{f.desc}</p>
+                <p className="font-semibold text-ink text-[0.95rem] dark:text-white">{f.title}</p>
+                <p className="text-sm text-muted mt-1 dark:text-slate-400">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -245,18 +251,18 @@ export default function HomePage(): React.ReactElement {
       {/* Affiliate — clean placement below the fold */}
       <section className="px-4 pb-12">
         <div className="max-w-2xl mx-auto">
-          <div className="px-5 py-4 rounded-xl bg-sky-50 border border-sky-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="px-5 py-4 rounded-2xl bg-brand-soft/60 ring-1 ring-brand/15 dark:bg-brand/10 dark:ring-brand/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
-              <p className="text-sm font-medium text-slate-800">
+              <p className="text-sm font-semibold text-ink dark:text-white">
                 Download slow? Your ISP might be throttling social media.
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">A VPN can bypass ISP throttling for faster downloads.</p>
+              <p className="text-xs text-muted mt-0.5 dark:text-slate-400">A VPN can bypass ISP throttling for faster downloads.</p>
             </div>
             <a
               href="https://nordvpn.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="shrink-0 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium rounded-lg transition"
+              className="shrink-0 px-4 py-2 bg-brand hover:bg-brand-deep text-white text-sm font-semibold rounded-xl shadow-soft transition"
             >
               Try NordVPN &rarr;
             </a>
@@ -267,7 +273,7 @@ export default function HomePage(): React.ReactElement {
       {/* Guides */}
       <section className="px-4 pb-12 animate-on-scroll">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-4">Download tools &amp; guides</h2>
+          <h2 className="text-2xl font-bold mb-6 text-ink dark:text-white">Download tools &amp; guides</h2>
           <div className="grid sm:grid-cols-2 gap-2 text-sm">
             {[
               { href: '/twitter-video-downloader', label: 'Twitter/X Video Downloader' },
@@ -286,7 +292,7 @@ export default function HomePage(): React.ReactElement {
               <a
                 key={link.href}
                 href={link.href}
-                className="px-4 py-3 rounded-lg border border-slate-100 bg-white text-slate-700 hover:border-sky-200 hover:text-sky-700 transition"
+                className="px-4 py-3 rounded-xl border border-ink/[0.06] bg-surface text-muted hover:border-brand/30 hover:text-brand hover:shadow-soft transition dark:bg-night-surface dark:border-white/5 dark:text-slate-300"
               >
                 {link.label}
               </a>
@@ -298,15 +304,15 @@ export default function HomePage(): React.ReactElement {
       {/* FAQ */}
       <section className="px-4 pb-16 animate-on-scroll">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-5">Frequently asked questions</h2>
+          <h2 className="text-2xl font-bold mb-6 text-ink dark:text-white">Frequently asked questions</h2>
           <dl className="space-y-4">
             {homepageFaqs.map((faq) => (
               <div
                 key={faq.question}
-                className="pb-4 border-b border-slate-100 last:border-0 last:pb-0"
+                className="pb-4 border-b border-ink/[0.06] dark:border-white/10 last:border-0 last:pb-0"
               >
-                <dt className="font-medium text-sm text-slate-900">{faq.question}</dt>
-                <dd className="mt-1 text-sm text-slate-600">{faq.answer}</dd>
+                <dt className="font-semibold text-[0.95rem] text-ink dark:text-white">{faq.question}</dt>
+                <dd className="mt-1 text-sm text-muted dark:text-slate-400">{faq.answer}</dd>
               </div>
             ))}
           </dl>

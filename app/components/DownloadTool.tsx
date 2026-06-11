@@ -267,7 +267,7 @@ export function DownloadTool({
             type="url"
             inputMode="url"
             placeholder={ui.placeholder}
-            className={`flex-1 px-4 py-4 min-h-[48px] rounded-xl border-0 ring-1 ring-slate-200 shadow-lg shadow-slate-200/60 focus:ring-2 focus:ring-sky-500 focus:shadow-sky-100/60 outline-none transition-all duration-200 text-sm dark:bg-slate-900 dark:text-slate-100 dark:ring-slate-800 dark:shadow-none dark:focus:ring-sky-500 ${loading ? 'ring-2 ring-sky-400 shadow-sky-200 animate-pulse' : ''}`}
+            className={`flex-1 px-4 py-4 min-h-[52px] rounded-2xl border-0 ring-1 ring-ink/10 bg-surface shadow-soft focus:ring-2 focus:ring-brand outline-none transition-all duration-200 text-sm placeholder:text-muted/70 dark:bg-night-surface dark:text-slate-100 dark:ring-white/10 dark:shadow-none dark:focus:ring-brand ${loading ? 'ring-2 ring-brand animate-pulse' : ''}`}
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             onKeyDown={(e) => {
@@ -280,7 +280,7 @@ export function DownloadTool({
           <button
             type="button"
             onClick={() => void pasteFromClipboard()}
-            className="px-4 min-h-[48px] rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:border-sky-300 hover:bg-sky-50 transition shrink-0 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="px-5 min-h-[52px] rounded-2xl border border-ink/10 bg-surface text-ink text-sm font-semibold hover:border-brand/40 hover:bg-brand-soft/60 transition shrink-0 shadow-soft dark:bg-night-surface dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/5"
           >
             Paste
           </button>
@@ -288,7 +288,7 @@ export function DownloadTool({
 
         <button
           type="submit"
-          className={`w-full inline-flex items-center justify-center gap-2 bg-gradient-to-b from-sky-500 to-sky-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-sky-500/25 transition-all duration-150 text-white font-semibold py-3 min-h-[48px] rounded-xl text-sm group`}
+          className={`w-full inline-flex items-center justify-center gap-2 bg-gradient-to-b from-brand to-brand-deep hover:-translate-y-0.5 hover:shadow-glow shadow-lift transition-all duration-150 text-white font-semibold py-4 min-h-[52px] rounded-2xl text-[0.95rem] group`}
           disabled={loading}
         >
           {loading ? (
@@ -333,7 +333,7 @@ export function DownloadTool({
 
       {/* Results area */}
       {hasResults && !loading && (
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden dark:bg-slate-900 dark:border-slate-800">
+        <div className="rounded-3xl border border-ink/[0.06] bg-surface shadow-lift overflow-hidden dark:bg-night-surface dark:border-white/5">
           {/* Preview for video/gif/thumbnail */}
           {thumbnailUrl && selectedFormat !== 'image' && (
             <div className="relative bg-slate-900">
@@ -375,7 +375,7 @@ export function DownloadTool({
           <div className="p-4 space-y-4">
             {/* Format selector */}
             <div>
-              <p className="text-xs font-medium text-slate-500 mb-2 uppercase tracking-wider">Format</p>
+              <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wider">Format</p>
               <div className="flex gap-2">
                 {([
                   ...(videoUrl ? [{ key: 'video' as const, label: 'Video (MP4)', icon: '▶' }] : []),
@@ -387,10 +387,10 @@ export function DownloadTool({
                     key={key}
                     type="button"
                     onClick={() => setSelectedFormat(key)}
-                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition border ${
+                    className={`flex-1 py-2 px-3 rounded-xl text-sm font-semibold transition border ${
                       selectedFormat === key
-                        ? 'bg-sky-50 border-sky-300 text-sky-800'
-                        : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
+                        ? 'bg-brand-soft border-brand/30 text-brand-deep dark:bg-brand/15 dark:text-brand'
+                        : 'bg-surface border-ink/10 text-muted hover:border-brand/30 dark:bg-night-surface dark:border-white/10 dark:text-slate-300'
                     }`}
                   >
                     <span className="mr-1.5">{icon}</span>
@@ -411,7 +411,7 @@ export function DownloadTool({
                 <button
                   type="button"
                   onClick={startDownload}
-                  className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition text-sm"
+                  className="flex-1 inline-flex items-center justify-center gap-2 bg-success hover:bg-[#0c8f57] text-white font-semibold py-3.5 rounded-2xl shadow-soft transition text-sm"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -421,7 +421,7 @@ export function DownloadTool({
                 <button
                   type="button"
                   onClick={() => void copyVideoUrl()}
-                  className="px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:border-sky-300 transition"
+                  className="px-4 py-3 rounded-2xl border border-ink/10 bg-surface text-ink text-sm font-medium hover:border-brand/40 hover:bg-brand-soft/50 transition dark:bg-night-surface dark:border-white/10 dark:text-slate-200"
                   title="Copy direct link"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
