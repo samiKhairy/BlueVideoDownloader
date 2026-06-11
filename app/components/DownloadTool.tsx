@@ -4,6 +4,7 @@
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Play, Repeat, Images, Image as ImageIcon, Scissors } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 import { toast } from 'sonner';
 
@@ -288,7 +289,7 @@ export function DownloadTool({
 
         <button
           type="submit"
-          className={`w-full inline-flex items-center justify-center gap-2 bg-gradient-to-b from-brand to-brand-deep hover:-translate-y-0.5 hover:shadow-glow shadow-lift transition-all duration-150 text-white font-semibold py-4 min-h-[52px] rounded-2xl text-[0.95rem] group`}
+          className={`w-full inline-flex items-center justify-center gap-2 bg-gradient-to-b from-brand to-brand-deep hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-[0.99] shadow-lift transition-all duration-150 text-white font-semibold py-4 min-h-[52px] rounded-2xl text-[0.95rem] group`}
           disabled={loading}
         >
           {loading ? (
@@ -378,22 +379,22 @@ export function DownloadTool({
               <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wider">Format</p>
               <div className="flex gap-2">
                 {([
-                  ...(videoUrl ? [{ key: 'video' as const, label: 'Video (MP4)', icon: '▶' }] : []),
-                  ...(videoUrl ? [{ key: 'gif' as const, label: 'GIF loop', icon: '◎' }] : []),
-                  ...(images.length > 0 ? [{ key: 'image' as const, label: `Images (${images.length})`, icon: '🖼' }] : []),
-                  ...(thumbnailUrl && videoUrl ? [{ key: 'thumbnail' as const, label: 'Thumbnail', icon: '◻' }] : [])
-                ]).map(({ key, label, icon }) => (
+                  ...(videoUrl ? [{ key: 'video' as const, label: 'Video (MP4)', Icon: Play }] : []),
+                  ...(videoUrl ? [{ key: 'gif' as const, label: 'GIF loop', Icon: Repeat }] : []),
+                  ...(images.length > 0 ? [{ key: 'image' as const, label: `Images (${images.length})`, Icon: Images }] : []),
+                  ...(thumbnailUrl && videoUrl ? [{ key: 'thumbnail' as const, label: 'Thumbnail', Icon: ImageIcon }] : [])
+                ]).map(({ key, label, Icon }) => (
                   <button
                     key={key}
                     type="button"
                     onClick={() => setSelectedFormat(key)}
-                    className={`flex-1 py-2 px-3 rounded-xl text-sm font-semibold transition border ${
+                    className={`flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-sm font-semibold transition border active:scale-[0.98] ${
                       selectedFormat === key
                         ? 'bg-brand-soft border-brand/30 text-brand-deep dark:bg-brand/15 dark:text-brand'
                         : 'bg-surface border-ink/10 text-muted hover:border-brand/30 dark:bg-night-surface dark:border-white/10 dark:text-slate-300'
                     }`}
                   >
-                    <span className="mr-1.5">{icon}</span>
+                    <Icon className="w-3.5 h-3.5" />
                     {label}
                   </button>
                 ))}
@@ -411,7 +412,7 @@ export function DownloadTool({
                 <button
                   type="button"
                   onClick={startDownload}
-                  className="flex-1 inline-flex items-center justify-center gap-2 bg-success hover:bg-[#0c8f57] text-white font-semibold py-3.5 rounded-2xl shadow-soft transition text-sm"
+                  className="flex-1 inline-flex items-center justify-center gap-2 bg-success hover:bg-[#0c8f57] active:scale-[0.99] text-white font-semibold py-3.5 rounded-2xl shadow-soft transition text-sm"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -436,9 +437,10 @@ export function DownloadTool({
                 <button
                   type="button"
                   onClick={() => setShowTrimmer(true)}
-                  className="w-full py-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-medium transition dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700"
+                  className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-medium transition active:scale-[0.98] dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700"
                 >
-                  ✂️ Trim clip
+                  <Scissors className="w-3.5 h-3.5" />
+                  Trim clip
                 </button>
               </div>
             )}

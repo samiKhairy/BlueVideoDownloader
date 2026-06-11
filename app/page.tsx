@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Download, Shield, Volume2, Smartphone } from 'lucide-react';
 import { DownloadTool } from './components/DownloadTool';
 import { ScrollAnimationInit } from './components/ScrollAnimationInit';
+import { BlueskyIcon, XIcon, TikTokIcon } from './components/BrandIcons';
 
 // Homepage-specific metadata. Overrides the generic site default from layout.tsx
 // to lead with the high-opportunity "Bluesky video downloader" / GIF queries.
@@ -146,9 +147,9 @@ export default function HomePage(): React.ReactElement {
         <div className="max-w-2xl mx-auto">
           <div className="flex flex-wrap justify-center gap-2 text-sm">
             {([
-              { href: '/twitter-video-downloader' as const, label: 'Twitter/X', icon: '𝕏' },
-              { href: '/tiktok-video-downloader' as const, label: 'TikTok', icon: '♪' },
-              { href: '/' as const, label: 'Bluesky', icon: '🦋', active: true as const }
+              { href: '/twitter-video-downloader' as const, label: 'Twitter/X', Icon: XIcon },
+              { href: '/tiktok-video-downloader' as const, label: 'TikTok', Icon: TikTokIcon },
+              { href: '/' as const, label: 'Bluesky', Icon: BlueskyIcon, active: true as const }
             ] as const).map((p) => (
               <a
                 key={p.href}
@@ -159,7 +160,7 @@ export default function HomePage(): React.ReactElement {
                     : 'bg-surface border-ink/10 text-muted hover:border-brand/30 hover:text-brand dark:bg-night-surface dark:border-white/10 dark:text-slate-300'
                 }`}
               >
-                <span>{p.icon}</span>
+                <p.Icon className="w-3.5 h-3.5" />
                 {p.label}
               </a>
             ))}
