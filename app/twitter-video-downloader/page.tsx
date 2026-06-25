@@ -71,30 +71,6 @@ const faqJsonLd = {
   }))
 };
 
-const howToJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'How to download Twitter/X videos',
-  description: 'Save any public Twitter or X video as an MP4 file using BlueVideoSaver.',
-  step: [
-    {
-      '@type': 'HowToStep',
-      name: 'Copy the tweet URL',
-      text: 'Open Twitter or X, find the tweet with the video, click the share icon and copy the link.'
-    },
-    {
-      '@type': 'HowToStep',
-      name: 'Paste the URL',
-      text: 'Go to bluevideosaver.com/twitter-video-downloader and paste the tweet link into the download box.'
-    },
-    {
-      '@type': 'HowToStep',
-      name: 'Download the MP4',
-      text: 'Click Download and save the HD MP4 file to your device.'
-    }
-  ]
-};
-
 /* ─── Page ──────────────────────────────────────────────────────── */
 
 export default function TwitterDownloaderPage(): React.ReactElement {
@@ -260,10 +236,6 @@ export default function TwitterDownloaderPage(): React.ReactElement {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
       />
     </>
   );

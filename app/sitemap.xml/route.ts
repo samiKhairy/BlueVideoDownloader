@@ -9,7 +9,7 @@ const STATIC_PATHS = ['/', '/about', '/blog', '/pt', '/es', '/de', '/fr', '/id',
 const BLOG_PATHS = LIVE_BLOG_POSTS.map((post) => `/blog/${post.slug}`);
 
 // Pages with language alternates
-const ALL_LANGS = { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' };
+const ALL_LANGS = { 'x-default': '/', en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' };
 const HREFLANG_PAGES = [
   { path: '/', langs: ALL_LANGS },
   { path: '/pt', langs: ALL_LANGS },

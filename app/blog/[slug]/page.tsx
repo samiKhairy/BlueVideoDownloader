@@ -63,6 +63,23 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
         }
       : null;
 
+  // BreadcrumbList: shows Home › Guides › Post as a breadcrumb in the SERP
+  // listing (especially on desktop), making the result richer and more clickable.
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bluevideosaver.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://bluevideosaver.com/blog' },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `https://bluevideosaver.com/blog/${post.slug}`
+      }
+    ]
+  };
+
   return (
     <main className="min-h-screen px-4 py-10">
       <article className="max-w-3xl mx-auto prose prose-sm md:prose-base">
@@ -95,6 +112,10 @@ export default function BlogPostPage({ params }: BlogPageParams): React.ReactEle
             dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
           />
         )}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
       </article>
     </main>
   );

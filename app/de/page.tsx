@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     'Lade Bluesky Videos und GIFs kostenlos als MP4 herunter. Kein Wasserzeichen, keine Anmeldung. Funktioniert auf iPhone, Android und Desktop.',
   alternates: {
     canonical: '/de',
-    languages: { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id' }
+    languages: { 'x-default': '/', en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' }
   },
   openGraph: {
     title: 'Bluesky Video Downloader — Kostenlos, Ohne Wasserzeichen',
@@ -56,19 +56,6 @@ const faqJsonLd = {
     name: faq.question,
     acceptedAnswer: { '@type': 'Answer', text: faq.answer }
   }))
-};
-
-const howToJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'So lädst du Bluesky-Videos herunter',
-  description: 'Speichere jedes öffentliche Bluesky-Video oder GIF als MP4 mit BlueVideoSaver.',
-  inLanguage: 'de',
-  step: [
-    { '@type': 'HowToStep', name: 'Link kopieren', text: 'Öffne Bluesky, finde den Beitrag mit dem Video oder GIF, tippe auf die drei Punkte und kopiere den Link.' },
-    { '@type': 'HowToStep', name: 'Link einfügen', text: 'Gehe zu bluevideosaver.com und füge den Link in das Download-Feld ein.' },
-    { '@type': 'HowToStep', name: 'MP4 herunterladen', text: 'Klicke auf Download und speichere die MP4-Datei auf deinem Gerät.' }
-  ]
 };
 
 export default function DePage(): React.ReactElement {
@@ -176,8 +163,6 @@ export default function DePage(): React.ReactElement {
         </div>
       </section>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} />
-    </>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />    </>
   );
 }

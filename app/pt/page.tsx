@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Baixe vídeos e GIFs do Bluesky como MP4 grátis. Sem marca d'água, sem cadastro. Funciona no iPhone, Android e computador.",
   alternates: {
     canonical: '/pt',
-    languages: { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id' }
+    languages: { 'x-default': '/', en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' }
   },
   openGraph: {
     title: "Baixar Vídeos do Bluesky — Grátis, Sem Marca D'Água",
@@ -56,19 +56,6 @@ const faqJsonLd = {
     name: faq.question,
     acceptedAnswer: { '@type': 'Answer', text: faq.answer }
   }))
-};
-
-const howToJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'Como baixar vídeos do Bluesky',
-  description: 'Salve qualquer vídeo ou GIF público do Bluesky como MP4 usando o BlueVideoSaver.',
-  inLanguage: 'pt',
-  step: [
-    { '@type': 'HowToStep', name: 'Copie o link do post', text: 'Abra o Bluesky, encontre o post com o vídeo ou GIF, toque nos três pontos e copie o link.' },
-    { '@type': 'HowToStep', name: 'Cole o link', text: 'Acesse bluevideosaver.com e cole o link na caixa de download.' },
-    { '@type': 'HowToStep', name: 'Baixe o MP4', text: 'Clique em Download e salve o arquivo MP4 no seu dispositivo.' }
-  ]
 };
 
 export default function PtPage(): React.ReactElement {
@@ -176,8 +163,6 @@ export default function PtPage(): React.ReactElement {
         </div>
       </section>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} />
-    </>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />    </>
   );
 }

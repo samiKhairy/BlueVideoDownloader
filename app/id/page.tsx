@@ -6,7 +6,7 @@ import { DownloadTool } from '../components/DownloadTool';
 export const metadata: Metadata = {
   title: 'Download Video Bluesky — Gratis, Tanpa Watermark (2026)',
   description: 'Download video dan GIF Bluesky sebagai MP4 gratis. Tanpa watermark, tanpa daftar. Berfungsi di iPhone, Android, dan desktop.',
-  alternates: { canonical: '/id', languages: { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id' } },
+  alternates: { canonical: '/id', languages: { 'x-default': '/', en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' } },
   openGraph: { title: 'Download Video Bluesky — Gratis, Tanpa Watermark', url: 'https://bluevideosaver.com/id', siteName: 'BlueVideoSaver' }
 };
 
@@ -18,12 +18,6 @@ const faqs = [
 ];
 
 const faqJsonLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) };
-const howToJsonLd = { '@context': 'https://schema.org', '@type': 'HowTo', name: 'Cara download video Bluesky', inLanguage: 'id', step: [
-  { '@type': 'HowToStep', name: 'Salin link', text: 'Buka Bluesky dan salin link postingan.' },
-  { '@type': 'HowToStep', name: 'Tempel link', text: 'Buka bluevideosaver.com dan tempel link-nya.' },
-  { '@type': 'HowToStep', name: 'Download MP4', text: 'Klik Download dan simpan file MP4.' }
-] };
-
 export default function IdPage(): React.ReactElement {
   return (
     <>
@@ -82,8 +76,6 @@ export default function IdPage(): React.ReactElement {
           <dl className="space-y-4">{faqs.map((faq) => (<div key={faq.question} className="pb-4 border-b border-slate-100 last:border-0 last:pb-0"><dt className="font-medium text-sm text-slate-900">{faq.question}</dt><dd className="mt-1 text-sm text-slate-600">{faq.answer}</dd></div>))}</dl>
         </div>
       </section>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} />
-    </>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />    </>
   );
 }

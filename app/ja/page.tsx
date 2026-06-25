@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Blueskyの動画やGIFをMP4として無料でダウンロード。透かしなし、登録不要。iPhone、Android、PCで動作。',
   alternates: {
     canonical: '/ja',
-    languages: { en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' }
+    languages: { 'x-default': '/', en: '/', pt: '/pt', es: '/es', de: '/de', fr: '/fr', id: '/id', ja: '/ja' }
   },
   openGraph: {
     title: 'Bluesky 動画・GIFダウンローダー — 無料・透かしなし',
@@ -49,19 +49,6 @@ const faqJsonLd = {
     name: faq.question,
     acceptedAnswer: { '@type': 'Answer', text: faq.answer }
   }))
-};
-
-const howToJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'Blueskyの動画をダウンロードする方法',
-  description: 'BlueVideoSaverを使用して、Blueskyの公開動画やGIFをMP4として保存します。',
-  inLanguage: 'ja',
-  step: [
-    { '@type': 'HowToStep', name: 'リンクをコピー', text: 'Blueskyを開き、動画またはGIFを含む投稿を見つけ、3つのドットをタップしてリンクをコピーします。' },
-    { '@type': 'HowToStep', name: 'リンクを貼り付け', text: 'bluevideosaver.comにアクセスし、ダウンロードボックスにリンクを貼り付けます。' },
-    { '@type': 'HowToStep', name: 'MP4をダウンロード', text: 'Downloadをクリックし、MP4ファイルをデバイスに保存します。' }
-  ]
 };
 
 export default function JaPage(): React.ReactElement {
@@ -150,8 +137,6 @@ export default function JaPage(): React.ReactElement {
         </div>
       </section>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} />
-    </>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />    </>
   );
 }

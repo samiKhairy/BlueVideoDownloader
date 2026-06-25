@@ -11,7 +11,7 @@ import { BlueskyIcon, XIcon, TikTokIcon } from './components/BrandIcons';
 export const metadata: Metadata = {
   title: 'Bluesky Video Downloader — Save Videos & GIFs Free (2026)',
   description:
-    'Download Bluesky videos and GIFs as MP4 — free, no signup, no watermark. Paste any post link and save in seconds on iPhone, Android, or desktop.',
+    'Download Bluesky (bsky) videos and GIFs as MP4 — free, no signup, no watermark. Paste any bsky.app post link and save in seconds on iPhone, Android, or desktop.',
   openGraph: {
     title: 'Bluesky Video Downloader — Save Videos & GIFs Free',
     description:
@@ -61,6 +61,11 @@ const homepageFaqs = [
       'Some tools skip the audio stream. BlueVideoSaver detects and merges audio + video when both exist so your MP4 keeps the soundtrack.'
   },
   {
+    question: 'Can I download bsky videos?',
+    answer:
+      '"bsky" is just short for Bluesky. Paste any bsky.app post link into BlueVideoSaver and it saves the video or GIF as an MP4 — exactly like any other Bluesky link.'
+  },
+  {
     question: 'Is BlueVideoSaver free to use?',
     answer:
       'Yes. It is free, requires no signup, and runs in your browser with server-side processing.'
@@ -75,31 +80,6 @@ const faqJsonLd = {
     name: faq.question,
     acceptedAnswer: { '@type': 'Answer', text: faq.answer }
   }))
-};
-
-const howToJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'How to download videos from Bluesky, Twitter, and TikTok',
-  description:
-    'Save any public video from Bluesky, Twitter/X, or TikTok as an MP4 file using BlueVideoSaver.',
-  step: [
-    {
-      '@type': 'HowToStep',
-      name: 'Copy the video link',
-      text: 'Open Bluesky, Twitter/X, or TikTok and find the post with the video. Copy the link from the share menu.'
-    },
-    {
-      '@type': 'HowToStep',
-      name: 'Paste the link',
-      text: 'Go to bluevideosaver.com and paste the link into the download box.'
-    },
-    {
-      '@type': 'HowToStep',
-      name: 'Download the MP4',
-      text: 'Click Download and save the MP4 file to your device.'
-    }
-  ]
 };
 
 /* ─── Page ──────────────────────────────────────────────────────── */
@@ -118,8 +98,8 @@ export default function HomePage(): React.ReactElement {
             <br className="hidden sm:block" /> in two taps.
           </h1>
           <p className="animate-rise mt-4 text-base sm:text-lg text-muted dark:text-slate-400 max-w-lg mx-auto" style={{ animationDelay: '120ms' }}>
-            Paste a link and get a clean MP4 or GIF — free, no watermark, no sign-up.
-            Works the same on iPhone, Android, and desktop.
+            Paste any Bluesky (bsky.app) link and get a clean MP4 or GIF — free, no
+            watermark, no sign-up. Works the same on iPhone, Android, and desktop.
           </p>
 
           {/* Tool — floats on the dawn gradient */}
@@ -324,10 +304,6 @@ export default function HomePage(): React.ReactElement {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
       />
       <ScrollAnimationInit />
     </>

@@ -71,31 +71,6 @@ const faqJsonLd = {
   }))
 };
 
-const howToJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'How to download TikTok videos without watermark',
-  description:
-    'Save any public TikTok video as an MP4 file without watermark using BlueVideoSaver.',
-  step: [
-    {
-      '@type': 'HowToStep',
-      name: 'Copy the TikTok link',
-      text: 'Open TikTok, find the video, tap Share and select "Copy link".'
-    },
-    {
-      '@type': 'HowToStep',
-      name: 'Paste the link',
-      text: 'Go to bluevideosaver.com/tiktok-video-downloader and paste the TikTok link into the download box.'
-    },
-    {
-      '@type': 'HowToStep',
-      name: 'Download the MP4',
-      text: 'Click Download and save the watermark-free MP4 file to your device.'
-    }
-  ]
-};
-
 /* ─── Page ──────────────────────────────────────────────────────── */
 
 export default function TikTokDownloaderPage(): React.ReactElement {
@@ -262,10 +237,6 @@ export default function TikTokDownloaderPage(): React.ReactElement {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
       />
     </>
   );
